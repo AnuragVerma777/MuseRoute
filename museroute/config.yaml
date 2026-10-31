@@ -1,21 +1,21 @@
-# Populate base_url and model_id from your .env when available.
-# Prices intentionally remain unset until verified.
+# Fill endpoint, model ID, and cost weight only from verified deployment/model-card data.
 tiers:
   cheap:
     name: cheap
-    base_url: null # TODO: copy from .env; no .env was present when scaffolded
-    model_id: null # TODO: copy from .env; never infer a model ID
+    base_url: null # TODO: set the verified endpoint URL
+    model_id: null # TODO: set the verified model ID
     api_key_env: CHEAP_API_KEY
-    kind: null # TODO: choose hosted, self_hosted, or mode
-    price_in_per_million: null # TODO: set verified price
-    price_out_per_million: null # TODO: set verified price
+    cost_weight: null # TODO: fill from the model card
     extra_params: {}
   strong:
     name: strong
-    base_url: null # TODO: copy from .env; no .env was present when scaffolded
-    model_id: null # TODO: copy from .env; never infer a model ID
+    base_url: null # TODO: set the verified endpoint URL
+    model_id: null # TODO: set the verified model ID
     api_key_env: STRONG_API_KEY
-    kind: null # TODO: choose hosted, self_hosted, or mode
-    price_in_per_million: null # TODO: set verified price
-    price_out_per_million: null # TODO: set verified price
+    cost_weight: null # TODO: fill from the model card
     extra_params: {}
+
+policy:
+  allowed_models: ["muse-spark-open", "muse-glimmer"]
+  blocked_hosts: ["api.meta.ai"]
+  require_free: true
