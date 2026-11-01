@@ -175,8 +175,23 @@ def _print_summary(items: dict[tuple[str, str], dict[str, Any]], tiers: list[str
 
 
 def run() -> dict[tuple[str, str], dict[str, Any]]:
+    if CLIENT_IMPORT_ERROR:
+        print(f"Cannot run baseline: MuseRoute client could not load: {CLIENT_IMPORT_ERROR}")
+        raise SystemExit(1)
+    missing_by_tier = {
+        tier: [field for field in ("base_url", "model_id") if not config.get(field)]
+        for tier, config in client._TIERS.items()
+    }
+    missing_by_tier = {tier: fields for tier, fields in missing_by_tier.items() if fields}
+    if missing_by_tier:
+        details = "; ".join(
+            f"{tier} missing {', '.join(fields)}" for tier, fields in missing_by_tier.items()
+        )
+        print(f"Cannot run baseline: configure each tier's base_url and model_id first ({details}).")
+        raise SystemExit(1)
+
     prompts = _load_workload()
-    tiers = list(client._TIERS) if client is not None else ["cheap", "strong"]
+    tiers = list(client._TIERS)
     items = _load_existing()
     try:
         for tier in tiers:

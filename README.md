@@ -1,15 +1,15 @@
 # MuseRoute
 
-MuseRoute is a Python 3.11 project for making direct chat-completions requests through selectable Muse tiers, checking replies against a small workload, and comparing each tier's quality, latency, token use, and available cost data. Its policy restricts model IDs to case-insensitive substring matches for `muse-spark-open` or `muse-glimmer`, blocks `api.meta.ai`, and requires free use.
+MuseRoute is a Python 3.11 project for making direct chat-completions requests through selectable Muse tiers, checking replies against a small workload, and comparing each tier's quality, latency, token use, and available cost data. Each tier can use its own OpenAI-compatible host and model. The policy requires `muse` somewhere in each configured model ID (case-insensitive) and blocks the `api.meta.ai` host.
 
 ## Muse models and tiers
 
-The policy's allowed model-name fragments are exactly `muse-spark-open` and `muse-glimmer`. The free path uses the verified Hugging Face model ID `meta-models/Muse-Glimmer-30B`. Both tiers point to the same locally hosted model: `cheap` requests low reasoning strength, while `strong` requests high reasoning strength. This compares effort settings without paying for another hosted model.
+The policy only permits model IDs containing `muse` (case-insensitive). The verified Hugging Face model ID `meta-models/Muse-Glimmer-30B` is one option. The `cheap` tier requests low reasoning strength and the `strong` tier requests high reasoning strength; the two tiers can point to the same or different Muse models and compatible hosts.
 
-- **cheap** is the intended lower-cost tier for routine or simpler prompts. Its `model_id`, `base_url`, and `cost_weight` are TODOs.
-- **strong** is the intended higher-capability tier for harder prompts. Its `model_id`, `base_url`, and `cost_weight` are TODOs.
+- **cheap** is the intended lower-cost tier for routine or simpler prompts. It reads `CHEAP_BASE_URL`, `CHEAP_MODEL_ID`, and optional `CHEAP_API_KEY` from `.env`; its `cost_weight` is a TODO.
+- **strong** is the intended higher-capability tier for harder prompts. It reads `STRONG_BASE_URL`, `STRONG_MODEL_ID`, and optional `STRONG_API_KEY` from `.env`; its `cost_weight` is a TODO.
 
-Muse Spark Open through OpenRouter is paid, so it is blocked by the free-only policy. `require_free` permits only local addresses and Cloudflare Quick Tunnel URLs; paid provider hosts such as OpenRouter and Meta's paid API are rejected at startup. The baseline runner calls each tier independently with the same workload; it does not route prompts between tiers.
+The paid Meta API host `api.meta.ai` is blocked at startup. MuseRoute does not otherwise restrict the host, so configure only endpoints you intend to use. The baseline runner calls each tier independently with the same workload; it does not route prompts between tiers.
 
 ## Setup
 
@@ -20,7 +20,7 @@ python -m pip install -r requirements.txt
 Copy-Item .env.example .env
 ```
 
-Fill in the endpoint and model ID for each tier in `museroute/config.yaml`. Put any required key values in `.env`, and set each tier's `api_key_env` to its variable name. Leave it empty for a self-hosted endpoint that requires no key. The `.env` file is ignored by Git. Populate `cost_weight` from the relevant model card; no USD prices are currently configured.
+Fill in the six tier-specific variables in `.env` using `.env.example` as a template. Leave an API key empty for an endpoint that does not require one. The `.env` file is ignored by Git. Populate `cost_weight` from a trusted model card or measured relative compute data; no USD prices are configured.
 
 ## Run the checks
 
@@ -37,7 +37,7 @@ python scripts/baseline.py
 
 ## Baseline results — 2026-10-31
 
-The baseline command produced 180 records, but no model requests reached an endpoint. The available Python environment does not have `requests`, and both configured tier URLs and model IDs are still null. Accuracy and latency are therefore unavailable; USD cost is unknown because no prices are configured.
+The prior baseline artifact consisted of 180 failed request records and has been removed. No valid model requests reached an endpoint, so accuracy and latency are unavailable; USD cost is unknown because no prices are configured.
 
 | Tier | Band | Accuracy | Average latency | Total tokens | Total cost (USD) |
 |---|---|---:|---:|---:|---:|
@@ -76,7 +76,7 @@ There are no valid holdout answers to rank. The current 180 baseline rows all co
 
 ### Reproduce the split, sweep, holdout comparison, and chart
 
-Configure the free local or Quick Tunnel endpoint and the two model IDs in `.env`/`museroute/config.yaml` first. From the repository root, with Python 3.11 and the virtual environment active, run these exact commands:
+Configure the two tier URLs and Muse model IDs in `.env` first. From the repository root, with Python 3.11 and the virtual environment active, run these exact commands:
 
 ```powershell
 python scripts/split_data.py
@@ -89,7 +89,7 @@ The split uses fixed seed 42. `sweep.py` tunes thresholds and self-consistency o
 
 ## Serve Muse Glimmer from a free GPU notebook
 
-In a Kaggle or Colab session, enable a GPU and set `HF_TOKEN` to a Hugging Face read token using the platform's secrets/environment UI. The verified repo is `meta-models/Muse-Glimmer-30B`; `.env.example` already sets `GLIMMER_REPO` to that ID. The model is Apache-2.0 open weights. Its model card describes a 4-bit size under 20 GB and a 24–32 GB deployment envelope, making a dual-T4 session a plausible target; the actual free runtime must still be checked for memory fit. The script installs the model's current Transformers implementation, logs in without saving the token as a Git credential, and loads across the visible GPUs with a balanced device map.
+In a Kaggle or Colab session, enable a GPU and set `HF_TOKEN` to a Hugging Face read token using the platform's secrets/environment UI. The verified repo is `meta-models/Muse-Glimmer-30B`. The model is Apache-2.0 open weights. Its model card describes a 4-bit size under 20 GB and a 24–32 GB deployment envelope, making a dual-T4 session a plausible target; the actual runtime must still be checked for memory fit. The script installs the model's current Transformers implementation, logs in without saving the token as a Git credential, and loads across the visible GPUs with a balanced device map.
 
 Run from the project root in the notebook terminal/cell:
 
@@ -97,7 +97,7 @@ Run from the project root in the notebook terminal/cell:
 python notebooks/serve_glimmer.py
 ```
 
-The script prints GPU memory before and after model loading. If loading or generation runs out of memory, it prints the exact exception and per-GPU memory figures. On success it starts `POST /v1/chat/completions`, downloads `cloudflared` if needed, and opens a temporary free Quick Tunnel. Copy the printed `GLIMMER_BASE_URL` and generated `GLIMMER_API_KEY` lines into your local, Git-ignored `.env`. The base URL includes `/v1`; the key protects the public tunnel. Set the same repo ID in the notebook session and local `.env`, then MuseRoute uses low reasoning for `cheap` and high reasoning for `strong` against this self-hosted API. This is a self-hosted API on a free GPU session, not a guaranteed free third-party inference service; free GPU availability and session quotas depend on Kaggle/Colab.
+The script prints GPU memory before and after model loading. If loading or generation runs out of memory, it prints the exact exception and per-GPU memory figures. On success it starts `POST /v1/chat/completions`, downloads `cloudflared` if needed, and opens a temporary Quick Tunnel. Set the printed URL as `CHEAP_BASE_URL` and/or `STRONG_BASE_URL`, set the generated key in the corresponding API-key variables, and use `meta-models/Muse-Glimmer-30B` for the matching model IDs. The base URL includes `/v1`; the key protects the public tunnel. This is a self-hosted API on a GPU session, not a guaranteed free third-party inference service; GPU availability and session quotas depend on Kaggle/Colab.
 
 Quick Tunnel URLs are temporary and stop working when the notebook process stops. The model's exact repository and access requirements must be checked on its [Hugging Face model page](https://huggingface.co/). The loader uses Hugging Face's [4-bit bitsandbytes and balanced device map](https://huggingface.co/docs/transformers/quantization/bitsandbytes); Cloudflare documents the temporary [Quick Tunnel](https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/).
 

@@ -6,6 +6,7 @@ import os
 import time
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 import requests
 import yaml
@@ -53,6 +54,15 @@ def _load_config() -> tuple[dict[str, Any], dict[str, Any]]:
         raise ConfigurationError("Configuration must contain a 'tiers' mapping")
     if not isinstance(policy, dict):
         raise ConfigurationError("Configuration must contain a 'policy' mapping")
+    # Resolve whole-value ${ENV_VAR} references while preserving null TODOs.
+    for tier_config in tiers.values():
+        if not isinstance(tier_config, dict):
+            continue
+        for field in ("base_url", "model_id"):
+            value = tier_config.get(field)
+            if isinstance(value, str) and value.startswith("${") and value.endswith("}"):
+                variable = value[2:-1]
+                tier_config[field] = os.getenv(variable) or None
     return tiers, policy
 
 
@@ -77,7 +87,12 @@ def _validate_policy(tiers: dict[str, Any], policy: dict[str, Any]) -> None:
         base_url = config.get("base_url")
         if base_url is not None:
             url_text = str(base_url)
-            if any(host.casefold() in url_text.casefold() for host in blocked_hosts):
+            hostname = (urlparse(url_text).hostname or "").casefold()
+            if any(
+                hostname == host.casefold()
+                or hostname.endswith("." + host.casefold().lstrip("."))
+                for host in blocked_hosts
+            ):
                 raise ConfigurationError(
                     f"Tier '{tier_name}' base_url {url_text!r} contains blocked host"
                 )

@@ -1,21 +1,22 @@
-# Fill endpoint, model ID, and cost weight only from verified deployment/model-card data.
+# Configure each tier independently. Keep host/model values in the local .env.
 tiers:
   cheap:
     name: cheap
-    base_url: null # TODO: set the verified endpoint URL
-    model_id: null # TODO: set the verified model ID
+    base_url: ${CHEAP_BASE_URL}
+    model_id: ${CHEAP_MODEL_ID}
     api_key_env: CHEAP_API_KEY
-    cost_weight: null # TODO: fill from the model card
-    extra_params: {}
+    cost_weight: null # TODO: derive a relative weight from measured local GPU use
+    extra_params:
+      reasoning_strength: low
   strong:
     name: strong
-    base_url: null # TODO: set the verified endpoint URL
-    model_id: null # TODO: set the verified model ID
+    base_url: ${STRONG_BASE_URL}
+    model_id: ${STRONG_MODEL_ID}
     api_key_env: STRONG_API_KEY
-    cost_weight: null # TODO: fill from the model card
-    extra_params: {}
+    cost_weight: null # TODO: derive a relative weight from measured local GPU use
+    extra_params:
+      reasoning_strength: high
 
 policy:
-  allowed_models: ["muse-spark-open", "muse-glimmer"]
+  allowed_models: ["muse"]
   blocked_hosts: ["api.meta.ai"]
-  require_free: true

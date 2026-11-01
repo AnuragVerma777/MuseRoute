@@ -35,6 +35,23 @@ def test_startup_policy_rejects_blocked_host():
         )
 
 
+def test_model_allowlist_is_case_insensitive_muse_substring():
+    client._validate_policy(
+        {"strong": {"model_id": "Vendor/MuSe-Model", "base_url": "https://demo.vendor.example/v1"}},
+        {
+            "allowed_models": ["muse"],
+            "blocked_hosts": ["api.meta.ai"],
+        },
+    )
+
+
+def test_policy_allows_any_nonblocked_host():
+    client._validate_policy(
+        {"strong": {"model_id": "vendor/muse-model", "base_url": "https://api.vendor.example/v1"}},
+        {"allowed_models": ["muse"], "blocked_hosts": ["api.meta.ai"]},
+    )
+
+
 def test_402_is_fatal_and_not_retried(monkeypatch, capsys):
     _configure(monkeypatch)
     response = Mock(ok=False, status_code=402)
