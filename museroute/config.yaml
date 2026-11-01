@@ -7,7 +7,7 @@ tiers:
     api_key_env: CHEAP_API_KEY
     cost_weight: null # TODO: derive a relative weight from measured local GPU use
     extra_params:
-      reasoning_strength: low
+      reasoning_effort: low
   strong:
     name: strong
     base_url: ${STRONG_BASE_URL}
@@ -15,7 +15,7 @@ tiers:
     api_key_env: STRONG_API_KEY
     cost_weight: null # TODO: derive a relative weight from measured local GPU use
     extra_params:
-      reasoning_strength: high
+      reasoning_effort: high
 
 policy:
   allowed_models: ["muse"]

@@ -30,6 +30,12 @@ PAYMENT_MESSAGES = [{"role": "user", "content": "Reply with the word ok."}]
 # policy blocks that host, so client startup rejects it before any request.
 # Add a host only after confirming its official Chat Completions docs.
 REASONING_DOCS: dict[str, tuple[str, dict[str, Any], dict[str, Any], str]] = {
+    "integrate.api.nvidia.com": (
+        "reasoning_effort",
+        {"reasoning_effort": "high"},
+        {"reasoning_effort": "none"},
+        "https://docs.api.nvidia.com/nim/reference/meta-muse-glimmer-30b-infer",
+    ),
     "api.meta.ai": (
         "reasoning_effort",
         {"reasoning_effort": "high"},
