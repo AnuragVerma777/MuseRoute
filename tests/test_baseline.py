@@ -1,7 +1,17 @@
 import pytest
+from unittest.mock import Mock
 
 from museroute import client
 from scripts import baseline
+
+
+def test_baseline_uses_sampled_temperature(monkeypatch):
+    call = Mock(return_value=("ok", {}))
+    monkeypatch.setattr(baseline.client, "chat", call)
+
+    baseline._chat_once("cheap", {"prompt": "hello"})
+
+    assert call.call_args.kwargs["temperature"] == 0.95
 
 
 def test_payment_error_stops_baseline_item(monkeypatch):

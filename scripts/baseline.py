@@ -28,6 +28,9 @@ WORKLOAD_PATH = ROOT / "data" / "workload.jsonl"
 RESULT_PATH = ROOT / "results" / "baseline.json"
 TEMP_PATH = ROOT / "results" / "baseline.json.tmp"
 MAX_RATE_LIMIT_RETRIES = 3
+# Muse Glimmer's published NVIDIA API guidance recommends sampled decoding at
+# 0.95; greedy temperature=0 caused repeated timeouts in this reasoning model.
+BASELINE_TEMPERATURE = 0.95
 
 
 def _load_workload() -> list[dict[str, Any]]:
@@ -90,7 +93,7 @@ def _new_row(tier: str, prompt: dict[str, Any], *, answer: str | None = None,
 def _chat_once(tier: str, prompt: dict[str, Any]) -> tuple[str, dict[str, Any]]:
     messages = [{"role": "user", "content": prompt["prompt"]}]
     try:
-        return client.chat(tier, messages, temperature=0)
+        return client.chat(tier, messages, temperature=BASELINE_TEMPERATURE)
     except client.RejectedParameterError as exc:
         if "temperature" not in str(exc).casefold():
             raise
