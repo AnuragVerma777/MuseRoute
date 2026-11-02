@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import random
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -178,7 +180,9 @@ def _print_summary(items: dict[tuple[str, str], dict[str, Any]], tiers: list[str
     print(f"\nSaved {len(items)} tier/prompt records ({failures} errors) to {RESULT_PATH}")
 
 
-def run() -> dict[tuple[str, str], dict[str, Any]]:
+def run(workers: int = 1) -> dict[tuple[str, str], dict[str, Any]]:
+    if workers < 1:
+        raise ValueError("workers must be at least 1")
     if CLIENT_IMPORT_ERROR:
         print(f"Cannot run baseline: MuseRoute client could not load: {CLIENT_IMPORT_ERROR}")
         raise SystemExit(1)
@@ -197,14 +201,42 @@ def run() -> dict[tuple[str, str], dict[str, Any]]:
     prompts = _load_workload()
     tiers = list(client._TIERS)
     items = _load_existing()
+    pending = [
+        (tier, prompt)
+        for tier in tiers
+        for prompt in prompts
+        if not _finished(items.get((tier, prompt["id"])))
+    ]
     try:
-        for tier in tiers:
-            for prompt in prompts:
+        if workers == 1:
+            for tier, prompt in pending:
                 key = (tier, prompt["id"])
-                if _finished(items.get(key)):
-                    continue
                 items[key] = _run_item(tier, prompt)
                 _save(items)
+        else:
+            print(f"Running {len(pending)} unfinished prompts with {workers} workers")
+            with ThreadPoolExecutor(max_workers=workers) as pool:
+                futures = {
+                    pool.submit(_run_item, tier, prompt): (tier, prompt)
+                    for tier, prompt in pending
+                }
+                for done_count, future in enumerate(as_completed(futures), 1):
+                    tier, prompt = futures[future]
+                    try:
+                        row = future.result()
+                    except client.FatalPaymentError:
+                        for queued in futures:
+                            queued.cancel()
+                        raise
+                    items[(tier, prompt["id"])] = row
+                    _save(items)
+                    print(
+                        f"\rCompleted {done_count}/{len(futures)} unfinished prompts "
+                        f"({tier}/{prompt['id']}; errors={sum(bool(x.get('error')) for x in items.values())})",
+                        end="",
+                        flush=True,
+                    )
+            print()
     except client.FatalPaymentError as exc:
         _save(items)
         print(f"\nBaseline stopped: {exc}")
@@ -219,4 +251,9 @@ def run() -> dict[tuple[str, str], dict[str, Any]]:
 
 
 if __name__ == "__main__":
-    run()
+    parser = argparse.ArgumentParser(description="Run the independent per-tier workload baseline.")
+    parser.add_argument(
+        "--workers", type=int, default=1,
+        help="maximum concurrent model requests (default: 1); use a small value for hosted free endpoints",
+    )
+    run(workers=parser.parse_args().workers)
