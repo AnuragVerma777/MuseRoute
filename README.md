@@ -11,6 +11,24 @@ The policy only permits model IDs containing `muse` (case-insensitive). The veri
 
 The paid Meta API host `api.meta.ai` is blocked at startup. MuseRoute does not otherwise restrict the host, so configure only endpoints you intend to use. The baseline runner calls each tier independently with the same workload; it does not route prompts between tiers.
 
+## Run the local API
+
+Start the server from the project root after configuring the tier endpoints and keys:
+
+```powershell
+uvicorn museroute.server:app --host 127.0.0.1 --port 8000
+```
+
+`POST /v1/chat/completions` accepts the standard chat-completions `messages` array and returns the usual `choices` and `usage` fields, plus `route_trace` with the selected tier, reason, latency, and cost units. `POST /api/route` returns the answer and full router trace. `POST /api/compare` sends the same messages to strong-only and MuseRoute. `GET /health` checks the configured model policy. The server reads its threshold and self-consistency setting from the selected `operating_point` in `results/sweep.json` when available; `MUSEROUTE_THRESHOLD` and `MUSEROUTE_SELF_CONSISTENCY` override those values. Without a saved sweep selection, it defaults to threshold `0.5` and self-consistency off.
+
+Example request:
+
+```bash
+curl http://127.0.0.1:8000/v1/chat/completions \
+  -H 'Content-Type: application/json' \
+  -d '{"model":"museroute","messages":[{"role":"user","content":"Which number is larger, 9.11 or 9.8?"}]}'
+```
+
 ## Setup
 
 ```powershell
