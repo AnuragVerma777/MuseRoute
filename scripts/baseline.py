@@ -139,6 +139,10 @@ def _run_item(tier: str, prompt: dict[str, Any]) -> dict[str, Any]:
         )
     except KeyboardInterrupt:
         raise
+    except client.FatalPaymentError:
+        # Payment errors are a hard stop for the entire baseline, not a row-level
+        # model failure to be retried across the remaining prompts.
+        raise
     except Exception as exc:
         return _new_row(tier, prompt, error=f"{type(exc).__name__}: {exc}")
 
@@ -201,6 +205,10 @@ def run() -> dict[tuple[str, str], dict[str, Any]]:
                     continue
                 items[key] = _run_item(tier, prompt)
                 _save(items)
+    except client.FatalPaymentError as exc:
+        _save(items)
+        print(f"\nBaseline stopped: {exc}")
+        raise SystemExit(2)
     except KeyboardInterrupt:
         _save(items)
         print("\nInterrupted; completed results have been saved. Re-run to resume.")
