@@ -15,11 +15,8 @@ Usage (from repo root, venv active, endpoints configured in .env):
 from __future__ import annotations
 
 import json
-import random
-import re
+import argparse
 import sys
-import time
-from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -29,11 +26,12 @@ sys.path.insert(0, str(ROOT))
 from museroute.checks import score  # noqa: E402
 
 try:
-    from museroute import client  # noqa: E402
+    from museroute import client, router as routing  # noqa: E402
 
     CLIENT_ERROR: str | None = None
 except Exception as exc:
     client = None  # type: ignore[assignment]
+    routing = None  # type: ignore[assignment]
     CLIENT_ERROR = f"{type(exc).__name__}: {exc}"
 
 # ── paths ────────────────────────────────────────────────────────────────
@@ -47,8 +45,9 @@ CHART_PATH = ROOT / "results" / "pareto.png"
 # ── sweep grid ───────────────────────────────────────────────────────────
 
 THRESHOLDS = [round(0.50 + i * 0.05, 2) for i in range(10)]  # 0.50 … 0.95
-SC_K = 3  # samples per prompt in self-consistency mode
-SC_TEMP = 0.7
+ROUTER_TEMP = 0.2
+if routing is not None:
+    routing._CACHE_PATH = CACHE_PATH
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -138,6 +137,32 @@ def _load_jsonl(path: Path) -> list[dict[str, Any]]:
     return items
 
 
+def _required_cache_keys(prompts: list[dict[str, Any]]) -> set[str]:
+    """Return the raw answer-cache keys needed for baselines and all router modes."""
+    required: set[str] = set()
+    for p in prompts:
+        pid = p["id"]
+        messages = [{"role": "user", "content": p["prompt"]}]
+        output_format = "json" if p["check"] == "json_fields" else "text"
+        prepared = routing._with_confidence_request(messages, output_format)
+        required.add(_ckey("cheap", pid, ROUTER_TEMP, 0))
+        required.add(_ckey("strong", pid, ROUTER_TEMP, 0))
+        required.add(routing._cache_key("cheap", prepared, {"temperature": ROUTER_TEMP}, 0))
+        required.add(routing._cache_key("cheap", prepared, {"temperature": ROUTER_TEMP}, 1))
+        required.add(routing._cache_key("strong", prepared, {"temperature": ROUTER_TEMP}, 0))
+    return required
+
+
+def _cache_misses(cache: dict[str, Any], prompts: list[dict[str, Any]]) -> list[str]:
+    required = _required_cache_keys(prompts)
+    return sorted(
+        key for key in required
+        if not isinstance(cache.get(key), dict)
+        or "answer" not in cache[key]
+        or not isinstance(cache[key].get("stats"), dict)
+    )
+
+
 # ═══════════════════════════════════════════════════════════════════════════
 # Pre-cache every API call the sweep could need
 # ═══════════════════════════════════════════════════════════════════════════
@@ -149,31 +174,29 @@ def _precache(cache: dict[str, Any], prompts: list[dict[str, Any]], label: str) 
         pid = p["id"]
         msgs: list[dict[str, str]] = [{"role": "user", "content": p["prompt"]}]
 
-        # 1. cheap @ temp=0 (non-SC baseline & confidence probe source)
-        answer_t0, _ = _cached_chat(cache, "cheap", pid, msgs, temperature=0)
+        _cached_chat(cache, "cheap", pid, msgs, temperature=ROUTER_TEMP)
+        _cached_chat(cache, "strong", pid, msgs, temperature=ROUTER_TEMP)
 
-        # 2. confidence probe for non-SC mode
-        probe: list[dict[str, str]] = [
-            {"role": "user", "content": p["prompt"]},
-            {"role": "assistant", "content": answer_t0},
-            {
-                "role": "user",
-                "content": (
-                    "Rate your confidence in your previous answer from 0.0 "
-                    "to 1.0.  Reply with only the number."
-                ),
-            },
-        ]
-        _cached_chat(cache, "cheap", pid, probe, temperature=0, tag="conf")
-
-        # 3. cheap @ SC_TEMP x SC_K (self-consistency mode)
-        for k in range(SC_K):
-            _cached_chat(cache, "cheap", pid, msgs, temperature=SC_TEMP, attempt=k)
-
-        # 4. strong @ temp=0 (escalation target + strong-only baseline)
-        _cached_chat(cache, "strong", pid, msgs, temperature=0)
+        output_format = "json" if p["check"] == "json_fields" else "text"
+        routed_messages = routing._with_confidence_request(msgs, output_format)
+        params = {"temperature": ROUTER_TEMP}
+        routing._cached_chat(cache, "cheap", routed_messages, params, sample=0)
+        routing._cached_chat(cache, "cheap", routed_messages, params, sample=1)
+        routing._cached_chat(cache, "strong", routed_messages, params, sample=0)
 
         sys.stdout.write(f"\r  {label} [{i}/{n}] {pid} cached")
+        sys.stdout.flush()
+    print()
+
+
+def _precache_baselines(cache: dict[str, Any], prompts: list[dict[str, Any]], label: str) -> None:
+    """Cache the two direct baselines without pre-running router variants."""
+    n = len(prompts)
+    for i, p in enumerate(prompts, 1):
+        messages = [{"role": "user", "content": p["prompt"]}]
+        _cached_chat(cache, "cheap", p["id"], messages, temperature=ROUTER_TEMP)
+        _cached_chat(cache, "strong", p["id"], messages, temperature=ROUTER_TEMP)
+        sys.stdout.write(f"\r  {label} baselines [{i}/{n}] {p['id']} cached")
         sys.stdout.flush()
     print()
 
@@ -183,101 +206,30 @@ def _precache(cache: dict[str, Any], prompts: list[dict[str, Any]], label: str) 
 # ═══════════════════════════════════════════════════════════════════════════
 
 
-def _parse_confidence(text: str) -> float:
-    m = re.search(r"(0\.\d+|1\.0?|0(?!\.\d)|1(?!\.\d))", text.strip())
-    return max(0.0, min(1.0, float(m.group(1)))) if m else 0.5
-
-
-def _eval_no_sc(
-    cache: dict[str, Any], p: dict[str, Any], threshold: float
+def _eval_route(
+    cache: dict[str, Any], p: dict[str, Any], threshold: float, self_consistency: bool
 ) -> dict[str, Any]:
-    pid = p["id"]
-    msgs: list[dict[str, str]] = [{"role": "user", "content": p["prompt"]}]
-
-    answer, stats0 = _cached_chat(cache, "cheap", pid, msgs, temperature=0)
-
-    probe: list[dict[str, str]] = [
-        {"role": "user", "content": p["prompt"]},
-        {"role": "assistant", "content": answer},
+    # router.route and the direct baselines share one disk cache.
+    routing._CACHE_PATH = CACHE_PATH
+    answer, trace = routing.route(
+        [{"role": "user", "content": p["prompt"]}],
         {
-            "role": "user",
-            "content": (
-                "Rate your confidence in your previous answer from 0.0 "
-                "to 1.0.  Reply with only the number."
-            ),
+            "threshold": threshold,
+            "format_check": "json" if p["check"] == "json_fields" else "text",
+            "self_consistency": self_consistency,
+            "low_temperature": ROUTER_TEMP,
         },
-    ]
-    conf_str, stats_c = _cached_chat(
-        cache, "cheap", pid, probe, temperature=0, tag="conf"
     )
-    confidence = _parse_confidence(conf_str)
-
-    stats_used = [stats0, stats_c]
-    tok = sum(_tokens(s) for s in stats_used)
-    lat = (stats0.get("latency_ms") or 0) + (stats_c.get("latency_ms") or 0)
-    escalated = False
-
-    if confidence < threshold:
-        escalated = True
-        strong_ans, strong_s = _cached_chat(cache, "strong", pid, msgs, temperature=0)
-        answer = strong_ans
-        stats_used.append(strong_s)
-        tok += _tokens(strong_s)
-        lat += strong_s.get("latency_ms") or 0
-
+    tokens = trace["total_prompt_tokens"] + trace["total_completion_tokens"]
     return {
         "answer": answer,
         "correct": score(answer, p["gold"], p["check"]),
-        "escalated": escalated,
-        "confidence": confidence,
-        "tokens": tok,
-        "cost_units": _total_cost(stats_used),
-        "latency_ms": lat,
-    }
-
-
-def _eval_sc(
-    cache: dict[str, Any], p: dict[str, Any], threshold: float
-) -> dict[str, Any]:
-    pid = p["id"]
-    msgs: list[dict[str, str]] = [{"role": "user", "content": p["prompt"]}]
-
-    answers: list[str] = []
-    stats_list: list[dict[str, Any]] = []
-    for k in range(SC_K):
-        a, s = _cached_chat(
-            cache, "cheap", pid, msgs, temperature=SC_TEMP, attempt=k
-        )
-        answers.append(a)
-        stats_list.append(s)
-
-    normed = [" ".join(a.casefold().split()) for a in answers]
-    ctr = Counter(normed)
-    majority_norm, majority_count = ctr.most_common(1)[0]
-    agreement = majority_count / len(answers)
-    majority_answer = answers[normed.index(majority_norm)]
-
-    stats_used = list(stats_list)
-    tok = sum(_tokens(s) for s in stats_used)
-    lat = sum(s.get("latency_ms") or 0 for s in stats_list)
-    escalated = False
-
-    if agreement < threshold:
-        escalated = True
-        strong_ans, strong_s = _cached_chat(cache, "strong", pid, msgs, temperature=0)
-        majority_answer = strong_ans
-        stats_used.append(strong_s)
-        tok += _tokens(strong_s)
-        lat += strong_s.get("latency_ms") or 0
-
-    return {
-        "answer": majority_answer,
-        "correct": score(majority_answer, p["gold"], p["check"]),
-        "escalated": escalated,
-        "confidence": agreement,
-        "tokens": tok,
-        "cost_units": _total_cost(stats_used),
-        "latency_ms": lat,
+        "escalated": trace["escalated"],
+        "confidence": trace["reason"],
+        "tokens": tokens,
+        "cost_units": trace["total_cost_units"],
+        "latency_ms": trace["total_latency_ms"],
+        "trace": trace,
     }
 
 
@@ -299,7 +251,7 @@ def _baseline(
 
     for p in prompts:
         msgs: list[dict[str, str]] = [{"role": "user", "content": p["prompt"]}]
-        ans, stats = _cached_chat(cache, tier, p["id"], msgs, temperature=0)
+        ans, stats = _cached_chat(cache, tier, p["id"], msgs, temperature=ROUTER_TEMP)
         ok = score(ans, p["gold"], p["check"])
         if ok:
             correct += 1
@@ -309,7 +261,11 @@ def _baseline(
         b = p["band"]
         band_n[b] = band_n.get(b, 0) + 1
         band_c[b] = band_c.get(b, 0) + (1 if ok else 0)
-        details.append({"id": p["id"], "band": b, "correct": ok, "answer": ans})
+        details.append({
+            "id": p["id"], "band": b, "correct": ok, "answer": ans,
+            "tokens": _tokens(stats), "latency_ms": stats.get("latency_ms") or 0,
+            "cost_units": stats.get("cost_units"), "escalated": tier == "strong",
+        })
 
     n = len(prompts)
     return {
@@ -317,10 +273,10 @@ def _baseline(
         "accuracy": round(correct / n, 4) if n else 0,
         "total_cost_units": None if any(v is None for v in cost_values) else sum(cost_values),
         "total_tokens": total_tok,
+        "avg_total_tokens_per_request": round(total_tok / n, 2) if n else 0,
         "avg_latency_ms": round(total_lat / n, 2) if n else 0,
-        "band_accuracy": {
-            b: round(band_c.get(b, 0) / band_n[b], 4) for b in sorted(band_n)
-        },
+        "band_accuracy": {b: round(band_c.get(b, 0) / band_n[b], 4) for b in sorted(band_n)},
+        "bands": _group_metrics(details),
         "details": details,
     }
 
@@ -345,7 +301,7 @@ def _sweep(
             band_n: dict[str, int] = {}
 
             for p in prompts:
-                r = _eval_sc(cache, p, th) if sc else _eval_no_sc(cache, p, th)
+                r = _eval_route(cache, p, th, sc)
                 if r["correct"]:
                     correct += 1
                 if r["escalated"]:
@@ -366,6 +322,7 @@ def _sweep(
                     "escalation_rate": round(esc / n, 4),
                     "total_cost_units": None if any(v is None for v in cost_values) else sum(cost_values),
                     "total_tokens": tok,
+                    "avg_total_tokens_per_request": round(tok / n, 2) if n else 0,
                     "avg_latency_ms": round(lat / n, 2),
                     "band_accuracy": {
                         b: round(band_c.get(b, 0) / band_n[b], 4)
@@ -403,7 +360,10 @@ def _pick_op(results: list[dict[str, Any]], strong_acc: float) -> dict[str, Any]
     cutoff = strong_acc - 0.02
     eligible = [r for r in results if r["accuracy"] >= cutoff]
     if not eligible:
-        eligible = sorted(results, key=lambda r: -r["accuracy"])
+        raise RuntimeError(
+            f"No sweep setting is within 2 percentage points of strong-only accuracy "
+            f"({strong_acc:.1%}); cannot select the requested operating point."
+        )
     return min(eligible, key=_resource)
 
 
@@ -428,7 +388,7 @@ def _eval_set(
     details: list[dict[str, Any]] = []
 
     for p in prompts:
-        r = _eval_sc(cache, p, threshold) if sc else _eval_no_sc(cache, p, threshold)
+        r = _eval_route(cache, p, threshold, sc)
         if r["correct"]:
             correct += 1
         if r["escalated"]:
@@ -447,6 +407,9 @@ def _eval_set(
                 "escalated": r["escalated"],
                 "confidence": r["confidence"],
                 "answer": r["answer"],
+                "tokens": r["tokens"],
+                "latency_ms": r["latency_ms"],
+                "cost_units": r["cost_units"],
             }
         )
 
@@ -456,12 +419,32 @@ def _eval_set(
         "escalation_rate": round(esc / n, 4),
         "total_cost_units": None if any(v is None for v in cost_values) else sum(cost_values),
         "total_tokens": tok,
+        "avg_total_tokens_per_request": round(tok / n, 2) if n else 0,
         "avg_latency_ms": round(lat / n, 2),
         "band_accuracy": {
             b: round(band_c.get(b, 0) / band_n[b], 4) for b in sorted(band_n)
         },
+        "bands": _group_metrics(details),
         "details": details,
     }
+
+
+def _group_metrics(details: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    for detail in details:
+        grouped.setdefault(detail["band"], []).append(detail)
+    result: dict[str, dict[str, Any]] = {}
+    for band, rows in sorted(grouped.items()):
+        costs = [row.get("cost_units") for row in rows]
+        result[band] = {
+            "accuracy": round(sum(bool(row["correct"]) for row in rows) / len(rows), 4),
+            "escalation_rate": round(sum(bool(row.get("escalated")) for row in rows) / len(rows), 4),
+            "total_cost_units": None if any(value is None for value in costs) else sum(costs),
+            "total_tokens": sum(row.get("tokens", 0) for row in rows),
+            "avg_total_tokens_per_request": round(sum(row.get("tokens", 0) for row in rows) / len(rows), 2),
+            "avg_latency_ms": round(sum(row.get("latency_ms", 0) for row in rows) / len(rows), 2),
+        }
+    return result
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -543,7 +526,7 @@ def _save_chart(
 
 def _print_sweep(results: list[dict[str, Any]], pareto: list[dict[str, Any]]) -> None:
     pset = {(r["self_consistency"], r["threshold"]) for r in pareto}
-    hdr = ("SC", "THRESH", "ACC", "ESC%", "COST_UNITS", "TOKENS", "LAT_MS", "P")
+    hdr = ("SC", "THRESH", "ACC", "ESC%", "COST_UNITS", "TOKENS", "AVG_TOK/REQ", "LAT_MS", "P")
     rows: list[tuple[str, ...]] = [hdr]
     for r in results:
         star = "*" if (r["self_consistency"], r["threshold"]) in pset else ""
@@ -555,6 +538,7 @@ def _print_sweep(results: list[dict[str, Any]], pareto: list[dict[str, Any]]) ->
                 f"{r['escalation_rate']:.1%}",
                 "unknown" if r["total_cost_units"] is None else str(r["total_cost_units"]),
                 str(r["total_tokens"]),
+                f"{r['avg_total_tokens_per_request']:.1f}",
                 f"{r['avg_latency_ms']:.1f}",
                 star,
             )
@@ -574,28 +558,21 @@ def _print_holdout(
 ) -> None:
     print(f"\n  Operating point: SC={op['self_consistency']}, threshold={op['threshold']:.2f}")
     print(f"  Tune accuracy:  {op['accuracy']:.1%}\n")
-    h = ("", "Router", "Cheap-only", "Strong-only")
-    r1 = ("Accuracy", f"{ho['accuracy']:.1%}", f"{cheap['accuracy']:.1%}", f"{strong['accuracy']:.1%}")
-    r2 = ("Escalation %", f"{ho['escalation_rate']:.1%}", "0.0%", "100.0%")
-    r3 = ("Cost units", *("unknown" if x["total_cost_units"] is None else str(x["total_cost_units"]) for x in (ho, cheap, strong)))
-    r4 = ("Tokens", *(str(x["total_tokens"]) for x in (ho, cheap, strong)))
-    r5 = ("Avg latency ms", f"{ho['avg_latency_ms']:.1f}", f"{cheap['avg_latency_ms']:.1f}", f"{strong['avg_latency_ms']:.1f}")
-    table = [h, r1, r2, r3, r4, r5]
-    ws = [max(len(row[c]) for row in table) for c in range(4)]
-    for i, row in enumerate(table):
+    systems = [("Cheap-only", cheap, 0.0), ("Strong-only", strong, 1.0), ("MuseRoute", ho, ho["escalation_rate"])]
+    headers = ("BAND", "SYSTEM", "ACCURACY", "ESCALATION", "COST_UNITS", "TOKENS")
+    rows = [headers]
+    for band in ["overall", "easy", "medium", "hard"]:
+        for name, summary, fallback_esc in systems:
+            metric = summary if band == "overall" else summary.get("bands", {}).get(band, {})
+            if not metric:
+                continue
+            cost = metric.get("total_cost_units")
+            rows.append((band, name, f"{metric['accuracy']:.1%}", f"{metric.get('escalation_rate', fallback_esc):.1%}", "unknown" if cost is None else str(cost), str(metric["total_tokens"])))
+    ws = [max(len(row[c]) for row in rows) for c in range(len(headers))]
+    for i, row in enumerate(rows):
         print("  " + " | ".join(f"{v:>{ws[c]}}" for c, v in enumerate(row)))
         if i == 0:
             print("  " + "-+-".join("-" * w for w in ws))
-
-    # Per-band breakdown
-    print("\n  Per-band accuracy (holdout):")
-    print(f"  {'Band':<8} {'Router':>8} {'Cheap':>8} {'Strong':>8}")
-    print(f"  {'-'*8} {'-'*8} {'-'*8} {'-'*8}")
-    for band in sorted(ho["band_accuracy"]):
-        ra = ho["band_accuracy"].get(band, 0)
-        ca = cheap["band_accuracy"].get(band, 0)
-        sa = strong["band_accuracy"].get(band, 0)
-        print(f"  {band:<8} {ra:>7.1%} {ca:>7.1%} {sa:>7.1%}")
 
     # Worst mistakes
     mistakes = [d for d in ho.get("details", []) if not d["correct"]]
@@ -605,7 +582,7 @@ def _print_holdout(
             ans_short = (d["answer"] or "")[:60].replace("\n", " ")
             print(
                 f"    {d['id']} ({d['band']}) esc={d['escalated']} "
-                f"conf={d['confidence']:.2f}  ans={ans_short!r}"
+                f"reason={d['confidence']}  ans={ans_short!r}"
             )
 
 
@@ -615,6 +592,12 @@ def _print_holdout(
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Sweep routing settings on tune data.")
+    parser.add_argument(
+        "--reproduce", action="store_true",
+        help="use the existing answer cache only; never make network requests",
+    )
+    args = parser.parse_args()
     for path, name in [(TUNE_PATH, "tune.jsonl"), (HOLDOUT_PATH, "holdout.jsonl")]:
         if not path.exists():
             print(f"{name} not found. Run:  python scripts/split_data.py")
@@ -622,9 +605,20 @@ def main() -> None:
 
     tune = _load_jsonl(TUNE_PATH)
     holdout = _load_jsonl(HOLDOUT_PATH)
+    cache = _load_cache()
+    if args.reproduce:
+        missing_keys = _cache_misses(cache, tune + holdout)
+        if missing_keys:
+            print(
+                f"Cannot reproduce offline: answer cache is missing {len(missing_keys)} "
+                "of the required response entries; no network requests were made. "
+                f"Example missing key: {missing_keys[0]}"
+            )
+            sys.exit(3)
+        print("Reproducing from complete answer cache; network access is disabled.")
     # Refuse to start if a tier is not configured. In particular, this avoids
     # creating partial result/cache artifacts that could look like measurements.
-    if CLIENT_ERROR:
+    if CLIENT_ERROR and not args.reproduce:
         print(f"Cannot run sweep: {CLIENT_ERROR}")
         sys.exit(2)
     missing = [
@@ -633,10 +627,9 @@ def main() -> None:
         for field in ("model_id", "base_url")
         if not cfg.get(field)
     ]
-    if missing:
+    if missing and not args.reproduce:
         print("Cannot run sweep: configure " + ", ".join(missing) + " in .env/config.yaml first.")
         sys.exit(2)
-    cache = _load_cache()
     print(f"Tune: {len(tune)}  Holdout: {len(holdout)}  Cache: {len(cache)} entries\n")
 
     # ── Phase 1: pre-cache tune ──────────────────────────────────────────
@@ -676,7 +669,7 @@ def main() -> None:
 
     # ── Phase 5: pre-cache holdout + evaluate ────────────────────────────
     print("\n== Phase 5: holdout evaluation ==")
-    _precache(cache, holdout, "holdout")
+    _precache_baselines(cache, holdout, "holdout")
 
     cheap_ho = _baseline(cache, holdout, "cheap")
     strong_ho = _baseline(cache, holdout, "strong")
