@@ -1,0 +1,16 @@
+# MuseRoute demo script — 3 minutes
+
+Every measurement below is taken from `results/facts.json`. Open FastAPI's interactive API page at `http://127.0.0.1:8000/docs` before presenting. There is no custom static UI in this repository; the UI steps below use the API page or its JSON responses.
+
+| Time | Scene | Narration | On-screen action | UI step |
+|---|---|---|---|---|
+| 0:00–0:30 | Problem | “Teams comparing model tiers need a way to try a cheaper answer first, decide when to escalate, and check the decision against held-out prompts.” | Show the `/api/route` endpoint and the `cheap` then `strong` flow in `museroute/router.py`. | In `/docs`, expand `POST /api/route`; point out that the request takes chat `messages`. |
+| 0:30–1:00 | Evidence | “The evaluation has 90 prompts: 45 for tuning and 45 held out, with 15 in each difficulty band. Both configured tiers used `meta/muse-glimmer-30b` on `integrate.api.nvidia.com`.” | Show `GET /api/facts` and its prompt counts and `models_and_hosts`. | In `/docs`, execute `GET /api/facts`; highlight the model/host and split counts. |
+| 1:00–1:25 | Cost | “The measured holdout escalation rate is 20%, but that alone does not prove a cost saving. Cost units and MuseRoute total tokens are null, so the honest value is NOT MEASURED.” | Show `holdout.overall` and the null `cost_units` and token fields in the facts response. | Use the response viewer; point to the literal `null` fields. |
+| 1:25–2:00 | Available solutions | “The alternatives considered are OpenRouter Auto Router, Not Diamond, LiteLLM Router, and RouteLLM. I don’t have the four source descriptions in this copy of the brief, so I’m not making feature or performance claims about them.” | Show the alternatives table in README. | Return to README and show the names with source-description status. |
+| 2:00–2:35 | Before and after | “The saved holdout baseline is 57.78% for strong-only; the selected MuseRoute setting is 48.89%. The router did not improve accuracy on this holdout. The live comparison endpoint can also show strong-only and MuseRoute responses to the same prompt, but those live answers are not the saved evaluation.” | Show the two recorded accuracy fields, then optionally use `POST /api/compare` with one prompt. | In `/docs`, expand `POST /api/compare`; execute only if configured endpoints are available. |
+| 2:35–3:00 | Impact and limits | “MuseRoute demonstrates Muse-only policy enforcement, a format/confidence guard, and a held-out evaluation. On these 45 prompts, it underperformed both single-tier overall; six routed prompts had no returned answer. Cost savings and generalization beyond this workload are NOT MEASURED.” | Show the overall and per-band rows, then the six entries in `holdout_request_failures`. | In `/api/facts`, point to holdout accuracy, errors, and null costs. |
+
+## 30-second fallback
+
+If live model calls fail, skip `POST /api/compare` and show the saved facts response at `http://127.0.0.1:8000/api/facts?demo=1`. The `/api/facts` endpoint serves the saved JSON and ignores the query string; **`?demo=1` is not an implemented demo mode**, and there is no static UI in this checkout. Narrate: “This is the saved 45-prompt holdout result. MuseRoute accuracy is 48.89%, the two single tiers are 60.00% and 57.78%, and cost units are NOT MEASURED.”

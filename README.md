@@ -1,19 +1,75 @@
 # MuseRoute
 
-MuseRoute is a small Python 3.11 service and evaluation harness that routes chat requests through a cheaper Muse tier first and escalates to a stronger tier when the answer is malformed, refused, or below a confidence threshold. It also provides a standard chat-completions HTTP endpoint, a direct route trace, and a comparison endpoint for strong-only versus routed calls.
+## Problem and target user
 
-## Muse models and tier roles
+Teams evaluating Meta Muse models need to understand whether a cheaper first attempt can answer a request well enough, and when a stronger attempt should be used. MuseRoute is for hackathon teams and developers testing that question with measurable, repeatable prompts.
 
-Both configured tiers currently use the exact model ID `meta/muse-glimmer-30b` on NVIDIA's OpenAI-compatible Integrate endpoint (`https://integrate.api.nvidia.com/v1`). They are two modes of the same model, not two different models:
+## Unique value
 
-- **cheap** sends `reasoning_effort: low` and is tried first for each routed request.
-- **strong** sends `reasoning_effort: high` when MuseRoute escalates; it is also the strong-only comparison tier.
+MuseRoute is a Muse-only, confidence-gated routing experiment that records its decisions and evaluates them on prompts held out from tuning.
 
-The model ID, URL, and API key are read separately from `CHEAP_*` and `STRONG_*` variables in `.env`. The client rejects configured model IDs without `muse` (case-insensitive) and blocks the paid Meta API host `api.meta.ai`. Both `cost_weight` values are currently null.
+## Key features
+
+- **Muse-only model policy and two configured tiers:** both tiers currently use `meta/muse-glimmer-30b` on `integrate.api.nvidia.com`; [measured model and host facts](results/facts.json).
+- **Cheap-first routing with a format and confidence guard:** see the [router implementation](museroute/router.py) and measured [holdout route results](results/facts.json).
+- **Tune/holdout evaluation:** 45 prompts were held out from the 45-prompt tune set; inspect [all recorded facts](results/facts.json).
+- **API endpoints for routing, comparison, health and facts:** see [the FastAPI service](museroute/server.py).
+- **Presentation material:** [3-minute demo script](docs/DEMO_SCRIPT.md) and [judge Q&A](docs/JUDGE_QA.md).
+
+## Existing alternatives
+
+The four source lines referenced for this table were not included in the request (the message contains “paste the four lines from my earlier message”). To avoid unsourced descriptions or comparisons, the factual descriptions are pending those lines.
+
+| Alternative | Factual line from supplied source |
+|---|---|
+| OpenRouter Auto Router | Source line not supplied. |
+| Not Diamond | Source line not supplied. |
+| LiteLLM Router | Source line not supplied. |
+| RouteLLM | Source line not supplied. |
+
+MuseRoute makes no claim that it beats these alternatives.
+
+## Why MuseRoute is different
+
+- **Muse-only:** the saved facts identify `meta/muse-glimmer-30b` for both tiers, and the project enforces a Muse model policy.
+- **Accuracy guard:** the router checks answer format and self-reported confidence before deciding whether to escalate. Its measured accuracy is reported below; this guard did not improve the recorded holdout accuracy over either single tier.
+- **Held-out evaluation:** the reported comparison uses 45 holdout prompts separate from the 45 tune prompts.
+- **No card:** payment-card requirements are not recorded in `results/facts.json`; **SAY: not measured**.
+
+## Results
+
+All results below come from [results/facts.json](results/facts.json). Accuracy is measured on 45 holdout prompts. A JSON `null` means **NOT MEASURED**.
+
+| System | Accuracy | Escalation | Average total tokens/request | Average latency (ms) | Cost units |
+|---|---:|---:|---:|---:|---:|
+| Cheap-only | 60.00% | 0% | 249.93 | 12,947.69 | NOT MEASURED |
+| Strong-only | 57.78% | 100% | 537.33 | 26,021.18 | NOT MEASURED |
+| MuseRoute | 48.89% | 20% | NOT MEASURED | 452,626.58 | NOT MEASURED |
+
+Per-band accuracy:
+
+| Band (15 prompts each) | Cheap-only | Strong-only | MuseRoute |
+|---|---:|---:|---:|
+| Easy | 100% | 100% | 60% |
+| Medium | 80% | 73.33% | 73.33% |
+| Hard | 0% | 0% | 13.33% |
+
+The saved operating point uses threshold `0.5` with self-consistency off. The configured tiers currently use the same model ID and host. The MuseRoute holdout total-token count and cost units are null in the source facts, so this evaluation cannot establish a cost saving. Six routed prompts had no returned answer; the source facts record 15 tier-call errors across those requests and fallbacks.
+
+## What was built during the hackathon
+
+Commit dates and subjects from Git history:
+
+| Date | Recorded work |
+|---|---|
+| 2026-10-31 | Project scaffold, Muse client/policy, invented workload and checks, resumable baseline runner. |
+| 2026-11-01 | Muse endpoint configuration, host-agnostic tier setup, payment-error handling. |
+| 2026-11-02 | Cached router, baseline and sweep work, held-out evaluation, FastAPI server. |
+| 2026-11-03 | Repository rules, completed baseline and holdout results, facts generator and facts API. |
 
 ## Setup
 
-Use Python 3.11 from the project root:
+Use Python 3.11 from the repository root:
 
 ```powershell
 py -3.11 -m venv .venv
@@ -22,40 +78,23 @@ python -m pip install -r requirements.txt
 Copy-Item .env.example .env
 ```
 
-Fill in the tier-specific base URLs, model IDs, and keys in `.env`. `.env` is ignored by Git. Do not commit it. Set `cost_weight` only from a trusted model card or measured relative compute data; do not treat it as a dollar price.
-
-## Commands
+Set `CHEAP_BASE_URL`, `CHEAP_MODEL_ID`, `CHEAP_API_KEY`, `STRONG_BASE_URL`, `STRONG_MODEL_ID`, and `STRONG_API_KEY` in the local `.env`. The checked-in facts show the host and model ID used for the recorded measurements; credentials are not part of the facts artifact.
 
 ```powershell
-# Run request checks and the independent tier baseline
+pytest -q
 python scripts/smoke.py
 python scripts/baseline.py
-
-# Recreate the fixed-seed (42) stratified split, then tune on tune.jsonl
 python scripts/split_data.py
 python scripts/sweep.py
-
-# After a complete sweep cache exists, replay without network calls
-python scripts/sweep.py --reproduce
-
-# Run the local API
+python scripts/make_facts.py
 uvicorn museroute.server:app --host 127.0.0.1 --port 8000
-
-# Run tests
-pytest -q
 ```
 
-The split has 45 tune prompts and 45 held-out prompts (15 easy, 15 medium, 15 hard). `sweep.py` selects its operating point from tune data only, then evaluates that single setting on holdout. The API reads the selected point from `results/sweep.json` when present; `MUSEROUTE_THRESHOLD` and `MUSEROUTE_SELF_CONSISTENCY` can override it.
+## Architecture
 
-## Local API
+`museroute/client.py` sends chat-completions HTTP requests. `museroute/router.py` tries the cheap tier, applies its format/confidence checks, and may escalate. `museroute/server.py` exposes `/health`, `/v1/chat/completions`, `/api/route`, `/api/compare`, and `/api/facts`. Workload, tune and holdout inputs are under `data/`; measured outputs and caches are under `results/`.
 
-- `GET /health` checks configured model policy.
-- `POST /v1/chat/completions` returns chat-completions JSON, usage counts, and a compact `route_trace`.
-- `POST /api/route` returns the answer and full trace.
-- `POST /api/compare` runs strong-only and MuseRoute on the same messages.
-- `GET /api/facts` serves the generated `results/facts.json` measurement summary.
-
-Example:
+## API example
 
 ```bash
 curl http://127.0.0.1:8000/v1/chat/completions \
@@ -63,32 +102,4 @@ curl http://127.0.0.1:8000/v1/chat/completions \
   -d '{"model":"museroute","messages":[{"role":"user","content":"Which number is larger, 9.11 or 9.8?"}]}'
 ```
 
-Fetch the measured summary:
-
-```bash
-curl http://127.0.0.1:8000/api/facts
-```
-
-Generate or refresh it from the saved evaluation artifacts with `python scripts/make_facts.py`.
-
-## Results — 45 held-out prompts
-
-`results/facts.json` is generated from the saved baseline, sweep and split artifacts. It reports measured accuracy and per-band results for cheap-only, strong-only and MuseRoute, prompt counts, token/latency measurements, the selected tune threshold, and routed holdout mistakes. Run `python scripts/make_facts.py` to refresh the summary; `GET /api/facts` serves the same JSON.
-
-There are 45 holdout prompts, stratified across easy, medium and hard. The recorded overall accuracies are 60.0% cheap-only, 57.8% strong-only, and 48.9% MuseRoute. Six routed holdout prompts have no returned answer after request failures; those failures are listed separately from the answered mistakes. Per-band accuracy, escalation, token, latency and cost fields are in `results/facts.json`; values absent from the source records remain JSON `null` and should be displayed as **NOT MEASURED**. Both tier cost weights are null, so cost units are not measured. **Cost units are a relative estimate, not dollars.**
-
-The facts artifact contains up to five deterministic examples of incorrect answered holdout prompts, ordered hard then medium then easy, with the check failure explained. It does not mislabel failed requests as model mistakes. The accuracy-versus-cost chart is at `results/pareto.png`.
-
-```bash
-python scripts/make_facts.py
-```
-
-## Serve Glimmer from a free GPU notebook
-
-`notebooks/serve_glimmer.py` can load `meta-models/Muse-Glimmer-30B` on a Kaggle or Colab GPU session, start a compatible server, and print a temporary Cloudflare Quick Tunnel URL. Set the Hugging Face token as `HF_TOKEN` in the notebook environment and enable Internet/GPU access. Run:
-
-```bash
-python notebooks/serve_glimmer.py
-```
-
-The tunnel URL changes each session. Use it as the relevant `CHEAP_BASE_URL` or `STRONG_BASE_URL` in `.env`; the model ID remains `meta/muse-glimmer-30b` for the NVIDIA hosted endpoint or the appropriate Muse model ID for a local server.
+Retrieve the saved evaluation facts with `curl http://127.0.0.1:8000/api/facts`.
