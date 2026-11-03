@@ -12,7 +12,7 @@
     <main class="page-shell">
       <header class="hero">
         <p class="eyebrow">MUSEROUTE · MUSE-ONLY ROUTING</p>
-        <h1>Hackathon teams evaluating Meta Muse need to see when a cheap first answer is enough and when to escalate.</h1>
+        <h1>Find the Muse tier that best fits your prompt.</h1>
         <p id="mode-note" class="mode-note" role="status"></p>
       </header>
 
@@ -24,42 +24,30 @@
       <div id="route-panel" role="tabpanel" aria-labelledby="route-tab">
       <section class="panel prompt-panel" aria-labelledby="prompt-title">
         <div class="section-heading">
-          <div><p class="eyebrow">MUSEROUTE CHAT</p><h2 id="prompt-title">Ask MuseRoute</h2></div>
+          <div><p class="eyebrow">PROMPT ROUTING</p><h2 id="prompt-title">Which Muse tier should handle this?</h2></div>
           <span id="cache-status" class="pill">Loading saved examples…</span>
         </div>
-        <p class="chat-intro">Send a prompt. MuseRoute tries the cheap tier first and automatically escalates when its routing policy says to.</p>
-        <div id="chat-log" class="chat-log" role="log" aria-live="polite" aria-label="Conversation">
-          <article class="chat-message assistant-message"><span class="chat-speaker">MuseRoute</span><p>Hi! Ask me anything, or choose one of the saved examples below. I’ll route your prompt and show the answer here.</p></article>
-        </div>
+        <p class="chat-intro">Enter a prompt. MuseRoute applies its routing policy and reports the selected tier and model. It does not show a generated answer.</p>
         <form id="chat-form" class="chat-composer">
           <label class="visually-hidden" for="prompt-input">Your message</label>
-          <textarea id="prompt-input" rows="2" placeholder="Message MuseRoute… (Enter to send, Shift+Enter for a new line)" required></textarea>
-          <button id="route-button" class="button button-primary" type="submit">Send</button>
+          <textarea id="prompt-input" rows="3" placeholder="Paste or type your prompt…" required></textarea>
+          <button id="route-button" class="button button-primary" type="submit">Find best tier</button>
         </form>
         <span id="request-error" class="error-message" role="alert"></span>
+        <section id="recommendation" class="recommendation" aria-live="polite" hidden>
+          <p class="eyebrow">MUSEROUTE SELECTION</p>
+          <h3 id="selected-model">NOT MEASURED</h3>
+          <p id="selected-mode" class="recommendation-meta"></p>
+          <p><strong>Why:</strong> <span id="recommendation-reason"></span></p>
+          <p><strong>Routing path:</strong> <span id="recommendation-path"></span></p>
+          <p class="recommendation-note">This is the tier selected by the configured routing policy, not a measured claim that it is always better.</p>
+        </section>
         <details class="preset-details">
           <summary>Choose a saved example</summary>
           <div id="preset-groups" class="preset-groups" aria-label="Saved prompt examples"></div>
         </details>
       </section>
-
-      <section class="panel timeline-panel" aria-labelledby="timeline-title">
-        <details id="trace-details">
-        <summary class="trace-summary"><span><span class="eyebrow">ROUTING TRACE</span><strong id="timeline-title">How MuseRoute decided</strong></span><span id="request-badge" class="pill pill-muted">Waiting for a prompt</span></summary>
-        <div id="timeline" class="timeline empty-state">Run a prompt to see each tier, decision, timing, and final answer.</div>
-        </details>
-      </section>
-
-      <section class="panel compare-panel" aria-labelledby="compare-title">
-        <div class="section-heading"><div><p class="eyebrow">03 / SIDE BY SIDE</p><h2 id="compare-title">Before and after</h2></div><button id="compare-button" class="button button-secondary" type="button">Compare strong-only vs MuseRoute</button></div>
-        <div id="comparison" class="comparison empty-state">Run a saved example, then compare its cached strong-only and routed measurements.</div>
-      </section>
-
-      <aside class="cost-banner" aria-label="Cost estimate notice">
-        <strong>Cost units are an estimate. Savings are projections from held-out tests.</strong>
-        <span>Null values are shown as NOT MEASURED. This demo does not report dollar prices.</span>
-      </aside>
-      <footer>Saved examples replay cached tier answers and holdout decisions. Offline demo mode makes no model calls.</footer>
+      <footer>No generated answer is shown. In offline demo mode, saved examples replay the recorded routing choice without model calls.</footer>
       </div>
 
       <div id="proof-panel" role="tabpanel" aria-labelledby="proof-tab" hidden>

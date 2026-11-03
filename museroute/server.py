@@ -315,6 +315,34 @@ def api_route(payload: dict[str, Any], demo: bool = False) -> dict[str, Any]:
     return {"answer": answer, "route_trace": trace}
 
 
+@app.post("/api/recommend")
+def api_recommend(payload: dict[str, Any], demo: bool = False) -> dict[str, Any]:
+    """Route a prompt and return only the selected tier metadata, never its answer."""
+    if demo:
+        result = _demo_result(_find_demo_record(payload))
+        trace = result["route_trace"]
+    else:
+        messages = _messages(payload)
+        _answer, trace = _run_route(messages)
+    tier = trace.get("tier_used")
+    config = client._TIERS.get(tier) if isinstance(tier, str) else None
+    if not isinstance(config, dict):
+        config = {}
+    return {
+        "selected_tier": tier,
+        "model_id": config.get("model_id"),
+        "extra_params": config.get("extra_params"),
+        "reason": trace.get("reason"),
+        "escalated": trace.get("escalated"),
+        "calls": [
+            {"tier": call.get("tier"), "status": call.get("status")}
+            for call in trace.get("calls", [])
+            if isinstance(call, dict)
+        ],
+        "cached": bool(trace.get("cached")),
+    }
+
+
 @app.post("/api/compare")
 def api_compare(payload: dict[str, Any], demo: bool = False) -> dict[str, Any]:
     if demo:

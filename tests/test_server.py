@@ -51,6 +51,32 @@ def test_api_route_returns_full_trace(monkeypatch):
     }
 
 
+def test_api_recommend_returns_tier_metadata_without_answer(monkeypatch):
+    trace = _trace()
+    monkeypatch.setattr(server.router, "route", lambda messages, policy: ("private generated text", trace))
+    client._TIERS["cheap"].update({"extra_params": {"reasoning_effort": "low"}})
+
+    result = server.api_recommend({"messages": [{"role": "user", "content": "test"}]})
+
+    assert result["selected_tier"] == "cheap"
+    assert result["model_id"] == "meta/muse-spark-open"
+    assert result["extra_params"] == {"reasoning_effort": "low"}
+    assert "answer" not in result
+    assert "private generated text" not in str(result)
+
+
+def test_demo_recommend_replays_choice_without_model_call(monkeypatch, tmp_path):
+    _write_demo_sources(monkeypatch, tmp_path)
+    monkeypatch.setattr(server.client, "chat", lambda *args, **kwargs: pytest.fail("demo must not call a tier"))
+    payload = {"prompt_id": "E1", "messages": [{"role": "user", "content": "Cached easy prompt 1?"}]}
+
+    result = server.api_recommend(payload, demo=True)
+
+    assert result["selected_tier"] == "cheap"
+    assert result["model_id"] == "meta/muse-spark-open"
+    assert "answer" not in result
+
+
 def test_compare_runs_strong_only_and_router_on_same_messages(monkeypatch):
     seen = []
     monkeypatch.setattr(server.client, "chat", lambda tier, messages: (seen.append((tier, messages)) or ("strong answer", {"tier": tier})))
@@ -157,9 +183,9 @@ def test_get_root_serves_plain_static_page():
     html = open(response.path, encoding="utf-8").read()
 
     assert response.path.name == "index.html"
-    assert "Hackathon teams evaluating Meta Muse" in html
+    assert "Find the Muse tier that best fits your prompt." in html
     assert 'id="chat-form"' in html
-    assert 'id="chat-log"' in html
+    assert 'id="recommendation"' in html
     assert 'id="prompt-input"' in html
     assert any(route.path == "/" for route in server.app.routes)
 

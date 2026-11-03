@@ -4,17 +4,14 @@
   const input = el("prompt-input");
   const chatForm = el("chat-form");
   const routeButton = el("route-button");
-  const compareButton = el("compare-button");
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   })[char]);
   let selectedPromptId = null;
-  let lastRoute = null;
-  compareButton.disabled = true;
 
   el("mode-note").textContent = demoMode
-    ? "Offline demo mode: saved examples replay cached answers without model calls. To ask your own prompt, open this page without ?demo=1. Cached latency is historical, not playback time."
-    : "Live chat: send any prompt. MuseRoute automatically routes it through the configured Muse tiers and answers here.";
+    ? "Offline demo mode: saved examples replay cached routing choices without model calls. To route your own prompt live, open this page without ?demo=1."
+    : "Live routing: enter any prompt to see which configured Muse tier the policy selects. No generated answer is shown.";
 
   const requestJson = async (url, options = {}) => {
     let response;
@@ -69,144 +66,57 @@
     el("cache-status").textContent = `${response.prompts.length} cached examples`;
   };
 
-  const metric = (value, suffix = "") => value === null || value === undefined ? "NOT MEASURED" : `${value}${suffix}`;
-  const formatConfidence = (value) => typeof value === "number" ? `${Math.round(value * 100)}%` : "NOT MEASURED";
-  const addChatMessage = (role, text, state = "") => {
-    const article = document.createElement("article");
-    article.className = `chat-message ${role === "user" ? "user-message" : "assistant-message"}`;
-    if (state) article.classList.add(state);
-    const speaker = document.createElement("span");
-    speaker.className = "chat-speaker";
-    speaker.textContent = role === "user" ? "You" : "MuseRoute";
-    const content = document.createElement("p");
-    content.textContent = text;
-    article.append(speaker, content);
-    el("chat-log").appendChild(article);
-    article.scrollIntoView({ block: "nearest", behavior: "smooth" });
-    return content;
-  };
-  const makeCard = (title, body, meta = "", options = {}) => `
-    <article class="timeline-step ${options.final ? "final-step" : ""}">
-      <div class="step-top"><h3 class="step-title">${escapeHtml(title)}</h3>${options.cached ? '<span class="cache-badge">cached</span>' : ""}</div>
-      <p class="step-answer">${escapeHtml(body || "No answer returned.")}</p>
-      ${meta ? `<p class="step-meta">${escapeHtml(meta)}</p>` : ""}
-      ${options.reason ? `<p class="step-reason">${escapeHtml(options.reason)}</p>` : ""}
-    </article>`;
-
-  const renderTimeline = (result) => {
-    const trace = result.route_trace || {};
-    const calls = Array.isArray(trace.calls) ? trace.calls : [];
-    const cards = [];
-    let cheapIndex = 0;
-    let hasStrong = false;
-    for (const call of calls) {
-      const tier = call.tier;
-      const title = tier === "cheap" ? `Cheap${++cheapIndex > 1 ? ` sample ${cheapIndex}` : ""}` : "Strong";
-      if (tier === "strong") hasStrong = true;
-      const body = call.status === "error" ? (call.error || "Tier call failed.") : (call.parse_error || call.answer);
-      const meta = `Confidence: ${formatConfidence(call.confidence)} · Latency: ${metric(call.latency_ms, " ms")}`;
-      cards.push(makeCard(title, body, meta, { cached: Boolean(call.cached) }));
-    }
-    const escalated = Boolean(trace.escalated ?? trace.decision === "escalate");
-    const reason = trace.reason || "Decision reason not recorded.";
-    cards.push(makeCard(
-      "Decision",
-      escalated ? "ESCALATE to strong" : "STAY with cheap",
-      `Decision latency: NOT MEASURED${trace.decision ? ` · ${trace.decision}` : ""}`,
-      { reason }
-    ));
-    if (!hasStrong) cards.push(makeCard("Strong", "Not called", "No strong-tier step in this route."));
-    const totalLatency = trace.total_latency_ms ?? trace.latency_ms;
-    const finalCached = Boolean(trace.cached || calls.some((call) => call.cached));
-    cards.push(makeCard(
-      "Final answer",
-      result.answer,
-      `Route latency: ${metric(totalLatency, " ms")} · Cost units: ${metric(trace.total_cost_units)}`,
-      { final: true, cached: finalCached }
-    ));
-    el("timeline").className = "timeline";
-    el("timeline").innerHTML = cards.join("");
-    el("request-badge").className = `pill ${result.answer ? "" : "pill-error"}`;
-    el("request-badge").textContent = result.answer ? (demoMode ? "Cached replay" : "Request complete") : "No answer";
-    if (!result.answer) {
-      el("request-error").textContent = "No model response. The routing trace contains the exact error.";
-      el("trace-details").open = true;
-    }
+  const renderRecommendation = (result) => {
+    const selectedTier = result.selected_tier;
+    const params = result.extra_params && typeof result.extra_params === "object" ? result.extra_params : null;
+    const settingText = params && Object.keys(params).length
+      ? Object.entries(params).map(([key, value]) => `${key}: ${JSON.stringify(value)}`).join(" · ")
+      : "Tier settings: NOT MEASURED";
+    const calls = Array.isArray(result.calls) ? result.calls : [];
+    el("recommendation").hidden = false;
+    el("selected-model").textContent = selectedTier
+      ? `${selectedTier} tier · ${result.model_id || "model_id: NOT MEASURED"}`
+      : "No tier selected";
+    el("selected-mode").textContent = settingText;
+    el("recommendation-reason").textContent = result.reason || "NOT MEASURED";
+    el("recommendation-path").textContent = calls.length
+      ? calls.map((call) => `${call.tier} (${call.status})`).join(" → ")
+      : "NOT MEASURED";
   };
 
   const runRoute = async () => {
     el("request-error").textContent = "";
+    el("recommendation").hidden = true;
     const prompt = input.value.trim();
     if (!prompt) return;
     const promptId = selectedPromptId;
-    addChatMessage("user", prompt);
-    const pending = addChatMessage("assistant", demoMode ? "Loading saved answer…" : "Routing your prompt…", "pending-message");
-    lastRoute = null;
-    compareButton.disabled = true;
-    el("comparison").textContent = "Route this prompt before comparing.";
-    el("comparison").className = "comparison empty-state";
     routeButton.disabled = true;
-    routeButton.textContent = "Sending…";
+    routeButton.textContent = "Checking…";
     try {
       const query = demoMode ? "?demo=1" : "";
       const body = { messages: [{ role: "user", content: prompt }] };
       if (demoMode) body.prompt_id = promptId;
-      const result = await requestJson(`/api/route${query}`, {
+      const result = await requestJson(`/api/recommend${query}`, {
         method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body)
       });
-      pending.textContent = result.answer || "I couldn't get a response from the configured Muse models. The routing trace shows the exact error.";
-      pending.parentElement.classList.remove("pending-message");
-      lastRoute = { body, result };
-      compareButton.disabled = false;
-      renderTimeline(result);
-      el("comparison").textContent = "Press Compare to load the strong-only and routed measurements.";
-      el("comparison").className = "comparison empty-state";
+      renderRecommendation(result);
     } catch (error) {
-      pending.textContent = demoMode
-        ? `No saved replay for this prompt. Choose one of the cached examples above. (${error.message})`
-        : `I couldn't complete that request. ${error.message}`;
-      pending.parentElement.classList.remove("pending-message");
-      lastRoute = null;
-      el("request-badge").className = "pill pill-error";
-      el("request-badge").textContent = "Request failed";
+      el("recommendation").hidden = false;
+      el("selected-model").textContent = "Could not select a tier";
+      el("selected-mode").textContent = "";
+      el("recommendation-reason").textContent = error.message;
+      el("recommendation-path").textContent = "NOT MEASURED";
       el("request-error").textContent = demoMode
-        ? `Cached demo unavailable: ${error.message}`
-        : `Live request failed: ${error.message}`;
+        ? "No saved route for this prompt. Choose one of the cached examples below."
+        : "Routing request failed. See the reason above.";
     } finally {
       input.value = "";
       selectedPromptId = null;
       document.querySelectorAll(".preset-button").forEach((item) => item.setAttribute("aria-pressed", "false"));
       routeButton.disabled = false;
-      routeButton.textContent = "Send";
+      routeButton.textContent = "Find best tier";
       input.focus();
     }
-  };
-
-  const totalTokens = (stats, trace) => {
-    if (stats?.total_tokens !== undefined) return stats.total_tokens;
-    if (trace?.total_tokens !== undefined) return trace.total_tokens;
-    const prompt = stats?.prompt_tokens ?? trace?.total_prompt_tokens;
-    const completion = stats?.completion_tokens ?? trace?.total_completion_tokens;
-    return Number.isInteger(prompt) && Number.isInteger(completion) ? prompt + completion : null;
-  };
-
-  const renderComparison = (data) => {
-    const before = data.strong_only || {};
-    const after = data.museroute || {};
-    const beforeStats = before.stats || {};
-    const afterTrace = after.route_trace || {};
-    const card = (title, tokens, latency, cost) => `
-      <article class="compare-card"><h3>${escapeHtml(title)}</h3>
-        <div class="metric-row"><span>Tokens</span><strong>${escapeHtml(metric(tokens))}</strong></div>
-        <div class="metric-row"><span>Latency</span><strong>${escapeHtml(metric(latency, " ms"))}</strong></div>
-        <div class="metric-row"><span>Cost units</span><strong>${escapeHtml(metric(cost))}</strong></div>
-      </article>`;
-    el("comparison").className = "comparison";
-    el("comparison").innerHTML = card(
-      "Before · strong-only", totalTokens(beforeStats), beforeStats.latency_ms, beforeStats.cost_units
-    ) + card(
-      "After · MuseRoute", totalTokens(null, afterTrace), afterTrace.total_latency_ms ?? afterTrace.latency_ms, afterTrace.total_cost_units ?? afterTrace.cost_units
-    );
   };
 
   const showMeasured = (value) => value === null || value === undefined ? "NOT MEASURED" : escapeHtml(value);
@@ -354,30 +264,6 @@
       selectedPromptId = null;
     }
   });
-  compareButton.addEventListener("click", async () => {
-    el("comparison").textContent = "Loading comparison…";
-    if (!lastRoute) {
-      el("comparison").textContent = "Route a prompt before comparing.";
-      el("comparison").className = "comparison empty-state";
-      return;
-    }
-    compareButton.disabled = true;
-    try {
-      const query = demoMode ? "?demo=1" : "";
-      const body = { ...lastRoute.body };
-      if (demoMode) body.prompt_id = selectedPromptId;
-      const data = await requestJson(`/api/compare${query}`, {
-        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body)
-      });
-      renderComparison(data);
-    } catch (error) {
-      el("comparison").className = "comparison empty-state error-message";
-      el("comparison").textContent = `${demoMode ? "Cached comparison unavailable" : "Live comparison failed"}: ${error.message}`;
-    } finally {
-      compareButton.disabled = false;
-    }
-  });
-
   loadPresets().catch((error) => {
     el("cache-status").className = "pill pill-error";
     el("cache-status").textContent = "Saved examples unavailable";
