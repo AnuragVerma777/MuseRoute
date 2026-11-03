@@ -16,6 +16,12 @@
         <p id="mode-note" class="mode-note" role="status"></p>
       </header>
 
+      <nav class="tab-strip" role="tablist" aria-label="MuseRoute views">
+        <button id="route-tab" class="tab-button" type="button" role="tab" aria-selected="true" aria-controls="route-panel">Route</button>
+        <button id="proof-tab" class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="proof-panel">Proof</button>
+      </nav>
+
+      <div id="route-panel" role="tabpanel" aria-labelledby="route-tab">
       <section class="panel prompt-panel" aria-labelledby="prompt-title">
         <div class="section-heading">
           <div><p class="eyebrow">01 / TRY A PROMPT</p><h2 id="prompt-title">Choose a cached example or write a prompt</h2></div>
@@ -45,6 +51,52 @@
         <span>Null values are shown as NOT MEASURED. This demo does not report dollar prices.</span>
       </aside>
       <footer>Evaluation examples replay saved tier answers and a saved holdout decision. Demo mode makes no model calls.</footer>
+      </div>
+
+      <div id="proof-panel" role="tabpanel" aria-labelledby="proof-tab" hidden>
+        <section class="panel" aria-labelledby="proof-title">
+          <div class="section-heading"><div><p class="eyebrow">HOLDOUT EVIDENCE</p><h2 id="proof-title">45-prompt results</h2></div><span id="proof-status" class="pill pill-muted">Loading saved facts…</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>System</th><th>Accuracy</th><th>Escalation %</th><th>Tokens</th><th>Cost units</th></tr></thead>
+              <tbody id="proof-holdout-body"><tr><td colspan="5">Loading…</td></tr></tbody>
+            </table>
+          </div>
+          <h3 class="subheading">Accuracy per band</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Band</th><th>Cheap-only</th><th>Strong-only</th><th>MuseRoute</th></tr></thead>
+              <tbody id="proof-bands-body"><tr><td colspan="4">Loading…</td></tr></tbody>
+            </table>
+          </div>
+          <div id="accuracy-guard-status" class="guard-status" aria-live="polite">Loading accuracy guard status…</div>
+          <h3 class="subheading">Five worst holdout failures</h3>
+          <ol id="worst-failures" class="failure-list"><li>Loading…</li></ol>
+          <details class="request-failures"><summary>Unanswered holdout requests</summary><ol id="request-failures-list"></ol></details>
+        </section>
+
+        <section class="panel calculator-panel" aria-labelledby="calculator-title">
+          <div class="section-heading"><div><p class="eyebrow">PROJECTION TOOL</p><h2 id="calculator-title">Savings calculator</h2></div><span id="calculator-quality" class="pill pill-muted">Quality guard: NOT MEASURED</span></div>
+          <p class="calculator-label">projection from held-out test; prices are inputs; not real savings</p>
+          <p class="calculator-explainer">MuseRoute cost = cheap cost on every request + escalation rate × strong cost. A saving is shown only when MuseRoute accuracy is within 2 percentage points of strong-only accuracy.</p>
+          <form id="calculator-form" class="calculator-form">
+            <label>Monthly requests<input name="monthly_requests" type="number" min="0" step="1" inputmode="numeric" placeholder="NOT MEASURED"></label>
+            <label>Average prompt tokens/request<input name="average_prompt_tokens" type="number" min="0" step="any" inputmode="decimal" placeholder="NOT MEASURED"></label>
+            <label>Average completion tokens/request<input name="average_completion_tokens" type="number" min="0" step="any" inputmode="decimal" placeholder="NOT MEASURED"></label>
+            <label>Cheap input price / million tokens<input name="cheap_input_price_per_million" type="number" min="0" step="any" inputmode="decimal" placeholder="NOT MEASURED"></label>
+            <label>Cheap output price / million tokens<input name="cheap_output_price_per_million" type="number" min="0" step="any" inputmode="decimal" placeholder="NOT MEASURED"></label>
+            <label>Strong input price / million tokens<input name="strong_input_price_per_million" type="number" min="0" step="any" inputmode="decimal" placeholder="NOT MEASURED"></label>
+            <label>Strong output price / million tokens<input name="strong_output_price_per_million" type="number" min="0" step="any" inputmode="decimal" placeholder="NOT MEASURED"></label>
+          </form>
+          <div class="calculator-results" aria-live="polite">
+            <div><span>Holdout escalation rate</span><strong id="calc-escalation">NOT MEASURED</strong></div>
+            <div><span>Strong-only projected monthly cost</span><strong id="calc-strong-cost">NOT MEASURED</strong></div>
+            <div><span>MuseRoute projected monthly cost</span><strong id="calc-route-cost">NOT MEASURED</strong></div>
+            <div class="saving-result"><span>Projected saving</span><strong id="calc-saving">NOT MEASURED</strong></div>
+          </div>
+          <p id="calculator-message" class="calculator-message">Enter all inputs to calculate a projection.</p>
+        </section>
+      </div>
     </main>
   </body>
 </html>

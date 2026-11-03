@@ -208,3 +208,51 @@ def test_demo_cache_miss_is_clear_and_never_calls_tier(monkeypatch, tmp_path):
 
     assert exc.value.status_code == 404
     assert "demo mode made no live call" in exc.value.detail
+
+
+def test_api_calculate_uses_facts_accuracy_and_escalation(monkeypatch):
+    monkeypatch.setattr(server, "api_facts", lambda: {
+        "holdout": {"overall": {
+            "museroute": {"accuracy": 0.79, "escalation_rate": 0.2},
+            "strong_only": {"accuracy": 0.8},
+        }}
+    })
+    payload = {
+        "monthly_requests": 1000,
+        "average_prompt_tokens": 100,
+        "average_completion_tokens": 50,
+        "cheap_input_price_per_million": 1,
+        "cheap_output_price_per_million": 2,
+        "strong_input_price_per_million": 10,
+        "strong_output_price_per_million": 20,
+    }
+
+    result = server.api_calculate(payload)
+
+    assert result["quality_gate_pass"] is True
+    assert result["strong_only_monthly_cost"] == pytest.approx(2.0)
+    assert result["museroute_monthly_cost"] == pytest.approx(0.6)
+    assert result["projected_savings"] == pytest.approx(1.4)
+
+
+def test_api_calculate_suppresses_saving_when_quality_drop_exceeds_two_points(monkeypatch):
+    monkeypatch.setattr(server, "api_facts", lambda: {
+        "holdout": {"overall": {
+            "museroute": {"accuracy": 0.5, "escalation_rate": 0.2},
+            "strong_only": {"accuracy": 0.6},
+        }}
+    })
+    payload = {
+        "monthly_requests": 1000,
+        "average_prompt_tokens": 100,
+        "average_completion_tokens": 50,
+        "cheap_input_price_per_million": 1,
+        "cheap_output_price_per_million": 2,
+        "strong_input_price_per_million": 10,
+        "strong_output_price_per_million": 20,
+    }
+
+    result = server.api_calculate(payload)
+
+    assert result["status"] == "quality_drop_too_large"
+    assert result["projected_savings"] is None

@@ -180,6 +180,134 @@
     );
   };
 
+  const showMeasured = (value) => value === null || value === undefined ? "NOT MEASURED" : escapeHtml(value);
+  const showPercent = (value) => typeof value === "number" ? `${(value * 100).toFixed(2)}%` : "NOT MEASURED";
+  let proofFacts = null;
+  let calculatorTimer = null;
+  let calculatorRequest = 0;
+
+  const renderProof = (facts) => {
+    const overall = facts.holdout?.overall || {};
+    const systems = [
+      ["Cheap-only", overall.cheap_only],
+      ["Strong-only", overall.strong_only],
+      ["MuseRoute", overall.museroute],
+    ];
+    el("proof-holdout-body").innerHTML = systems.map(([name, row]) => `
+      <tr><th scope="row">${name}</th><td>${showPercent(row?.accuracy)}</td><td>${showPercent(row?.escalation_rate)}</td><td>${showMeasured(row?.total_tokens)}</td><td>${showMeasured(row?.cost_units)}</td></tr>`).join("");
+    const bands = facts.holdout?.by_band || {};
+    el("proof-bands-body").innerHTML = ["easy", "medium", "hard"].map((band) => {
+      const row = bands[band] || {};
+      return `<tr><th scope="row">${escapeHtml(band)}</th><td>${showPercent(row.cheap_only?.accuracy)}</td><td>${showPercent(row.strong_only?.accuracy)}</td><td>${showPercent(row.museroute?.accuracy)}</td></tr>`;
+    }).join("");
+
+    const routed = overall.museroute?.accuracy;
+    const strong = overall.strong_only?.accuracy;
+    const guard = el("accuracy-guard-status");
+    const qualityPill = el("calculator-quality");
+    if (typeof routed !== "number" || typeof strong !== "number") {
+      guard.className = "guard-status";
+      guard.textContent = "Accuracy guard: NOT MEASURED; holdout accuracy is missing.";
+      qualityPill.className = "pill pill-muted";
+      qualityPill.textContent = "Quality guard: NOT MEASURED";
+    } else {
+      const gap = (strong - routed) * 100;
+      const passed = routed >= strong - 0.02;
+      guard.className = `guard-status ${passed ? "guard-pass" : "guard-fail"}`;
+      guard.textContent = passed
+        ? `Accuracy guard: PASS — MuseRoute is within 2 percentage points of strong-only (gap ${gap.toFixed(2)} pp).`
+        : `Accuracy guard: FAIL — MuseRoute is ${gap.toFixed(2)} percentage points below strong-only; required maximum drop is 2 pp.`;
+      qualityPill.className = `pill ${passed ? "" : "pill-error"}`;
+      qualityPill.textContent = `Quality guard: ${passed ? "PASS" : "FAIL"}`;
+    }
+
+    const mistakes = Array.isArray(facts.worst_holdout_mistakes) ? facts.worst_holdout_mistakes : [];
+    el("worst-failures").innerHTML = mistakes.length ? mistakes.slice(0, 5).map((mistake) => `
+      <li><strong>${escapeHtml(mistake.id)} · ${escapeHtml(mistake.band)}</strong>
+        <span class="failure-reason">${escapeHtml(mistake.reason || "Reason: NOT MEASURED")}</span>
+        <span class="failure-reason">Answer: ${escapeHtml(mistake.answer || "NOT MEASURED")} · Expected: ${escapeHtml(mistake.gold ?? "NOT MEASURED")}</span>
+      </li>`).join("") : "<li>NOT MEASURED</li>";
+    const requestFailures = Array.isArray(facts.holdout_request_failures) ? facts.holdout_request_failures : [];
+    el("request-failures-list").innerHTML = requestFailures.length
+      ? requestFailures.map((failure) => `<li><strong>${escapeHtml(failure.id)}:</strong> ${escapeHtml(failure.reason || "NOT MEASURED")}</li>`).join("")
+      : "<li>NOT MEASURED</li>";
+    el("proof-status").textContent = `${showMeasured(facts.holdout?.overall?.prompt_count)} holdout prompts · facts.json`;
+    el("calc-escalation").textContent = showPercent(overall.museroute?.escalation_rate);
+  };
+
+  const loadProof = async () => {
+    if (proofFacts) return proofFacts;
+    el("proof-status").textContent = "Loading saved facts…";
+    try {
+      proofFacts = await requestJson("/api/facts");
+      renderProof(proofFacts);
+      scheduleCalculation();
+      return proofFacts;
+    } catch (error) {
+      el("proof-status").className = "pill pill-error";
+      el("proof-status").textContent = `Could not load facts: ${error.message}`;
+      return null;
+    }
+  };
+
+  const numericInput = (formData, name) => {
+    const raw = formData.get(name);
+    if (raw === null || raw === "") return null;
+    const value = Number(raw);
+    return Number.isFinite(value) ? value : null;
+  };
+
+  const scheduleCalculation = () => {
+    clearTimeout(calculatorTimer);
+    calculatorTimer = setTimeout(runCalculation, 140);
+  };
+
+  const runCalculation = async () => {
+    if (!proofFacts) return;
+    const requestId = ++calculatorRequest;
+    const form = new FormData(el("calculator-form"));
+    const payload = {};
+    for (const name of [
+      "monthly_requests", "average_prompt_tokens", "average_completion_tokens",
+      "cheap_input_price_per_million", "cheap_output_price_per_million",
+      "strong_input_price_per_million", "strong_output_price_per_million",
+    ]) payload[name] = numericInput(form, name);
+    try {
+      const result = await requestJson("/api/calculate", {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
+      });
+      if (requestId !== calculatorRequest) return;
+      const formatProjection = (value) => typeof value === "number" ? value.toLocaleString(undefined, { maximumFractionDigits: 6 }) : "NOT MEASURED";
+      el("calc-strong-cost").textContent = formatProjection(result.strong_only_monthly_cost);
+      el("calc-route-cost").textContent = formatProjection(result.museroute_monthly_cost);
+      el("calc-saving").textContent = formatProjection(result.projected_savings);
+      if (result.status === "quality_drop_too_large") {
+        el("calculator-message").textContent = "Quality drop too large. No saving is shown.";
+      } else if (result.status === "quality_not_measured") {
+        el("calculator-message").textContent = "Accuracy is NOT MEASURED; no saving is shown.";
+      } else if (result.status === "inputs_not_measured") {
+        el("calculator-message").textContent = "Enter all request, token, and price inputs; projection is NOT MEASURED until then.";
+      } else {
+        el("calculator-message").textContent = `Projected saving: ${formatProjection(result.projected_savings)} (projection only).`;
+      }
+    } catch (error) {
+      if (requestId === calculatorRequest) el("calculator-message").textContent = `Calculator error: ${error.message}`;
+    }
+  };
+
+  const activateTab = (tabName) => {
+    const routeSelected = tabName === "route";
+    el("route-panel").hidden = !routeSelected;
+    el("proof-panel").hidden = routeSelected;
+    el("route-tab").setAttribute("aria-selected", String(routeSelected));
+    el("proof-tab").setAttribute("aria-selected", String(!routeSelected));
+    if (!routeSelected) loadProof();
+  };
+
+  el("route-tab").addEventListener("click", () => activateTab("route"));
+  el("proof-tab").addEventListener("click", () => activateTab("proof"));
+  el("calculator-form").addEventListener("input", scheduleCalculation);
+
   routeButton.addEventListener("click", runRoute);
   input.addEventListener("input", () => {
     const selected = document.querySelector('.preset-button[aria-pressed="true"]');

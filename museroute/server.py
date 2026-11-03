@@ -13,7 +13,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from . import client, router
+from . import calculator, client, router
 
 app = FastAPI(title="MuseRoute", version="0.1.0")
 _OPERATING_POINT_PATH = Path(__file__).resolve().parents[1] / "results" / "sweep.json"
@@ -239,6 +239,26 @@ def api_facts() -> dict[str, Any]:
         raise HTTPException(status_code=404, detail="Facts are not generated; run python scripts/make_facts.py") from exc
     except json.JSONDecodeError as exc:
         raise HTTPException(status_code=500, detail="results/facts.json is not valid JSON") from exc
+
+
+@app.post("/api/calculate")
+def api_calculate(payload: dict[str, Any]) -> dict[str, Any]:
+    facts = api_facts()
+    holdout = facts.get("holdout", {}).get("overall", {})
+    route_facts = holdout.get("museroute", {})
+    strong_facts = holdout.get("strong_only", {})
+    return calculator.estimate_monthly_costs(
+        monthly_requests=payload.get("monthly_requests"),
+        average_prompt_tokens=payload.get("average_prompt_tokens"),
+        average_completion_tokens=payload.get("average_completion_tokens"),
+        cheap_input_price_per_million=payload.get("cheap_input_price_per_million"),
+        cheap_output_price_per_million=payload.get("cheap_output_price_per_million"),
+        strong_input_price_per_million=payload.get("strong_input_price_per_million"),
+        strong_output_price_per_million=payload.get("strong_output_price_per_million"),
+        escalation_rate=route_facts.get("escalation_rate"),
+        museroute_accuracy=route_facts.get("accuracy"),
+        strong_accuracy=strong_facts.get("accuracy"),
+    )
 
 
 @app.post("/v1/chat/completions")
