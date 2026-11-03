@@ -24,21 +24,27 @@
       <div id="route-panel" role="tabpanel" aria-labelledby="route-tab">
       <section class="panel prompt-panel" aria-labelledby="prompt-title">
         <div class="section-heading">
-          <div><p class="eyebrow">01 / TRY A PROMPT</p><h2 id="prompt-title">Choose a cached example or write a prompt</h2></div>
+          <div><p class="eyebrow">MUSEROUTE CHAT</p><h2 id="prompt-title">Ask MuseRoute</h2></div>
           <span id="cache-status" class="pill">Loading saved examples…</span>
         </div>
+        <p class="chat-intro">Send a prompt. MuseRoute tries the cheap tier first and automatically escalates when its routing policy says to.</p>
         <div id="preset-groups" class="preset-groups" aria-label="Saved prompt examples"></div>
-        <label class="field-label" for="prompt-input">Your prompt</label>
-        <textarea id="prompt-input" rows="3" placeholder="Select a saved example or enter a prompt…"></textarea>
-        <div class="actions">
-          <button id="route-button" class="button button-primary" type="button">Route prompt</button>
-          <span id="request-error" class="error-message" role="alert"></span>
+        <div id="chat-log" class="chat-log" role="log" aria-live="polite" aria-label="Conversation">
+          <article class="chat-message assistant-message"><span class="chat-speaker">MuseRoute</span><p>Hi! Ask me anything, or choose one of the saved examples above. I’ll route your prompt and show the answer here.</p></article>
         </div>
+        <form id="chat-form" class="chat-composer">
+          <label class="visually-hidden" for="prompt-input">Your message</label>
+          <textarea id="prompt-input" rows="2" placeholder="Message MuseRoute… (Enter to send, Shift+Enter for a new line)" required></textarea>
+          <button id="route-button" class="button button-primary" type="submit">Send</button>
+        </form>
+        <span id="request-error" class="error-message" role="alert"></span>
       </section>
 
       <section class="panel timeline-panel" aria-labelledby="timeline-title">
-        <div class="section-heading"><div><p class="eyebrow">02 / ROUTE TIMELINE</p><h2 id="timeline-title">What happened</h2></div><span id="request-badge" class="pill pill-muted">Waiting for a prompt</span></div>
+        <details id="trace-details">
+        <summary class="trace-summary"><span><span class="eyebrow">ROUTING TRACE</span><strong id="timeline-title">How MuseRoute decided</strong></span><span id="request-badge" class="pill pill-muted">Waiting for a prompt</span></summary>
         <div id="timeline" class="timeline empty-state">Run a prompt to see each tier, decision, timing, and final answer.</div>
+        </details>
       </section>
 
       <section class="panel compare-panel" aria-labelledby="compare-title">

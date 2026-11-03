@@ -2,6 +2,7 @@
   const demoMode = new URLSearchParams(window.location.search).get("demo") === "1";
   const el = (id) => document.getElementById(id);
   const input = el("prompt-input");
+  const chatForm = el("chat-form");
   const routeButton = el("route-button");
   const compareButton = el("compare-button");
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -12,8 +13,8 @@
   compareButton.disabled = true;
 
   el("mode-note").textContent = demoMode
-    ? "Offline demo mode: presets replay saved tier answers and holdout decisions; no model calls are made. Cached latency is historical, not playback time."
-    : "Live mode: requests go to the configured Muse tiers; connection failures appear here.";
+    ? "Offline demo mode: saved examples replay cached answers without model calls. To ask your own prompt, open this page without ?demo=1. Cached latency is historical, not playback time."
+    : "Live chat: send any prompt. MuseRoute automatically routes it through the configured Muse tiers and answers here.";
 
   const requestJson = async (url, options = {}) => {
     let response;
@@ -70,6 +71,20 @@
 
   const metric = (value, suffix = "") => value === null || value === undefined ? "NOT MEASURED" : `${value}${suffix}`;
   const formatConfidence = (value) => typeof value === "number" ? `${Math.round(value * 100)}%` : "NOT MEASURED";
+  const addChatMessage = (role, text, state = "") => {
+    const article = document.createElement("article");
+    article.className = `chat-message ${role === "user" ? "user-message" : "assistant-message"}`;
+    if (state) article.classList.add(state);
+    const speaker = document.createElement("span");
+    speaker.className = "chat-speaker";
+    speaker.textContent = role === "user" ? "You" : "MuseRoute";
+    const content = document.createElement("p");
+    content.textContent = text;
+    article.append(speaker, content);
+    el("chat-log").appendChild(article);
+    article.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    return content;
+  };
   const makeCard = (title, body, meta = "", options = {}) => `
     <article class="timeline-step ${options.final ? "final-step" : ""}">
       <div class="step-top"><h3 class="step-title">${escapeHtml(title)}</h3>${options.cached ? '<span class="cache-badge">cached</span>' : ""}</div>
@@ -113,34 +128,44 @@
     el("timeline").innerHTML = cards.join("");
     el("request-badge").className = `pill ${result.answer ? "" : "pill-error"}`;
     el("request-badge").textContent = result.answer ? (demoMode ? "Cached replay" : "Request complete") : "No answer";
-    if (!result.answer) el("request-error").textContent = `Request failed: ${reason}`;
+    if (!result.answer) {
+      el("request-error").textContent = "No model response. The routing trace contains the exact error.";
+      el("trace-details").open = true;
+    }
   };
 
   const runRoute = async () => {
     el("request-error").textContent = "";
-    if (!input.value.trim()) {
-      el("request-error").textContent = "Enter a prompt or choose a saved example.";
-      return;
-    }
+    const prompt = input.value.trim();
+    if (!prompt) return;
+    const promptId = selectedPromptId;
+    addChatMessage("user", prompt);
+    const pending = addChatMessage("assistant", demoMode ? "Loading saved answer…" : "Routing your prompt…", "pending-message");
     lastRoute = null;
     compareButton.disabled = true;
     el("comparison").textContent = "Route this prompt before comparing.";
     el("comparison").className = "comparison empty-state";
     routeButton.disabled = true;
-    routeButton.textContent = demoMode ? "Loading cached result…" : "Routing…";
+    routeButton.textContent = "Sending…";
     try {
       const query = demoMode ? "?demo=1" : "";
-      const body = { messages: [{ role: "user", content: input.value }] };
-      if (demoMode) body.prompt_id = selectedPromptId;
+      const body = { messages: [{ role: "user", content: prompt }] };
+      if (demoMode) body.prompt_id = promptId;
       const result = await requestJson(`/api/route${query}`, {
         method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body)
       });
+      pending.textContent = result.answer || "I couldn't get a response from the configured Muse models. The routing trace shows the exact error.";
+      pending.parentElement.classList.remove("pending-message");
       lastRoute = { body, result };
       compareButton.disabled = false;
       renderTimeline(result);
       el("comparison").textContent = "Press Compare to load the strong-only and routed measurements.";
       el("comparison").className = "comparison empty-state";
     } catch (error) {
+      pending.textContent = demoMode
+        ? `No saved replay for this prompt. Choose one of the cached examples above. (${error.message})`
+        : `I couldn't complete that request. ${error.message}`;
+      pending.parentElement.classList.remove("pending-message");
       lastRoute = null;
       el("request-badge").className = "pill pill-error";
       el("request-badge").textContent = "Request failed";
@@ -148,8 +173,12 @@
         ? `Cached demo unavailable: ${error.message}`
         : `Live request failed: ${error.message}`;
     } finally {
+      input.value = "";
+      selectedPromptId = null;
+      document.querySelectorAll(".preset-button").forEach((item) => item.setAttribute("aria-pressed", "false"));
       routeButton.disabled = false;
-      routeButton.textContent = "Route prompt";
+      routeButton.textContent = "Send";
+      input.focus();
     }
   };
 
@@ -308,7 +337,16 @@
   el("proof-tab").addEventListener("click", () => activateTab("proof"));
   el("calculator-form").addEventListener("input", scheduleCalculation);
 
-  routeButton.addEventListener("click", runRoute);
+  chatForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    runRoute();
+  });
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      chatForm.requestSubmit();
+    }
+  });
   input.addEventListener("input", () => {
     const selected = document.querySelector('.preset-button[aria-pressed="true"]');
     if (selected && input.value !== selected.title) {

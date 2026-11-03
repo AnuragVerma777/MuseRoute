@@ -154,9 +154,13 @@ def _write_demo_sources(monkeypatch, tmp_path):
 
 def test_get_root_serves_plain_static_page():
     response = server.home()
+    html = open(response.path, encoding="utf-8").read()
 
     assert response.path.name == "index.html"
-    assert "Hackathon teams evaluating Meta Muse" in open(response.path, encoding="utf-8").read()
+    assert "Hackathon teams evaluating Meta Muse" in html
+    assert 'id="chat-form"' in html
+    assert 'id="chat-log"' in html
+    assert 'id="prompt-input"' in html
     assert any(route.path == "/" for route in server.app.routes)
 
 
