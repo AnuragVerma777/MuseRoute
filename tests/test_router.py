@@ -87,6 +87,9 @@ def test_low_confidence_escalates(monkeypatch):
     assert answer == "certain"
     assert trace["tier_used"] == "strong"
     assert trace["reason"] == "cheap_confidence_below_threshold"
+    assert trace["total_cost_units"] == 0.5
+    assert trace["total_prompt_tokens"] == 14
+    assert trace["total_completion_tokens"] == 6
 
 
 def test_missing_confidence_is_zero_and_escalates(monkeypatch):
@@ -129,6 +132,13 @@ def test_cheap_error_falls_back_to_strong(monkeypatch):
     assert trace["tier_used"] == "strong"
     assert trace["escalated"] is True
     assert trace["calls"][0]["status"] == "error"
+    assert isinstance(trace["calls"][0]["latency_ms"], (int, float))
+
+    # Failed attempts are cached too, so a repeat reuses the same traced result.
+    repeated_answer, repeated_trace = router.route([{"role": "user", "content": "Answer"}], {})
+    assert repeated_answer == answer
+    assert repeated_trace["calls"][0]["status"] == "error"
+    assert call.call_count == 2  # both the error and strong answer are served from cache
 
 
 def test_strong_error_falls_back_to_cheap_answer(monkeypatch):

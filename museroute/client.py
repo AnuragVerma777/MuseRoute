@@ -42,6 +42,17 @@ _CONFIG_PATH = Path(__file__).with_name("config.yaml")
 load_dotenv()
 
 
+def redact_secrets(message: Any) -> str:
+    """Remove configured API-key values before errors are written to logs or caches."""
+    text = str(message)
+    for config in globals().get("_TIERS", {}).values():
+        key_env = config.get("api_key_env") if isinstance(config, dict) else None
+        secret = os.getenv(str(key_env)) if key_env else None
+        if secret:
+            text = text.replace(secret, "[REDACTED]")
+    return text
+
+
 def _load_config() -> tuple[dict[str, Any], dict[str, Any]]:
     try:
         with _CONFIG_PATH.open(encoding="utf-8") as stream:

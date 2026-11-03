@@ -17,6 +17,8 @@ from __future__ import annotations
 import json
 import argparse
 import sys
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -46,6 +48,8 @@ CHART_PATH = ROOT / "results" / "pareto.png"
 
 THRESHOLDS = [round(0.50 + i * 0.05, 2) for i in range(10)]  # 0.50 … 0.95
 ROUTER_TEMP = 0.2
+PRECACHE_WORKERS = 4
+_CACHE_LOCK = threading.Lock()
 if routing is not None:
     routing._CACHE_PATH = CACHE_PATH
 
@@ -90,9 +94,14 @@ def _cached_chat(
     tag: str = "",
 ) -> tuple[str, dict[str, Any]]:
     key = _ckey(tier, pid, temperature, attempt, tag)
-    if key in cache:
-        e = cache[key]
-        return e["answer"], e["stats"]
+    with _CACHE_LOCK:
+        e = cache.get(key)
+    if isinstance(e, dict):
+        if isinstance(e.get("answer"), str) and isinstance(e.get("stats"), dict):
+            return e["answer"], e["stats"]
+        if isinstance(e.get("error"), str):
+            error_type = getattr(client, e.get("error_type", "MuseRouteError"), client.MuseRouteError)
+            raise error_type(e["error"])
     if CLIENT_ERROR:
         raise RuntimeError(CLIENT_ERROR)
     try:
@@ -101,13 +110,53 @@ def _cached_chat(
         if "temperature" not in str(exc).casefold():
             raise
         answer, stats = client.chat(tier, messages)
-    cache[key] = {"answer": answer, "stats": stats}
-    _save_cache(cache)
+    except Exception as exc:
+        with _CACHE_LOCK:
+            cache[key] = {"error_type": type(exc).__name__, "error": client.redact_secrets(exc)}
+            _save_cache(cache)
+        raise
+    with _CACHE_LOCK:
+        cache[key] = {"answer": answer, "stats": stats}
+        _save_cache(cache)
     return answer, stats
 
 
-def _tokens(stats: dict[str, Any]) -> int:
-    return (stats.get("prompt_tokens") or 0) + (stats.get("completion_tokens") or 0)
+def _cached_router_chat(
+    cache: dict[str, Any], tier: str, messages: list[dict[str, Any]], params: dict[str, Any], sample: int
+) -> tuple[str, dict[str, Any]]:
+    key = routing._cache_key(tier, messages, params, sample)
+    with _CACHE_LOCK:
+        saved = cache.get(key)
+    if isinstance(saved, dict) and isinstance(saved.get("answer"), str) and isinstance(saved.get("stats"), dict):
+        return saved["answer"], saved["stats"]
+    if isinstance(saved, dict) and isinstance(saved.get("error"), str):
+        error_type = getattr(client, saved.get("error_type", "MuseRouteError"), client.MuseRouteError)
+        raise error_type(saved["error"])
+    if CLIENT_ERROR:
+        raise RuntimeError(CLIENT_ERROR)
+    try:
+        answer, stats = client.chat(tier, messages, **params)
+    except client.RejectedParameterError as exc:
+        if "temperature" not in str(exc).casefold():
+            raise
+        answer, stats = client.chat(tier, messages)
+    except Exception as exc:
+        with _CACHE_LOCK:
+            cache[key] = {"error_type": type(exc).__name__, "error": client.redact_secrets(exc)}
+            _save_cache(cache)
+        raise
+    with _CACHE_LOCK:
+        cache[key] = {"answer": answer, "stats": stats}
+        _save_cache(cache)
+    return answer, stats
+
+
+def _tokens(stats: dict[str, Any]) -> int | None:
+    prompt_tokens = stats.get("prompt_tokens")
+    completion_tokens = stats.get("completion_tokens")
+    if not isinstance(prompt_tokens, int) or not isinstance(completion_tokens, int):
+        return None
+    return prompt_tokens + completion_tokens
 
 
 def _total_cost(stats_items: list[dict[str, Any]]) -> float | int | None:
@@ -117,9 +166,18 @@ def _total_cost(stats_items: list[dict[str, Any]]) -> float | int | None:
     return sum(values)
 
 
-def _resource(row: dict[str, Any]) -> float | int:
-    """Use configured cost units, or token count as a transparent fallback."""
-    return row["total_cost_units"] if row.get("total_cost_units") is not None else row["total_tokens"]
+def _resource(row: dict[str, Any]) -> float | int | None:
+    """Use measured cost units, or measured total tokens as an explicit fallback."""
+    value = row.get("total_cost_units")
+    if value is None:
+        value = row.get("total_tokens")
+    return value if isinstance(value, (int, float)) else None
+
+
+def _display(value: Any, fmt: str | None = None) -> str:
+    if value is None:
+        return "NOT MEASURED"
+    return format(value, fmt) if fmt else str(value)
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -137,8 +195,8 @@ def _load_jsonl(path: Path) -> list[dict[str, Any]]:
     return items
 
 
-def _required_cache_keys(prompts: list[dict[str, Any]]) -> set[str]:
-    """Return the raw answer-cache keys needed for baselines and all router modes."""
+def _required_tune_cache_keys(prompts: list[dict[str, Any]]) -> set[str]:
+    """All responses used by direct baselines and every tune-grid setting."""
     required: set[str] = set()
     for p in prompts:
         pid = p["id"]
@@ -153,13 +211,72 @@ def _required_cache_keys(prompts: list[dict[str, Any]]) -> set[str]:
     return required
 
 
-def _cache_misses(cache: dict[str, Any], prompts: list[dict[str, Any]]) -> list[str]:
-    required = _required_cache_keys(prompts)
+def _required_holdout_cache_keys(
+    cache: dict[str, Any], prompts: list[dict[str, Any]], threshold: float, self_consistency: bool
+) -> set[str]:
+    """Only direct baselines and route calls used by the chosen holdout setting."""
+    required: set[str] = set()
+    for prompt in prompts:
+        pid = prompt["id"]
+        messages = [{"role": "user", "content": prompt["prompt"]}]
+        output_format = "json" if prompt["check"] == "json_fields" else "text"
+        prepared = routing._with_confidence_request(messages, output_format)
+        cheap_key = routing._cache_key("cheap", prepared, {"temperature": ROUTER_TEMP}, 0)
+        second_key = routing._cache_key("cheap", prepared, {"temperature": ROUTER_TEMP}, 1)
+        strong_key = routing._cache_key("strong", prepared, {"temperature": ROUTER_TEMP}, 0)
+        required.update(
+            {
+                _ckey("cheap", pid, ROUTER_TEMP, 0),
+                _ckey("strong", pid, ROUTER_TEMP, 0),
+                cheap_key,
+            }
+        )
+
+        saved_cheap = cache.get(cheap_key)
+        if isinstance(saved_cheap, dict) and isinstance(saved_cheap.get("error"), str):
+            same_host = (client._TIERS.get("cheap") or {}).get("base_url") == (client._TIERS.get("strong") or {}).get("base_url")
+            if saved_cheap.get("error_type") != "FatalPaymentError" or not same_host:
+                required.add(strong_key)
+            continue
+        if not isinstance(saved_cheap, dict) or not isinstance(saved_cheap.get("answer"), str):
+            # The missing cheap response is already sufficient to fail preflight.
+            continue
+        answer, confidence, parse_error = routing._parse_envelope(saved_cheap["answer"])
+        escalation = bool(parse_error) or bool(routing._format_error(answer, output_format))
+        confidences = [confidence]
+
+        if self_consistency and not escalation:
+            required.add(second_key)
+            saved_second = cache.get(second_key)
+            if isinstance(saved_second, dict) and isinstance(saved_second.get("error"), str):
+                required.add(strong_key)
+                continue
+            if not isinstance(saved_second, dict) or not isinstance(saved_second.get("answer"), str):
+                continue
+            answer2, confidence2, parse_error2 = routing._parse_envelope(saved_second["answer"])
+            confidences.append(confidence2)
+            escalation = (
+                bool(parse_error2)
+                or bool(routing._format_error(answer2, output_format))
+                or routing._agreement_key(answer, output_format)
+                != routing._agreement_key(answer2, output_format)
+            )
+
+        if not escalation and min(confidences, default=0.0) < threshold:
+            escalation = True
+        if escalation:
+            required.add(strong_key)
+    return required
+
+
+def _cache_misses(cache: dict[str, Any], required: set[str]) -> list[str]:
     return sorted(
         key for key in required
         if not isinstance(cache.get(key), dict)
-        or "answer" not in cache[key]
-        or not isinstance(cache[key].get("stats"), dict)
+        or not (
+            (isinstance(cache[key].get("answer"), str) and isinstance(cache[key].get("stats"), dict))
+            or isinstance(cache[key].get("error"), str)
+        )
     )
 
 
@@ -169,35 +286,115 @@ def _cache_misses(cache: dict[str, Any], prompts: list[dict[str, Any]]) -> list[
 
 
 def _precache(cache: dict[str, Any], prompts: list[dict[str, Any]], label: str) -> None:
-    n = len(prompts)
-    for i, p in enumerate(prompts, 1):
+    def best_effort(call: Any) -> None:
+        try:
+            call()
+        except client.FatalPaymentError:
+            raise
+        except Exception:
+            # Failures are cached and replayed by the router; they are useful
+            # trace data and should not stop the rest of the prompt grid.
+            return
+
+    def precache_prompt(p: dict[str, Any]) -> str:
         pid = p["id"]
         msgs: list[dict[str, str]] = [{"role": "user", "content": p["prompt"]}]
 
-        _cached_chat(cache, "cheap", pid, msgs, temperature=ROUTER_TEMP)
-        _cached_chat(cache, "strong", pid, msgs, temperature=ROUTER_TEMP)
+        best_effort(lambda: _cached_chat(cache, "cheap", pid, msgs, temperature=ROUTER_TEMP))
+        best_effort(lambda: _cached_chat(cache, "strong", pid, msgs, temperature=ROUTER_TEMP))
 
         output_format = "json" if p["check"] == "json_fields" else "text"
         routed_messages = routing._with_confidence_request(msgs, output_format)
         params = {"temperature": ROUTER_TEMP}
-        routing._cached_chat(cache, "cheap", routed_messages, params, sample=0)
-        routing._cached_chat(cache, "cheap", routed_messages, params, sample=1)
-        routing._cached_chat(cache, "strong", routed_messages, params, sample=0)
+        best_effort(lambda: _cached_router_chat(cache, "cheap", routed_messages, params, sample=0))
+        best_effort(lambda: _cached_router_chat(cache, "cheap", routed_messages, params, sample=1))
+        best_effort(lambda: _cached_router_chat(cache, "strong", routed_messages, params, sample=0))
+        return pid
 
-        sys.stdout.write(f"\r  {label} [{i}/{n}] {pid} cached")
-        sys.stdout.flush()
+    with ThreadPoolExecutor(max_workers=PRECACHE_WORKERS) as pool:
+        futures = [pool.submit(precache_prompt, p) for p in prompts]
+        for i, future in enumerate(as_completed(futures), 1):
+            pid = future.result()
+            sys.stdout.write(f"\r  {label} [{i}/{len(prompts)}] {pid} cached")
+            sys.stdout.flush()
     print()
 
 
 def _precache_baselines(cache: dict[str, Any], prompts: list[dict[str, Any]], label: str) -> None:
     """Cache the two direct baselines without pre-running router variants."""
-    n = len(prompts)
-    for i, p in enumerate(prompts, 1):
+    def precache_prompt(p: dict[str, Any]) -> str:
         messages = [{"role": "user", "content": p["prompt"]}]
-        _cached_chat(cache, "cheap", p["id"], messages, temperature=ROUTER_TEMP)
-        _cached_chat(cache, "strong", p["id"], messages, temperature=ROUTER_TEMP)
-        sys.stdout.write(f"\r  {label} baselines [{i}/{n}] {p['id']} cached")
-        sys.stdout.flush()
+        for tier in ("cheap", "strong"):
+            try:
+                _cached_chat(cache, tier, p["id"], messages, temperature=ROUTER_TEMP)
+            except client.FatalPaymentError:
+                raise
+            except Exception:
+                pass
+        return p["id"]
+
+    with ThreadPoolExecutor(max_workers=PRECACHE_WORKERS) as pool:
+        futures = [pool.submit(precache_prompt, p) for p in prompts]
+        for i, future in enumerate(as_completed(futures), 1):
+            pid = future.result()
+            sys.stdout.write(f"\r  {label} baselines [{i}/{len(prompts)}] {pid} cached")
+            sys.stdout.flush()
+    print()
+
+
+def _precache_selected_route(
+    cache: dict[str, Any], prompts: list[dict[str, Any]], threshold: float, self_consistency: bool
+) -> None:
+    """Fetch only the calls made by the chosen setting, for holdout evaluation."""
+    def precache_prompt(prompt: dict[str, Any]) -> str:
+        messages = [{"role": "user", "content": prompt["prompt"]}]
+        output_format = "json" if prompt["check"] == "json_fields" else "text"
+        prepared = routing._with_confidence_request(messages, output_format)
+        params = {"temperature": ROUTER_TEMP}
+        try:
+            first_raw, _ = _cached_router_chat(cache, "cheap", prepared, params, sample=0)
+        except Exception as exc:
+            same_host = (client._TIERS.get("cheap") or {}).get("base_url") == (client._TIERS.get("strong") or {}).get("base_url")
+            if isinstance(exc, client.FatalPaymentError) and same_host:
+                return prompt["id"]
+            try:
+                _cached_router_chat(cache, "strong", prepared, params, sample=0)
+            except Exception:
+                pass
+            return prompt["id"]
+        first_answer, first_confidence, parse_error = routing._parse_envelope(first_raw)
+        escalation = bool(parse_error) or bool(routing._format_error(first_answer, output_format))
+        confidences = [first_confidence]
+
+        if self_consistency and not escalation:
+            try:
+                second_raw, _ = _cached_router_chat(cache, "cheap", prepared, params, sample=1)
+                second_answer, second_confidence, second_error = routing._parse_envelope(second_raw)
+                confidences.append(second_confidence)
+                escalation = (
+                    bool(second_error)
+                    or bool(routing._format_error(second_answer, output_format))
+                    or routing._agreement_key(first_answer, output_format)
+                    != routing._agreement_key(second_answer, output_format)
+                )
+            except Exception:
+                escalation = True
+
+        if not escalation and min(confidences, default=0.0) < threshold:
+            escalation = True
+        if escalation:
+            try:
+                _cached_router_chat(cache, "strong", prepared, params, sample=0)
+            except Exception:
+                pass
+        return prompt["id"]
+
+    with ThreadPoolExecutor(max_workers=PRECACHE_WORKERS) as pool:
+        futures = [pool.submit(precache_prompt, prompt) for prompt in prompts]
+        for i, future in enumerate(as_completed(futures), 1):
+            pid = future.result()
+            sys.stdout.write(f"\r  holdout route [{i}/{len(prompts)}] {pid} cached")
+            sys.stdout.flush()
     print()
 
 
@@ -220,7 +417,13 @@ def _eval_route(
             "low_temperature": ROUTER_TEMP,
         },
     )
-    tokens = trace["total_prompt_tokens"] + trace["total_completion_tokens"]
+    prompt_tokens = trace.get("total_prompt_tokens")
+    completion_tokens = trace.get("total_completion_tokens")
+    tokens = (
+        prompt_tokens + completion_tokens
+        if isinstance(prompt_tokens, int) and isinstance(completion_tokens, int)
+        else None
+    )
     return {
         "answer": answer,
         "correct": score(answer, p["gold"], p["check"]),
@@ -242,29 +445,45 @@ def _baseline(
     cache: dict[str, Any], prompts: list[dict[str, Any]], tier: str
 ) -> dict[str, Any]:
     correct = 0
-    total_tok = 0
+    token_values: list[int | None] = []
     cost_values: list[float | int | None] = []
     total_lat = 0.0
+    latency_count = 0
+    error_count = 0
     band_c: dict[str, int] = {}
     band_n: dict[str, int] = {}
     details: list[dict[str, Any]] = []
 
     for p in prompts:
         msgs: list[dict[str, str]] = [{"role": "user", "content": p["prompt"]}]
-        ans, stats = _cached_chat(cache, tier, p["id"], msgs, temperature=ROUTER_TEMP)
+        error: str | None = None
+        try:
+            ans, stats = _cached_chat(cache, tier, p["id"], msgs, temperature=ROUTER_TEMP)
+        except client.FatalPaymentError:
+            raise
+        except Exception as exc:
+            ans, stats = "", {}
+            error = f"{type(exc).__name__}: {client.redact_secrets(exc)}"
+            error_count += 1
         ok = score(ans, p["gold"], p["check"])
         if ok:
             correct += 1
-        total_tok += _tokens(stats)
+        measured_tokens = _tokens(stats) if stats else None
+        token_values.append(measured_tokens)
         cost_values.append(stats.get("cost_units"))
-        total_lat += stats.get("latency_ms") or 0
+        if isinstance(stats.get("latency_ms"), (int, float)):
+            total_lat += stats["latency_ms"]
+            latency_count += 1
         b = p["band"]
         band_n[b] = band_n.get(b, 0) + 1
         band_c[b] = band_c.get(b, 0) + (1 if ok else 0)
         details.append({
             "id": p["id"], "band": b, "correct": ok, "answer": ans,
-            "tokens": _tokens(stats), "latency_ms": stats.get("latency_ms") or 0,
+            "tokens": measured_tokens, "latency_ms": stats.get("latency_ms"),
             "cost_units": stats.get("cost_units"), "escalated": tier == "strong",
+            "error": error,
+            "prompt_tokens": stats.get("prompt_tokens"),
+            "completion_tokens": stats.get("completion_tokens"),
         })
 
     n = len(prompts)
@@ -272,9 +491,11 @@ def _baseline(
         "tier": tier,
         "accuracy": round(correct / n, 4) if n else 0,
         "total_cost_units": None if any(v is None for v in cost_values) else sum(cost_values),
-        "total_tokens": total_tok,
-        "avg_total_tokens_per_request": round(total_tok / n, 2) if n else 0,
-        "avg_latency_ms": round(total_lat / n, 2) if n else 0,
+        "total_tokens": None if any(value is None for value in token_values) else sum(token_values),
+        "finished": n - error_count,
+        "errors": error_count,
+        "avg_total_tokens_per_request": round(sum(token_values) / n, 2) if n and all(value is not None for value in token_values) else None,
+        "avg_latency_ms": round(total_lat / latency_count, 2) if latency_count == n and n else None,
         "band_accuracy": {b: round(band_c.get(b, 0) / band_n[b], 4) for b in sorted(band_n)},
         "bands": _group_metrics(details),
         "details": details,
@@ -294,9 +515,9 @@ def _sweep(
         for th in THRESHOLDS:
             correct = 0
             esc = 0
-            tok = 0
+            token_values: list[int | None] = []
             cost_values: list[float | int | None] = []
-            lat = 0.0
+            latency_values: list[float | None] = []
             band_c: dict[str, int] = {}
             band_n: dict[str, int] = {}
 
@@ -306,9 +527,9 @@ def _sweep(
                     correct += 1
                 if r["escalated"]:
                     esc += 1
-                tok += r["tokens"]
+                token_values.append(r["tokens"])
                 cost_values.append(r["cost_units"])
-                lat += r["latency_ms"]
+                latency_values.append(r["latency_ms"])
                 b = p["band"]
                 band_n[b] = band_n.get(b, 0) + 1
                 band_c[b] = band_c.get(b, 0) + (1 if r["correct"] else 0)
@@ -321,9 +542,17 @@ def _sweep(
                     "accuracy": round(correct / n, 4),
                     "escalation_rate": round(esc / n, 4),
                     "total_cost_units": None if any(v is None for v in cost_values) else sum(cost_values),
-                    "total_tokens": tok,
-                    "avg_total_tokens_per_request": round(tok / n, 2) if n else 0,
-                    "avg_latency_ms": round(lat / n, 2),
+                    "total_tokens": None if any(value is None for value in token_values) else sum(token_values),
+                    "avg_total_tokens_per_request": (
+                        round(sum(token_values) / n, 2)
+                        if n and all(value is not None for value in token_values)
+                        else None
+                    ),
+                    "avg_latency_ms": (
+                        round(sum(latency_values) / n, 2)
+                        if n and all(isinstance(value, (int, float)) for value in latency_values)
+                        else None
+                    ),
                     "band_accuracy": {
                         b: round(band_c.get(b, 0) / band_n[b], 4)
                         for b in sorted(band_n)
@@ -340,7 +569,8 @@ def _sweep(
 
 def _pareto(results: list[dict[str, Any]]) -> list[dict[str, Any]]:
     optimal: list[dict[str, Any]] = []
-    for r in results:
+    measured = [r for r in results if _resource(r) is not None]
+    for r in measured:
         dominated = any(
             o["accuracy"] >= r["accuracy"]
             and _resource(o) <= _resource(r)
@@ -348,7 +578,7 @@ def _pareto(results: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 o["accuracy"] > r["accuracy"]
                 or _resource(o) < _resource(r)
             )
-            for o in results
+            for o in measured
             if o is not r
         )
         if not dominated:
@@ -358,10 +588,10 @@ def _pareto(results: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 def _pick_op(results: list[dict[str, Any]], strong_acc: float) -> dict[str, Any]:
     cutoff = strong_acc - 0.02
-    eligible = [r for r in results if r["accuracy"] >= cutoff]
+    eligible = [r for r in results if r["accuracy"] >= cutoff and _resource(r) is not None]
     if not eligible:
         raise RuntimeError(
-            f"No sweep setting is within 2 percentage points of strong-only accuracy "
+            f"No sweep setting has measured cost/tokens and accuracy within 2 percentage points of strong-only accuracy "
             f"({strong_acc:.1%}); cannot select the requested operating point."
         )
     return min(eligible, key=_resource)
@@ -380,9 +610,9 @@ def _eval_set(
 ) -> dict[str, Any]:
     correct = 0
     esc = 0
-    tok = 0
+    token_values: list[int | None] = []
     cost_values: list[float | int | None] = []
-    lat = 0.0
+    latency_values: list[float | None] = []
     band_c: dict[str, int] = {}
     band_n: dict[str, int] = {}
     details: list[dict[str, Any]] = []
@@ -393,9 +623,9 @@ def _eval_set(
             correct += 1
         if r["escalated"]:
             esc += 1
-        tok += r["tokens"]
+        token_values.append(r["tokens"])
         cost_values.append(r["cost_units"])
-        lat += r["latency_ms"]
+        latency_values.append(r["latency_ms"])
         b = p["band"]
         band_n[b] = band_n.get(b, 0) + 1
         band_c[b] = band_c.get(b, 0) + (1 if r["correct"] else 0)
@@ -418,9 +648,17 @@ def _eval_set(
         "accuracy": round(correct / n, 4),
         "escalation_rate": round(esc / n, 4),
         "total_cost_units": None if any(v is None for v in cost_values) else sum(cost_values),
-        "total_tokens": tok,
-        "avg_total_tokens_per_request": round(tok / n, 2) if n else 0,
-        "avg_latency_ms": round(lat / n, 2),
+        "total_tokens": None if any(value is None for value in token_values) else sum(token_values),
+        "avg_total_tokens_per_request": (
+            round(sum(token_values) / n, 2)
+            if n and all(value is not None for value in token_values)
+            else None
+        ),
+        "avg_latency_ms": (
+            round(sum(latency_values) / n, 2)
+            if n and all(isinstance(value, (int, float)) for value in latency_values)
+            else None
+        ),
         "band_accuracy": {
             b: round(band_c.get(b, 0) / band_n[b], 4) for b in sorted(band_n)
         },
@@ -440,9 +678,22 @@ def _group_metrics(details: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
             "accuracy": round(sum(bool(row["correct"]) for row in rows) / len(rows), 4),
             "escalation_rate": round(sum(bool(row.get("escalated")) for row in rows) / len(rows), 4),
             "total_cost_units": None if any(value is None for value in costs) else sum(costs),
-            "total_tokens": sum(row.get("tokens", 0) for row in rows),
-            "avg_total_tokens_per_request": round(sum(row.get("tokens", 0) for row in rows) / len(rows), 2),
-            "avg_latency_ms": round(sum(row.get("latency_ms", 0) for row in rows) / len(rows), 2),
+            "total_tokens": (
+                sum(row["tokens"] for row in rows)
+                if all(isinstance(row.get("tokens"), int) for row in rows)
+                else None
+            ),
+            "avg_total_tokens_per_request": (
+                round(sum(row["tokens"] for row in rows) / len(rows), 2)
+                if all(isinstance(row.get("tokens"), int) for row in rows)
+                else None
+            ),
+            "avg_latency_ms": (
+                round(sum(row["latency_ms"] for row in rows if isinstance(row.get("latency_ms"), (int, float)))
+                      / sum(isinstance(row.get("latency_ms"), (int, float)) for row in rows), 2)
+                if all(isinstance(row.get("latency_ms"), (int, float)) for row in rows)
+                else None
+            ),
         }
     return result
 
@@ -471,7 +722,7 @@ def _save_chart(
 
     # Sweep points
     for sc_val, marker, label in [(False, "o", "SC=False"), (True, "s", "SC=True")]:
-        pts = [r for r in sweep_results if r["self_consistency"] == sc_val]
+        pts = [r for r in sweep_results if r["self_consistency"] == sc_val and _resource(r) is not None]
         ax.scatter(
             [_resource(r) for r in pts],
             [r["accuracy"] * 100 for r in pts],
@@ -536,10 +787,10 @@ def _print_sweep(results: list[dict[str, Any]], pareto: list[dict[str, Any]]) ->
                 f"{r['threshold']:.2f}",
                 f"{r['accuracy']:.1%}",
                 f"{r['escalation_rate']:.1%}",
-                "unknown" if r["total_cost_units"] is None else str(r["total_cost_units"]),
-                str(r["total_tokens"]),
-                f"{r['avg_total_tokens_per_request']:.1f}",
-                f"{r['avg_latency_ms']:.1f}",
+                _display(r["total_cost_units"]),
+                _display(r["total_tokens"]),
+                _display(r["avg_total_tokens_per_request"], ".1f"),
+                _display(r["avg_latency_ms"], ".1f"),
                 star,
             )
         )
@@ -567,7 +818,7 @@ def _print_holdout(
             if not metric:
                 continue
             cost = metric.get("total_cost_units")
-            rows.append((band, name, f"{metric['accuracy']:.1%}", f"{metric.get('escalation_rate', fallback_esc):.1%}", "unknown" if cost is None else str(cost), str(metric["total_tokens"])))
+            rows.append((band, name, f"{metric['accuracy']:.1%}", f"{metric.get('escalation_rate', fallback_esc):.1%}", _display(cost), _display(metric["total_tokens"])))
     ws = [max(len(row[c]) for row in rows) for c in range(len(headers))]
     for i, row in enumerate(rows):
         print("  " + " | ".join(f"{v:>{ws[c]}}" for c, v in enumerate(row)))
@@ -606,8 +857,15 @@ def main() -> None:
     tune = _load_jsonl(TUNE_PATH)
     holdout = _load_jsonl(HOLDOUT_PATH)
     cache = _load_cache()
+    if not args.reproduce:
+        # A new online run retries prior error sentinels but keeps all answers.
+        stale_errors = [key for key, value in cache.items() if isinstance(value, dict) and isinstance(value.get("error"), str)]
+        for key in stale_errors:
+            del cache[key]
+        if stale_errors:
+            _save_cache(cache)
     if args.reproduce:
-        missing_keys = _cache_misses(cache, tune + holdout)
+        missing_keys = _cache_misses(cache, _required_tune_cache_keys(tune))
         if missing_keys:
             print(
                 f"Cannot reproduce offline: answer cache is missing {len(missing_keys)} "
@@ -640,8 +898,8 @@ def main() -> None:
     print("\n== Phase 2: tune baselines ==")
     cheap_tune = _baseline(cache, tune, "cheap")
     strong_tune = _baseline(cache, tune, "strong")
-    print(f"  cheap-only:  acc={cheap_tune['accuracy']:.1%}  cost_units={cheap_tune['total_cost_units']}  tokens={cheap_tune['total_tokens']}  lat={cheap_tune['avg_latency_ms']:.1f}ms")
-    print(f"  strong-only: acc={strong_tune['accuracy']:.1%}  cost_units={strong_tune['total_cost_units']}  tokens={strong_tune['total_tokens']}  lat={strong_tune['avg_latency_ms']:.1f}ms")
+    print(f"  cheap-only:  acc={cheap_tune['accuracy']:.1%}  cost_units={_display(cheap_tune['total_cost_units'])}  tokens={_display(cheap_tune['total_tokens'])}  lat={_display(cheap_tune['avg_latency_ms'], '.1f')}ms")
+    print(f"  strong-only: acc={strong_tune['accuracy']:.1%}  cost_units={_display(strong_tune['total_cost_units'])}  tokens={_display(strong_tune['total_tokens'])}  lat={_display(strong_tune['avg_latency_ms'], '.1f')}ms")
     for label, bl in [("cheap", cheap_tune), ("strong", strong_tune)]:
         print(f"    {label} by band: {bl['band_accuracy']}")
 
@@ -664,11 +922,24 @@ def main() -> None:
     print(
         f"  SC={op['self_consistency']}, threshold={op['threshold']:.2f}, "
         f"tune_acc={op['accuracy']:.1%} (strong={strong_tune['accuracy']:.1%}, "
-        f"cutoff≥{strong_tune['accuracy'] - 0.02:.1%})"
+        f"cutoff>={strong_tune['accuracy'] - 0.02:.1%})"
     )
 
     # ── Phase 5: pre-cache holdout + evaluate ────────────────────────────
     print("\n== Phase 5: holdout evaluation ==")
+    if args.reproduce:
+        holdout_keys = _required_holdout_cache_keys(
+            cache, holdout, op["threshold"], op["self_consistency"]
+        )
+        missing_keys = _cache_misses(cache, holdout_keys)
+        if missing_keys:
+            print(
+                f"Cannot reproduce holdout offline: answer cache is missing {len(missing_keys)} "
+                "required response entries; no network requests were made. "
+                f"Example missing key: {missing_keys[0]}"
+            )
+            sys.exit(3)
+    _precache_selected_route(cache, holdout, op["threshold"], op["self_consistency"])
     _precache_baselines(cache, holdout, "holdout")
 
     cheap_ho = _baseline(cache, holdout, "cheap")

@@ -1,0 +1,3590 @@
+{
+  "cheap|E027|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 89,
+      "completion_tokens": 74,
+      "latency_ms": 2302.15,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|E011|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 90,
+      "completion_tokens": 74,
+      "latency_ms": 4735.5,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|E015|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 88,
+      "completion_tokens": 73,
+      "latency_ms": 5379.88,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E027|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 89,
+      "completion_tokens": 179,
+      "latency_ms": 3145.81,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E020|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 84,
+      "completion_tokens": 126,
+      "latency_ms": 10163.73,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "e0471e80662bf43d04d1a0ac424d94e10e93d8c56f5012bea3bf97b5f1e4242a": {
+    "answer": "{\"answer\": \"scam\", \"confidence\": 0.999}",
+    "stats": {
+      "prompt_tokens": 111,
+      "completion_tokens": 71,
+      "latency_ms": 6286.05,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E015|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 88,
+      "completion_tokens": 166,
+      "latency_ms": 8089.88,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|E011|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 90,
+      "completion_tokens": 184,
+      "latency_ms": 8734.77,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "dd9585cc9dadf52d784e36c5810c3df50ccd0827b3f1417f43d2969318c952d1": {
+    "answer": "{\"answer\": \"scam\", \"confidence\": 0.999}",
+    "stats": {
+      "prompt_tokens": 111,
+      "completion_tokens": 69,
+      "latency_ms": 2920.24,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "b0199fa607e618b64a15cea28c1ec259caffe5b7487447441828bb64e704f00e": {
+    "answer": "{\"answer\": \"scam\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 112,
+      "completion_tokens": 72,
+      "latency_ms": 2265.33,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "e3814cbd913047142f2d201794436c399996256741917a5bbcba7cc80e9151bb": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.999}",
+    "stats": {
+      "prompt_tokens": 110,
+      "completion_tokens": 86,
+      "latency_ms": 4101.13,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "b0e9582dc5b19b9d83a3a4130ac3eff855ee677372b0e4d355e432bd28a39b82": {
+    "answer": "{\"answer\": \"scam\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 110,
+      "completion_tokens": 78,
+      "latency_ms": 2956.49,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "a9f7516aaff76ac9a1c388259fe6bc00996f8f6c2c60197824128b49edeee22a": {
+    "answer": "{\"answer\": \"scam\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 112,
+      "completion_tokens": 72,
+      "latency_ms": 6594.87,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "af4a5df1923d6b0cfa1f6ae1023b6e45d0b8484dd911b78f4774595c9ede023f": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.99}",
+    "stats": {
+      "prompt_tokens": 111,
+      "completion_tokens": 180,
+      "latency_ms": 10032.26,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "6d96526f4229de9a1b76b2963f6773c457a0e6ed62f6474ddd7c3baf57b64f93": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.99}",
+    "stats": {
+      "prompt_tokens": 110,
+      "completion_tokens": 155,
+      "latency_ms": 5791.74,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E023|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 90,
+      "completion_tokens": 78,
+      "latency_ms": 3519.4,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "7c09ed18fedb838c525335038292a4c0432220f4c0b8f40b8bee2e69d8435aad": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.99}",
+    "stats": {
+      "prompt_tokens": 112,
+      "completion_tokens": 197,
+      "latency_ms": 5878.26,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E007|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 87,
+      "completion_tokens": 86,
+      "latency_ms": 4088.06,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E023|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 90,
+      "completion_tokens": 177,
+      "latency_ms": 9106.86,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E006|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 134,
+      "latency_ms": 9164.25,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E007|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 87,
+      "completion_tokens": 195,
+      "latency_ms": 6982.51,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "c8e012938a0e42cf71471ee8b98bc3ad74ab0a3ba3111742503441bf3bd96a96": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.999}",
+    "stats": {
+      "prompt_tokens": 112,
+      "completion_tokens": 80,
+      "latency_ms": 3353.91,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "5dfc4abacf5f1a594cf64a3f1337109e1b284d2213e61ca6ee3efafe8797d6d2": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.98}",
+    "stats": {
+      "prompt_tokens": 109,
+      "completion_tokens": 83,
+      "latency_ms": 3351.83,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "afd29ca6d0f9beb58e226f3de45627aabfc46f351da28f9c1aa08f6f174d0180": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.999}",
+    "stats": {
+      "prompt_tokens": 112,
+      "completion_tokens": 100,
+      "latency_ms": 3861.27,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "af21c8ace9073293bf54fda3cf270b01371a98ae811b27ead4bdcba97f7913af": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.99}",
+    "stats": {
+      "prompt_tokens": 109,
+      "completion_tokens": 83,
+      "latency_ms": 5729.66,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "0c96f4841c7c20673b7a6369916bfbbe0bea745967d9b98878718a6afa51c1d8": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.99}",
+    "stats": {
+      "prompt_tokens": 112,
+      "completion_tokens": 185,
+      "latency_ms": 6856.05,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|E020|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 84,
+      "completion_tokens": 441,
+      "latency_ms": 42388.89,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "a4f1e3cd13edf24ceccc495a2994c4e059e9bcabf207319f29c684b14417470c": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.99}",
+    "stats": {
+      "prompt_tokens": 109,
+      "completion_tokens": 157,
+      "latency_ms": 6346.35,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|E006|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 390,
+      "latency_ms": 18977.49,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "3b69acf01847657c2a16ebee1756f3e6c2141c0e5b4d7f5d791e31929ff3f732": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.62}",
+    "stats": {
+      "prompt_tokens": 106,
+      "completion_tokens": 122,
+      "latency_ms": 5742.73,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|E013|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 90,
+      "completion_tokens": 81,
+      "latency_ms": 7413.32,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|E012|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 150,
+      "latency_ms": 6754.29,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "fd4dec34d758d8d0f09cddf05d0451730ef353a9d2c5d8523414c3cc5eb95faf": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.68}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 136,
+      "latency_ms": 4671.23,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E013|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 90,
+      "completion_tokens": 186,
+      "latency_ms": 6814.97,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "b3287c51d973755e192d40798a8ce53ab29939e8f425f6f0148d6a9fd73380da": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.62}",
+    "stats": {
+      "prompt_tokens": 106,
+      "completion_tokens": 138,
+      "latency_ms": 10118.4,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "535cf68951ec41294e4925da2ee5859106c74828742627596d800a2884dfeede": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.999}",
+    "stats": {
+      "prompt_tokens": 112,
+      "completion_tokens": 100,
+      "latency_ms": 4090.66,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "d731a6be5cc2e6347826706925623196092e4d464f439e4c569d6492ce639a78": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.62}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 128,
+      "latency_ms": 11663.8,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "a26c385d8f6dbd040a224bef29777a14fa6f51e4dfdf99c3cd3a1bac75f30331": {
+    "answer": "{\"answer\": \"scam\", \"confidence\": 0.999}",
+    "stats": {
+      "prompt_tokens": 112,
+      "completion_tokens": 104,
+      "latency_ms": 6461.9,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "79e2cda57ec05f8c24db5590094a3a09200e047a3e986293a0aaf44b613c0bcd": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.6}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 341,
+      "latency_ms": 13921.18,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "d9b109145094030b36c84405dd2cfbc9aa1041c6ef44c2f064e47a12a42abfc0": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.99}",
+    "stats": {
+      "prompt_tokens": 112,
+      "completion_tokens": 167,
+      "latency_ms": 11151.52,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E016|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 127,
+      "latency_ms": 4807.22,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "899a850c1dd17b386d30ea7ccb8a1c4d034c32b69bbd6641c18ef1ab8f7cd81a": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.6}",
+    "stats": {
+      "prompt_tokens": 106,
+      "completion_tokens": 433,
+      "latency_ms": 24780.0,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E010|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 88,
+      "completion_tokens": 141,
+      "latency_ms": 7557.18,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E012|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 540,
+      "latency_ms": 35525.86,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E026|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 85,
+      "completion_tokens": 86,
+      "latency_ms": 4928.71,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "00663abdcbbc332294b19eb5942806ea538d9ab5b428255727e0a58afd4e8cbf": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.68}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 122,
+      "latency_ms": 11467.36,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E016|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 383,
+      "latency_ms": 18219.48,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "4e228ca08c3fe1cd748392befbf988209a8d2c0545118cb332dcb58618ee0702": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.72}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 98,
+      "latency_ms": 5340.45,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E026|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 85,
+      "completion_tokens": 375,
+      "latency_ms": 14409.11,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "4a3bf4a0c514a9a0d5a0f239a01c1e8f485671d7aac38ab9530ca92684ef2d27": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.78}",
+    "stats": {
+      "prompt_tokens": 107,
+      "completion_tokens": 87,
+      "latency_ms": 5221.45,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "80bf476c016460222642a3a0e1226f476d44ce18bd4c604a6b683cfbe6adf398": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.68}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 105,
+      "latency_ms": 8205.16,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "ca8d76ff5eef8a81eb74fb0c48f88631073a32806291a5a5b345cabc0391f049": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.78}",
+    "stats": {
+      "prompt_tokens": 107,
+      "completion_tokens": 87,
+      "latency_ms": 4829.82,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "0b10053d0c7f5942bcbd026e2eb13a3e38dec2e7426d1631dfe834256f9267e5": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.72}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 92,
+      "latency_ms": 6017.7,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "205b927c392e947711da4666efa886a163768041750b704fa49ec4f3c9d48976": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.78}",
+    "stats": {
+      "prompt_tokens": 107,
+      "completion_tokens": 367,
+      "latency_ms": 7545.4,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "c03443a1e9e6710d5a33065fa19a7808097fa46364bc1fd16e1fd2f35ea4212f": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.6}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 358,
+      "latency_ms": 19629.84,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E030|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 95,
+      "latency_ms": 7366.49,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E010|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 88,
+      "completion_tokens": 530,
+      "latency_ms": 45267.43,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E022|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 99,
+      "latency_ms": 10258.17,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "7e30a4ee64945c9b2cf8168183ca9a8303910428b3fcf077d9c450eeb54167df": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.68}",
+    "stats": {
+      "prompt_tokens": 110,
+      "completion_tokens": 118,
+      "latency_ms": 8842.39,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "8b7d037af287b1fada45e6fd41b29661a74d667f3adbfe6fbb4a440c07227df3": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.62}",
+    "stats": {
+      "prompt_tokens": 110,
+      "completion_tokens": 102,
+      "latency_ms": 4140.64,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E022|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 255,
+      "latency_ms": 14027.48,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "6d353decf75eda83eab6bb0d46e69ce5b63f6a15d642bc88500942a45a4edc28": {
+    "answer": "{\"answer\": \"safe\", \"confidence\": 0.65}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 319,
+      "latency_ms": 32051.27,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "abf18f928b7cb358d0a6cc380aca9375383c590590ae11f452fec126439814d2": {
+    "answer": "{\"answer\": \"safe\", \"confidence\": 0.62}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 153,
+      "latency_ms": 5038.04,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|E017|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 87,
+      "completion_tokens": 80,
+      "latency_ms": 5929.41,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E030|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 303,
+      "latency_ms": 29701.44,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "7da7f5be73f44f60d3fc996a80b271b21e1ef4b50fa5bf9bfb01062983f780ca": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.62}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 124,
+      "latency_ms": 9360.82,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E017|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 87,
+      "completion_tokens": 186,
+      "latency_ms": 15260.79,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "a4a718ba700b8f83ac8abe8159c71a7e11a65bfd67ecc962e1718529943a1efb": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.92}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 95,
+      "latency_ms": 10240.96,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "a45a3574a00da2df207f41f864070500a8dd64b4dde19868548001b47793c1f7": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.88}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 284,
+      "latency_ms": 16174.47,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "d9ffe46e2a0f36b4e380327117090b6eb50b73cc7662337463bfd9b878a2d896": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.72}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 95,
+      "latency_ms": 13119.49,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|H015|t0.2|a0": {
+    "answer": "The average is the sum divided by the number of values.\n\n\\[\n\\text{Average}= \\frac{12+15+21}{3}= \\frac{48}{3}=16\n\\]\n\nThe three scores average to 16.",
+    "stats": {
+      "prompt_tokens": 81,
+      "completion_tokens": 112,
+      "latency_ms": 7168.83,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "f1a6b7e77852844334326d2171d2930b140b21b551d1e0a506a6d2c9a5499107": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.999}",
+    "stats": {
+      "prompt_tokens": 109,
+      "completion_tokens": 96,
+      "latency_ms": 17291.63,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "7299d370c072df57698e65af758b812f86d3f87fea194dbef60553644d29b23f": {
+    "answer": "{\"answer\": \"scam\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 109,
+      "completion_tokens": 118,
+      "latency_ms": 9723.35,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "6b8fdab256168648bb4217389ea0d08baa214db06c445a7e0e78b64fdb2a2c8a": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.78}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 318,
+      "latency_ms": 18906.66,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "e6a7798262ef46bef1d2e73e531e6efdf9c317aa6f7c34d457e38004f4d2bc72": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.999}",
+    "stats": {
+      "prompt_tokens": 109,
+      "completion_tokens": 159,
+      "latency_ms": 5440.34,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H015|t0.2|a0": {
+    "answer": "The mean is the sum divided by the number of values.\n\n$12+15+21 = 48$\n\n$48 \\div 3 = 16$\n\nThe three scores average to 16.",
+    "stats": {
+      "prompt_tokens": 81,
+      "completion_tokens": 275,
+      "latency_ms": 18068.59,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "5bba1352dba3a6d01abca22ad5f2eca1c04347af95a28d276ca4e9d04b75999a": {
+    "answer": "{\"answer\": \"safe\", \"confidence\": 0.6}",
+    "stats": {
+      "prompt_tokens": 110,
+      "completion_tokens": 636,
+      "latency_ms": 60920.9,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|H016|t0.2|a0": {
+    "answer": "Total seats in the hall\n\n$$8\\ \\text{rows}\\times 6\\ \\text{seats/row}=48\\ \\text{seats}$$\n\nEmpty seats = Total – Occupied\n\n$$48-39 = 9$$\n\nThere are 9 empty seats.",
+    "stats": {
+      "prompt_tokens": 82,
+      "completion_tokens": 135,
+      "latency_ms": 6545.25,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|H012|t0.2|a0": {
+    "answer": "Each helper packs\n\n12 kits/day × 4 days = 48 kits\n\nFor 5 helpers:\n\n5 × 48 kits = 240 kits\n\nOr 5 × 12 = 60 kits per day, 60 × 4 = 240 kits in total.",
+    "stats": {
+      "prompt_tokens": 79,
+      "completion_tokens": 149,
+      "latency_ms": 3193.42,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "ef840dea719aff4f74f57000e205bc36cd24b9a29a8e415f9b39ff4e8188a678": {
+    "answer": "{\"answer\": \"The average is (12 + 15 + 21) / 3 = 48 / 3 = 16.\", \"confidence\": 0.999}",
+    "stats": {
+      "prompt_tokens": 103,
+      "completion_tokens": 99,
+      "latency_ms": 7330.11,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "320a02da04e0cf3d4cb487911aea4aa7b307dc1f630c41dbdced38538918124c": {
+    "answer": "{\"answer\": \"The average is (12 + 15 + 21) / 3 = 48 / 3 = 16.\", \"confidence\": 0.999}",
+    "stats": {
+      "prompt_tokens": 103,
+      "completion_tokens": 99,
+      "latency_ms": 4304.02,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|H024|t0.2|a0": {
+    "answer": "A 90-minute session that *includes* the breaks is 90 minutes in total.\n\nBreak time = 2 × 15 min = 30 min\n\nWorking time = Total time – Break time\n= 90 min – 30 min\n= 60 min\n\nSo 1 hour is spent working, with 30 minutes of break time inside the 90-minute block.",
+    "stats": {
+      "prompt_tokens": 77,
+      "completion_tokens": 201,
+      "latency_ms": 15971.8,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|H012|t0.2|a0": {
+    "answer": "Each helper packs\n\n12 kits/day × 4 days = 48 kits\n\nFor 5 helpers\n\n5 × 48 kits = 5 × 12 × 4 = 240 kits\n\nin the 4 days, 60 kits per day.",
+    "stats": {
+      "prompt_tokens": 79,
+      "completion_tokens": 266,
+      "latency_ms": 12001.14,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H016|t0.2|a0": {
+    "answer": "Total seats = rows × seats per row\n\n= 8 × 6 = 48 seats\n\nEmpty = Total – Occupied\n= 48 – 39\n= 9 seats\n\nThere are 9 empty seats left.",
+    "stats": {
+      "prompt_tokens": 82,
+      "completion_tokens": 231,
+      "latency_ms": 14222.37,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "4701a842412725dba013dcf43cc9b612f7366ab9bb9f68e6d95381084b449037": {
+    "answer": "{\"answer\": \"16\", \"confidence\": 0.999}",
+    "stats": {
+      "prompt_tokens": 103,
+      "completion_tokens": 146,
+      "latency_ms": 8068.37,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "e9db083dae074ee71a3f4e5291f38d9e2530934237f30d64c712ea2910ef41d2": {
+    "answer": "{\"answer\": \"Total seats = 8 × 6 = 48. Empty seats = 48 − 39 = 9.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 104,
+      "completion_tokens": 103,
+      "latency_ms": 4186.63,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "4dad137be3a2004ebc097a83f5776c9d58aa551986a4407e27bf6df780b789c9": {
+    "answer": "{\"answer\": \"Each helper packs 12 kits/day × 4 days = 48 kits. For 5 helpers: 48 × 5 = 240 kits in total.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 101,
+      "completion_tokens": 125,
+      "latency_ms": 5308.96,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "f7e837584b18e0241101483e4e22be20c93cb89e480e0733bb5ab0c44ec3227f": {
+    "answer": "{\"answer\": \"Total seats = 8 × 6 = 48. Empty seats = 48 − 39 = 9.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 104,
+      "completion_tokens": 103,
+      "latency_ms": 2757.84,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|H017|t0.2|a0": {
+    "answer": "At the same rate the flour per serving is constant.\n\nFlour per serving = $300\\text{ g} \\div 4 = 75\\text{ g/serving}$\n\nFor 7 servings:\n$7 \\times 75\\text{ g} = 525\\text{ g}$\n\n$300\\text{ g}\\times \\dfrac{7}{4}=525\\text{ g}$ of flour is needed for 7 servings.",
+    "stats": {
+      "prompt_tokens": 83,
+      "completion_tokens": 167,
+      "latency_ms": 7488.7,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "c63955dd67a5b98ddaaf0f39d9e6bc9762f27c4fd4ed22152ccf161a40c213ca": {
+    "answer": "{\"answer\": \"Each helper packs 12 kits/day × 4 days = 48 kits. For 5 helpers: 48 × 5 = 240 kits in total.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 101,
+      "completion_tokens": 124,
+      "latency_ms": 6013.44,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "03c67e52a736354413e9384eb34e55abacbbb2222280b256e8503994a120cdb8": {
+    "answer": "{\"answer\": \"9\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 104,
+      "completion_tokens": 148,
+      "latency_ms": 7163.07,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H024|t0.2|a0": {
+    "answer": "A 90 min session that is timed inclusive of the breaks is\n\n* Break time = 2 × 15 min = 30 min\n* Work time = Session time – Break time\n\nWork time = 90 min – 30 min = 60 min\n\ni.e. 1 hour of actual working time in the 90 min block. \n\n*Remark:* If you mean 90 min of net work plus the breaks, the elapsed time is 90 min + 30 min = 120 min = 2 h.",
+    "stats": {
+      "prompt_tokens": 77,
+      "completion_tokens": 382,
+      "latency_ms": 19041.03,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|H021|t0.2|a0": {
+    "answer": "84 pages ÷ 12 pages/day = 7 days\n\nIt will take 7 days of reading at 12 pages per day to finish the 84 pages left.",
+    "stats": {
+      "prompt_tokens": 78,
+      "completion_tokens": 110,
+      "latency_ms": 5213.26,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "b8c0527abb0475395eee189288d7aed73c8b959aa118fa508ca796f0d54a4c8d": {
+    "answer": "{\"answer\": \"90 minutes total minus 2 × 15 minutes of breaks = 90 - 30 = 60 minutes spent working.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 99,
+      "completion_tokens": 89,
+      "latency_ms": 6692.67,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|H017|t0.2|a0": {
+    "answer": "At the same rate the flour per serving is constant.\n\nFlour per serving = 300 g / 4 servings = 75 g/serving\n\nFor 7 servings\n\n* 75 g/serving × 7 servings = 525 g\n\nIn proportion form 300/4 = x/7  ⇒  x = 300×7/4 = 525 g of flour.",
+    "stats": {
+      "prompt_tokens": 83,
+      "completion_tokens": 257,
+      "latency_ms": 12307.87,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "e0885622598004c700ede97f43f1aaff18136dd1ca71178853c241eee55722a2": {
+    "answer": "{\"answer\": \"240 kits\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 101,
+      "completion_tokens": 162,
+      "latency_ms": 13135.45,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "2d8282e8987dc5254138b13078936779054179eeeb550c2f326b74cdf3b7401a": {
+    "answer": "{\"answer\": \"300 g / 4 servings = 75 g per serving. 75 g × 7 = 525 grams of flour are needed for 7 servings.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 105,
+      "completion_tokens": 111,
+      "latency_ms": 3422.82,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "dee6b0f5b0f65c125033f871c228d73afd60126b079a888d6fc6ca08651b0e40": {
+    "answer": "{\"answer\": \"90 minutes total minus 2 × 15 minutes of breaks = 90 - 30 = 60 minutes spent working.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 99,
+      "completion_tokens": 89,
+      "latency_ms": 9597.66,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|H018|t0.2|a0": {
+    "answer": "12 bags × 15 kg/bag = 180 kg received\n\n180 kg − 68 kg shipped = 112 kg\n\n112 kilograms remain in the store.",
+    "stats": {
+      "prompt_tokens": 80,
+      "completion_tokens": 96,
+      "latency_ms": 8035.79,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "4dc1a2cefaa6986a5068e08c99a0721583fa240f63d0a65bb09558413f829ae3": {
+    "answer": "{\"answer\": \"300 g / 4 servings = 75 g per serving. 75 g × 7 = 525 grams of flour are needed for 7 servings.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 105,
+      "completion_tokens": 111,
+      "latency_ms": 11462.59,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "dbf53d28452a8ba935d21e8f305dcf0f086aeac2f1394df500db6d68a8b144c4": {
+    "answer": "{\"answer\": \"60 minutes\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 99,
+      "completion_tokens": 140,
+      "latency_ms": 12612.17,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H021|t0.2|a0": {
+    "answer": "84 ÷ 12 = 7\n\nIt will take 7 days of 12 pages to finish the 84 pages left.",
+    "stats": {
+      "prompt_tokens": 78,
+      "completion_tokens": 238,
+      "latency_ms": 24192.99,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "85cafb2353dcfeaa965498157e42502a59aeca77680bd86baea8f23b83c9a9af": {
+    "answer": "{\"answer\": \"7 days\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 100,
+      "completion_tokens": 81,
+      "latency_ms": 1600.03,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|H008|t0.2|a0": {
+    "answer": "9 jars/minute × 6 minutes = 54 jars\n\nThe machine labels 54 jars in 6 minutes.",
+    "stats": {
+      "prompt_tokens": 76,
+      "completion_tokens": 87,
+      "latency_ms": 5784.46,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "85d62ec729d6fe24f54c50cd62abc5158e6b63e6286f1fe42ecae2df48229c5f": {
+    "answer": "{\"answer\": \"525 grams\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 105,
+      "completion_tokens": 177,
+      "latency_ms": 13305.85,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H018|t0.2|a0": {
+    "answer": "12 bags × 15 kg/bag = 180 kg received\n\n180 kg – 68 kg shipped out = 112 kg\n\n112 kg remain in store.",
+    "stats": {
+      "prompt_tokens": 80,
+      "completion_tokens": 239,
+      "latency_ms": 19488.51,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "b643214f5f87a8363323d157166dc8157ebbe7c8536fdc56f1cc3c502e834509": {
+    "answer": "{\"answer\": \"7 days\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 100,
+      "completion_tokens": 81,
+      "latency_ms": 6170.54,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "d2f6cc257ea38a57d9c643face26de8d7420d6997a8bac0a4cbcd584730e2f1b": {
+    "answer": "{\"answer\": \"The store receives 12 × 15 kg = 180 kg. After shipping out 68 kg, 180 kg − 68 kg = 112 kg remain.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 102,
+      "completion_tokens": 100,
+      "latency_ms": 4006.12,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|H027|t0.2|a0": {
+    "answer": "Five teams bring\n\n5 × 7 = 35 flags\n\n35 + 3 added by the organizer = 38 flags in total.",
+    "stats": {
+      "prompt_tokens": 78,
+      "completion_tokens": 104,
+      "latency_ms": 8290.57,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "305818e5cfaf352d4946e7938eaa34311de7702153dda203d4040b64a160b608": {
+    "answer": "{\"answer\": \"7 days\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 100,
+      "completion_tokens": 129,
+      "latency_ms": 7131.28,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "4b1f9dae82fb06c4304c18974a2d4bb015fc61ee6e67ccaf759477c7fae2d73a": {
+    "answer": "{\"answer\": \"The store receives 12 × 15 kg = 180 kg. After shipping out 68 kg, 180 kg − 68 kg = 112 kg remain.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 102,
+      "completion_tokens": 100,
+      "latency_ms": 5096.69,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "6ecccb6a5d566a2379ef857f290f263295573542c541b51687d972d3402943ff": {
+    "answer": "{\"answer\": \"112 kilograms remain\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 102,
+      "completion_tokens": 155,
+      "latency_ms": 4715.51,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|H020|t0.2|a0": {
+    "answer": "Let the three consecutive even numbers be\n\n$$x,\\;x+2,\\;x+4$$\n\nThen\n\n$$x+(x+2)+(x+4)=48$$\n$$3x+6=48$$\n$$3x=42$$\n$$x=14$$\n\nThe three numbers are $14,\\;16,\\;18$.\n\nThe largest is $18$.",
+    "stats": {
+      "prompt_tokens": 72,
+      "completion_tokens": 202,
+      "latency_ms": 8447.82,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|H027|t0.2|a0": {
+    "answer": "5 teams × 7 flags/team = 35 flags\n\n35 flags + 3 flags from the organizer = 38 flags in all.",
+    "stats": {
+      "prompt_tokens": 78,
+      "completion_tokens": 286,
+      "latency_ms": 12230.37,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H008|t0.2|a0": {
+    "answer": "9 jars/min × 6 min = 9 × 6 = 54 jars\n\nIt labels 9 + 9 + 9 + 9 + 9 + 9 = 54 jars in the 6 minutes.",
+    "stats": {
+      "prompt_tokens": 76,
+      "completion_tokens": 272,
+      "latency_ms": 21107.66,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|H010|t0.2|a0": {
+    "answer": "The numbers increase by a constant difference.\n\n9 − 4 = 5\n14 − 9 = 5\n19 − 14 = 5\n\nSo the common difference is +5.\n\nNext term = 19 + 5 = 24\n\nThe pattern continues 4, 9, 14, 19, 24, …",
+    "stats": {
+      "prompt_tokens": 85,
+      "completion_tokens": 145,
+      "latency_ms": 5474.34,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "14d264ae29c965139639107b88b11b32300f0ea657874041b6abf1374d111643": {
+    "answer": "{\"answer\": \"Five teams bring 5 × 7 = 35 flags. With 3 more added by the organizer there are 35 + 3 = 38 flags in total.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 100,
+      "completion_tokens": 107,
+      "latency_ms": 5175.07,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "c1858dafb26536a3cc86e395d7bb66896879b947719b3691daa9f1eab82187f6": {
+    "answer": "{\"answer\": \"54\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 98,
+      "completion_tokens": 85,
+      "latency_ms": 9603.11,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|H010|t0.2|a0": {
+    "answer": "The terms increase by a constant difference.\n\n9 - 4 = 5\n14 - 9 = 5\n19 - 14 = 5\n\nNext term = 19 + 5 = 24\n\nThe pattern continues 4, 9, 14, 19, 24, 29, …",
+    "stats": {
+      "prompt_tokens": 85,
+      "completion_tokens": 257,
+      "latency_ms": 10032.84,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "962457479ea5200b40b009f7d12bd03c83d94de733ef357e341228729cdee908": {
+    "answer": "{\"answer\": \"Five teams bring 5 × 7 = 35 flags. With 3 added by the organizer there are 35 + 3 = 38 flags in total.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 100,
+      "completion_tokens": 106,
+      "latency_ms": 8316.79,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "5df6b9096f4f4fcaea813d6b6416e308caf8a587351f8c9851c01df3ae753f53": {
+    "answer": "{\"answer\": \"54\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 98,
+      "completion_tokens": 96,
+      "latency_ms": 5859.49,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "ae91bf8158d6becf262488ad8d12267f872c9edc040ed3701a6d8391020a05ee": {
+    "answer": "{\"answer\": \"24\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 107,
+      "completion_tokens": 131,
+      "latency_ms": 6856.01,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "a0a44eed530982fef775592850acba78aac08904c9b97fb4538b1e688b9ea33e": {
+    "answer": "{\"answer\": \"38 flags\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 100,
+      "completion_tokens": 132,
+      "latency_ms": 7588.51,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "18d51aec5f1703f230ec59e63a92972eac01bbf22eb3679e1ad6f1d5966aed5c": {
+    "answer": "{\"answer\": \"24\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 107,
+      "completion_tokens": 123,
+      "latency_ms": 9533.66,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|H020|t0.2|a0": {
+    "answer": "Let the three even numbers be\n\n$$n,\\;n+2,\\;n+4$$\n\nwith $n>0$ even.\n\n$$n+(n+2)+(n+4)=48$$\n$$3n+6=48$$\n$$3n=42$$\n$$n=14$$\n\nThe three numbers are $14,\\;16,\\;18$.\n\nThe largest is $18$.",
+    "stats": {
+      "prompt_tokens": 72,
+      "completion_tokens": 320,
+      "latency_ms": 29939.98,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|H013|t0.2|a0": {
+    "answer": "A 20 % discount means you pay 100 % − 20 % = 80 % of the list price.\n\nDiscounted price = 500 × 0.80\n= 500 × 8/10\n= 400 points\n\nThe discount itself is 500 × 0.20 = 100 points off.",
+    "stats": {
+      "prompt_tokens": 78,
+      "completion_tokens": 153,
+      "latency_ms": 9280.31,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "f7d5ca0ccc2244a820fcf46466ff724b165abb77c27c01c39cf9f55559dd52d2": {
+    "answer": "{\"answer\": \"54\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 98,
+      "completion_tokens": 276,
+      "latency_ms": 18297.66,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "973939baaa573af13b0c75d254511ce8c4c02c0b169c54070be20650f219e9aa": {
+    "answer": "{\"answer\": \"The three numbers are 14, 16 and 18, so the largest is 18.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 94,
+      "completion_tokens": 103,
+      "latency_ms": 8127.52,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "27684a0f31c61ecb4b668766ea8a54669fe1f18957da5ca26d4b6c29d5c9f067": {
+    "answer": "{\"answer\": \"24\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 107,
+      "completion_tokens": 135,
+      "latency_ms": 11668.25,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H013|t0.2|a0": {
+    "answer": "A 20 % discount is 20 % of the list price.\n\nDiscount amount = 0.20 × 500 points = 100 points\n\nDiscounted price = List price – Discount\n= 500 – 100\n= 0.80 × 500 = 400 points\n\nThe game costs 400 points after the 20 % off, a saving of 100 points.",
+    "stats": {
+      "prompt_tokens": 78,
+      "completion_tokens": 293,
+      "latency_ms": 14004.73,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|H028|t0.2|a0": {
+    "answer": "Four parts cost\n\n4 × 175 points = 700 points\n\nRemaining fund = 1,200 – 700 = 500 points\n\n500 points remain.",
+    "stats": {
+      "prompt_tokens": 79,
+      "completion_tokens": 103,
+      "latency_ms": 10438.34,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "840a5fd5e8e538d1ede5ed1313807a09931b09998596870ee779a082687aa0dd": {
+    "answer": "{\"answer\": \"The three numbers are 14, 16 and 18, so the largest is 18.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 94,
+      "completion_tokens": 156,
+      "latency_ms": 10422.51,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|H002|t0.2|a0": {
+    "answer": "5 boxes × 8 sticks/box = 40 sticks in all\n\n40 sticks – 3 sticks used = 37 sticks remaining\n\n*If you meant 3 sticks used from each box, then each box has 8 – 3 = 5 left, i.e. 5 × 5 = 25 sticks in total.*",
+    "stats": {
+      "prompt_tokens": 79,
+      "completion_tokens": 184,
+      "latency_ms": 17596.37,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "43e1b4641493f375a820a48fd90935a9a464ea7d7b5bf144b6691b98f2dabe14": {
+    "answer": "{\"answer\": \"18\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 94,
+      "completion_tokens": 193,
+      "latency_ms": 16968.69,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H028|t0.2|a0": {
+    "answer": "4 parts × 175 points/part = 700 points spent\n\n1,200 points – 700 points = 500 points\n\n500 points remain in the fund.",
+    "stats": {
+      "prompt_tokens": 79,
+      "completion_tokens": 221,
+      "latency_ms": 22422.85,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|H030|t0.2|a0": {
+    "answer": "Each jar has 3 blue beads.\n\n3 jars × 3 blue beads/jar = 9 blue beads in all.\n\nThere are also 3 × 4 = 12 red beads in total.",
+    "stats": {
+      "prompt_tokens": 80,
+      "completion_tokens": 103,
+      "latency_ms": 6348.41,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "425a98d9030d03ffd22e079ff45089a0404abf56093f816d894e64afad413a76": {
+    "answer": "{\"answer\": \"1,200 points - 4 × 175 points = 1,200 - 700 = 500 points remain.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 101,
+      "completion_tokens": 97,
+      "latency_ms": 5522.46,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "1e6b8465bfb5db3ac140ada8025365a08b7c45a71bbeb98b6961367ecd650a9d": {
+    "answer": "{\"answer\": \"1,200 points minus 4 × 175 points = 1,200 - 700 = 500 points remain.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 101,
+      "completion_tokens": 97,
+      "latency_ms": 7370.48,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "aeb5403544d61e049600a523ba8e50f8b341a9781313ecef4a582c6b4a5e00a0": {
+    "answer": "{\"answer\": \"The discount is 20% of 500 = 100 points, so the discounted price is 500 - 100 = 400 points.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 100,
+      "completion_tokens": 90,
+      "latency_ms": 40459.53,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|H002|t0.2|a0": {
+    "answer": "5 boxes × 8 sticks/box = 40 sticks in all.\n\n40 sticks – 3 sticks used = 37 sticks left.\n\n*Remark:* If you meant 3 sticks used out of each box, then each box has 8–3 = 5 sticks left, i.e. 5 × 5 = 25 sticks in total.",
+    "stats": {
+      "prompt_tokens": 79,
+      "completion_tokens": 404,
+      "latency_ms": 31936.58,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cc03a87db0b53ad1f72b0fa8fe77b5e647770b8a2071a34275e279388f5fde0d": {
+    "answer": "{\"answer\": \"500 points remain\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 101,
+      "completion_tokens": 150,
+      "latency_ms": 8800.65,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "8f736a73a6e01b9541cc633d8d5cbf34fe0c96b2fb134b98db592497a88a32dc": {
+    "answer": "{\"answer\": \"The discount is 20% of 500 = 100 points, so the discounted price is 500 - 100 = 400 points.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 100,
+      "completion_tokens": 90,
+      "latency_ms": 10439.78,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|H030|t0.2|a0": {
+    "answer": "Each jar has 3 blue beads.\n\n3 jars × 3 blue / jar = 9 blue beads\n\nIn total there are 3 × (4 red + 3 blue) = 3 × 7 = 21 beads, 12 red and 9 blue.",
+    "stats": {
+      "prompt_tokens": 80,
+      "completion_tokens": 326,
+      "latency_ms": 28353.24,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "94a562232f42fc1e24f2d54d58865c72733a9045bc544d386225aab32cff40cc": {
+    "answer": "{\"answer\": \"5 boxes × 8 sticks = 40 sticks total. 40 − 3 used = 37 sticks remain.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 101,
+      "completion_tokens": 96,
+      "latency_ms": 13654.6,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "4c5c8b4127473c990aaa4a9c647f2e723cbd8912f0b04fb541a7f51e62a031bb": {
+    "answer": "{\"answer\": \"Each jar has 3 blue beads, so 3 jars have 3 × 3 = 9 blue beads in all.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 102,
+      "completion_tokens": 95,
+      "latency_ms": 11606.38,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "633c54b4333d1f28dfb6f20185757940ceb914be44ae64cf33b764fafe407780": {
+    "answer": "{\"answer\": \"37\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 101,
+      "completion_tokens": 85,
+      "latency_ms": 9820.95,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "3771d8351a7cda733595487054bda740a15316bc46be6b945cb043b5e529a1de": {
+    "answer": "{\"answer\": \"400 points\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 100,
+      "completion_tokens": 160,
+      "latency_ms": 16958.04,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M014|t0.2|a0": {
+    "answer": "{\"amount\": 1725, \"date\": \"2027-02-24\", \"sender\": \"P5\", \"purpose\": \"raincoat\"}",
+    "stats": {
+      "prompt_tokens": 121,
+      "completion_tokens": 465,
+      "latency_ms": 29787.24,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "89ebaac2f0c09ef9348183c23a82e89966c53a665f6ed3250660fa59ece17f00": {
+    "answer": "{\"answer\": \"Each jar has 3 blue beads, so 3 jars have 3 × 3 = 9 blue beads in all.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 102,
+      "completion_tokens": 101,
+      "latency_ms": 12670.04,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|M015|t0.2|a0": {
+    "answer": "{\"amount\": 360, \"date\": \"2027-03-06\", \"sender\": \"Q6\", \"purpose\": \"dance class fee\"}",
+    "stats": {
+      "prompt_tokens": 125,
+      "completion_tokens": 244,
+      "latency_ms": 10354.53,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "24c2f7d29e84cc411d5e00127c42a2a9d98587c08888172faa1199a94ef38acc": {
+    "answer": "{\"answer\": \"9 blue beads\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 102,
+      "completion_tokens": 176,
+      "latency_ms": 8615.68,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "d282317d52170f4a3623ef37f53a979259b6c136d33fee89fcdbb51b41c53f36": {
+    "answer": "{\"answer\": \"37 sticks remain (5 × 8 = 40 total, 40 − 3 = 37)\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 101,
+      "completion_tokens": 222,
+      "latency_ms": 21254.31,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M025|t0.2|a0": {
+    "answer": "{\"amount\": 1890, \"date\": \"2028-01-18\", \"sender\": \"SENDER-AA7\", \"purpose\": \"water bottle set\"}",
+    "stats": {
+      "prompt_tokens": 119,
+      "completion_tokens": 235,
+      "latency_ms": 13784.11,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|M022|t0.2|a0": {
+    "answer": "{\"amount\": 540, \"date\": \"2027-10-23\", \"sender\": \"SENDER-X4\", \"purpose\": \"umbrella\"}",
+    "stats": {
+      "prompt_tokens": 119,
+      "completion_tokens": 347,
+      "latency_ms": 24676.07,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M025|t0.2|a0": {
+    "answer": "{\"amount\": 1890, \"date\": \"2028-01-18\", \"sender\": \"SENDER-AA7\", \"purpose\": \"water bottle set\"}",
+    "stats": {
+      "prompt_tokens": 119,
+      "completion_tokens": 499,
+      "latency_ms": 21092.17,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|M015|t0.2|a0": {
+    "answer": "{\"amount\": 360, \"date\": \"2027-03-06\", \"sender\": \"Q6\", \"purpose\": \"dance class fee\"}",
+    "stats": {
+      "prompt_tokens": 125,
+      "completion_tokens": 1149,
+      "latency_ms": 56616.81,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "dfff433569d9a919e2892679eec68da2f1c2b78c62ca405e24fa7d9a706150cf": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 1890, \\\"date\\\": \\\"2028-01-18\\\", \\\"sender\\\": \\\"SENDER-AA7\\\", \\\"purpose\\\": \\\"water bottle set\\\"}\", \"confidence\": 0.98}",
+    "stats": {
+      "prompt_tokens": 152,
+      "completion_tokens": 224,
+      "latency_ms": 14952.06,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M014|t0.2|a0": {
+    "answer": "{\"amount\":1725,\"date\":\"2027-02-24\",\"sender\":null,\"purpose\":\"raincoat\"}",
+    "stats": {
+      "prompt_tokens": 121,
+      "completion_tokens": 1553,
+      "latency_ms": 68908.29,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "e339d1c2c36485aa530506fbd19c0c55c4410baf8c81d7c2cdebef140706ba3e": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 360, \\\"date\\\": \\\"2027-03-06\\\", \\\"sender\\\": \\\"Q6\\\", \\\"purpose\\\": \\\"dance class fee\\\"}\", \"confidence\": 0.98}",
+    "stats": {
+      "prompt_tokens": 158,
+      "completion_tokens": 247,
+      "latency_ms": 13543.86,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "8c8162bc3a14bfb2439211927baaab98d3b196efe790985a7237c2f6c4d1a922": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 1890, \\\"date\\\": \\\"2028-01-18\\\", \\\"sender\\\": \\\"SENDER-AA7\\\", \\\"purpose\\\": \\\"water bottle set\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 152,
+      "completion_tokens": 251,
+      "latency_ms": 23331.27,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "a914526e904f4583a7851b5926527c19f5c0fa130ce656b9b81106bceb6b4686": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 1725, \\\"date\\\": \\\"2027-02-24\\\", \\\"sender\\\": \\\"SENDER-P5\\\", \\\"purpose\\\": \\\"raincoat\\\"}\", \"confidence\": 0.68}",
+    "stats": {
+      "prompt_tokens": 154,
+      "completion_tokens": 333,
+      "latency_ms": 19677.93,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "ed79bbe15d82d958d8fa63241aef9c3a03b73254a75f137292340576aaf7826f": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 360, \\\"date\\\": \\\"2027-03-06\\\", \\\"sender\\\": \\\"Q6\\\", \\\"purpose\\\": \\\"dance class fee\\\"}\", \"confidence\": 0.96}",
+    "stats": {
+      "prompt_tokens": 158,
+      "completion_tokens": 258,
+      "latency_ms": 19923.26,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "bd68330bcd85526efbaf8629dad231599de614dc0865ccbd5b8b333db5ebf9c6": {
+    "answer": "{\"amount\": 1890, \"date\": \"2028-01-18\", \"sender\": \"SENDER-AA7\", \"purpose\": \"water bottle set\"}",
+    "stats": {
+      "prompt_tokens": 152,
+      "completion_tokens": 481,
+      "latency_ms": 18950.35,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "d121057e6c8bff2f6c0cfb3f0c57c4757d50553a1f81c84b6ba55e33b61bcd42": {
+    "answer": "{\"amount\": 360, \"date\": \"2027-03-06\", \"sender\": \"Q6\", \"purpose\": \"dance class fee\"}",
+    "stats": {
+      "prompt_tokens": 158,
+      "completion_tokens": 525,
+      "latency_ms": 24489.32,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "9981b5d9b5c81d101dd96284b4f122899f1c25da570fbb4cec90345f3b63f41c": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 1725, \\\"date\\\": \\\"2027-02-24\\\", \\\"sender\\\": \\\"SENDER-P5\\\", \\\"purpose\\\": \\\"raincoat\\\"}\", \"confidence\": 0.62}",
+    "stats": {
+      "prompt_tokens": 154,
+      "completion_tokens": 426,
+      "latency_ms": 31741.63,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|M016|t0.2|a0": {
+    "answer": "{\"amount\": 2890, \"date\": \"2027-04-28\", \"sender\": \"SENDER-R7\", \"purpose\": \"water-filter parts\"}",
+    "stats": {
+      "prompt_tokens": 121,
+      "completion_tokens": 261,
+      "latency_ms": 3922.02,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M022|t0.2|a0": {
+    "answer": "{\"amount\": 540, \"date\": \"2027-10-23\", \"sender\": \"SENDER-X4\", \"purpose\": \"umbrella\"}",
+    "stats": {
+      "prompt_tokens": 119,
+      "completion_tokens": 1293,
+      "latency_ms": 90096.56,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M001|t0.2|a0": {
+    "answer": "{\"amount\": 240, \"date\": \"2026-01-04\", \"sender\": \"\", \"purpose\": \"chai-samaan ke liye\"}",
+    "stats": {
+      "prompt_tokens": 128,
+      "completion_tokens": 508,
+      "latency_ms": 42280.87,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "e08b2e4eca163f352c64d2f5d7ab9b3b9eb0a3ea837640718ce57d56dc6a03c0": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 540, \\\"date\\\": \\\"2027-10-23\\\", \\\"sender\\\": \\\"SENDER-X4\\\", \\\"purpose\\\": \\\"umbrella\\\"}\", \"confidence\": 0.42}",
+    "stats": {
+      "prompt_tokens": 152,
+      "completion_tokens": 404,
+      "latency_ms": 27775.58,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M016|t0.2|a0": {
+    "answer": "{\"amount\": 2890, \"date\": \"2027-04-28\", \"sender\": \"SENDER-R7\", \"purpose\": \"water-filter parts\"}",
+    "stats": {
+      "prompt_tokens": 121,
+      "completion_tokens": 681,
+      "latency_ms": 45760.98,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "c3596bd4e1c214613caa30cf015666a652ef2e2a550b211e8f0a853050ca0907": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 540, \\\"date\\\": \\\"2027-10-23\\\", \\\"sender\\\": \\\"SENDER-X4\\\", \\\"purpose\\\": \\\"umbrella\\\"}\", \"confidence\": 0.78}",
+    "stats": {
+      "prompt_tokens": 152,
+      "completion_tokens": 309,
+      "latency_ms": 15846.78,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "286e80e3649fff00fb977a42ad7d1ab93bd598adc5b188956c87c491cde51796": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 2890, \\\"date\\\": \\\"2027-04-28\\\", \\\"sender\\\": \\\"SENDER-R7\\\", \\\"purpose\\\": \\\"water-filter parts\\\"}\", \"confidence\": 0.98}",
+    "stats": {
+      "prompt_tokens": 154,
+      "completion_tokens": 197,
+      "latency_ms": 6004.39,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "56b1fc0e3757951416b133698c963d9c3d5c5b7f36052cc675c3ab33dc7781b8": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 2890, \\\"date\\\": \\\"2027-04-28\\\", \\\"sender\\\": \\\"SENDER-R7\\\", \\\"purpose\\\": \\\"water-filter parts\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 154,
+      "completion_tokens": 192,
+      "latency_ms": 4746.76,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "a595d61511245ca68097fabfdecfa798c136aee90c0a545152c052a54d9f0a73": {
+    "answer": "{\"amount\": 2890, \"date\": \"2027-04-28\", \"sender\": \"SENDER-R7\", \"purpose\": \"water-filter parts\"}",
+    "stats": {
+      "prompt_tokens": 154,
+      "completion_tokens": 441,
+      "latency_ms": 12946.7,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M009|t0.2|a0": {
+    "answer": "{\"amount\": 1040, \"date\": \"2026-09-26\", \"sender\": \"SENDER-J9\", \"purpose\": \"kitchen container\"}",
+    "stats": {
+      "prompt_tokens": 120,
+      "completion_tokens": 346,
+      "latency_ms": 17139.03,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M001|t0.2|a0": {
+    "answer": "{\"amount\": 240, \"date\": \"2026-01-04\", \"sender\": \"SENDER-A1\", \"purpose\": \"chai-samaan\"}",
+    "stats": {
+      "prompt_tokens": 128,
+      "completion_tokens": 1241,
+      "latency_ms": 64293.81,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "3be286175e94cbbf697bc906819b85a49b7bf81977e202bceb097d97caf06cdb": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 240, \\\"date\\\": \\\"2026-01-04\\\", \\\"sender\\\": \\\"SENDER-A1\\\", \\\"purpose\\\": \\\"chai-samaan ke liye\\\"}\", \"confidence\": 0.97}",
+    "stats": {
+      "prompt_tokens": 161,
+      "completion_tokens": 193,
+      "latency_ms": 6442.05,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "8150cb043b30d53e7ca5375d926dd4754087a204ccde88a94f88a05125edc2fa": {
+    "answer": "{\"amount\": 540, \"date\": \"2027-10-23\", \"sender\": \"SENDER-X4\", \"purpose\": \"umbrella\"}",
+    "stats": {
+      "prompt_tokens": 152,
+      "completion_tokens": 782,
+      "latency_ms": 49145.73,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M017|t0.2|a0": {
+    "answer": "{\"amount\": 145, \"date\": \"2027-05-16\", \"sender\": \"SENDER-S8\", \"purpose\": \"seed packets\"}\n",
+    "stats": {
+      "prompt_tokens": 115,
+      "completion_tokens": 188,
+      "latency_ms": 9413.25,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "51b1be09c9d8ec44c7743477ef480b84e0153a51f9e3336aef5e1d1b38a47611": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 240, \\\"date\\\": \\\"2026-01-04\\\", \\\"sender\\\": \\\"SENDER-A1\\\", \\\"purpose\\\": \\\"chai-samaan ke liye\\\"}\", \"confidence\": 0.68}",
+    "stats": {
+      "prompt_tokens": 161,
+      "completion_tokens": 395,
+      "latency_ms": 22830.71,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M017|t0.2|a0": {
+    "answer": "{\n  \"amount\": 145,\n  \"date\": \"2027-05-16\",\n  \"sender\": \"SENDER-S8\",\n  \"purpose\": \"seed packets\"\n}",
+    "stats": {
+      "prompt_tokens": 115,
+      "completion_tokens": 478,
+      "latency_ms": 24610.98,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M028|t0.2|a0": {
+    "answer": "{\"amount\": 325, \"date\": \"2028-04-09\", \"sender\": \"SENDER-AD1\", \"purpose\": \"clay pots\"}",
+    "stats": {
+      "prompt_tokens": 120,
+      "completion_tokens": 189,
+      "latency_ms": 15367.05,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "d5bcf4d85bb98c314383abd45b191becd676f5662beedccf13555930a7789377": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 145, \\\"date\\\": \\\"2027-05-16\\\", \\\"sender\\\": \\\"SENDER-S8\\\", \\\"purpose\\\": \\\"seed packets\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 148,
+      "completion_tokens": 224,
+      "latency_ms": 24864.38,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M028|t0.2|a0": {
+    "answer": "{\"amount\": 325, \"date\": \"2028-04-09\", \"sender\": \"SENDER-AD1\", \"purpose\": \"clay pots\"}",
+    "stats": {
+      "prompt_tokens": 120,
+      "completion_tokens": 364,
+      "latency_ms": 32696.01,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "b2f0e1ae11b79e0e8f02cb63a36ee8248190b231521a8ffd231121c1700fb241": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 145, \\\"date\\\": \\\"2027-05-16\\\", \\\"sender\\\": \\\"SENDER-S8\\\", \\\"purpose\\\": \\\"seed packets\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 148,
+      "completion_tokens": 217,
+      "latency_ms": 21159.78,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "70aeead4b02517952be9314627fbbdf2aca041eaaed378047b68245cb2dacae0": {
+    "answer": "{\n  \"amount\": 240,\n  \"date\": \"2026-01-04\",\n  \"sender\": \"SENDER-A1\",\n  \"purpose\": \"chai-samaan\"\n}",
+    "stats": {
+      "prompt_tokens": 161,
+      "completion_tokens": 1092,
+      "latency_ms": 62770.17,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "38b68510ecdfc466ba853835cacc86102da2d84dcb2021b538900ad9424bab74": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 325, \\\"date\\\": \\\"2028-04-09\\\", \\\"sender\\\": \\\"SENDER-AD1\\\", \\\"purpose\\\": \\\"clay pots\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 153,
+      "completion_tokens": 192,
+      "latency_ms": 20384.35,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|M030|t0.2|a0": {
+    "answer": "{\"amount\": 940, \"date\": \"2028-06-13\", \"sender\": \"SENDER-AF3\", \"purpose\": \"picnic snacks\"}",
+    "stats": {
+      "prompt_tokens": 118,
+      "completion_tokens": 336,
+      "latency_ms": 21234.84,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "71092f0f456d82e1b25783ee2d04a79099694c564770f7801c402005bfbe014d": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 325, \\\"date\\\": \\\"2028-04-09\\\", \\\"sender\\\": \\\"SENDER-AD1\\\", \\\"purpose\\\": \\\"clay pots\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 153,
+      "completion_tokens": 192,
+      "latency_ms": 15789.26,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "dcb1e02464c5bc56074d2b878393c9fd33e9533d88b3c7fe621ff70e6a09f813": {
+    "answer": "{\"amount\": 145, \"date\": \"2027-05-16\", \"sender\": \"SENDER-S8\", \"purpose\": \"seed packets\"}",
+    "stats": {
+      "prompt_tokens": 148,
+      "completion_tokens": 421,
+      "latency_ms": 25489.54,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M026|t0.2|a0": {
+    "answer": "{\"amount\": 760, \"date\": \"2028-02-07\", \"sender\": \"AB8\", \"purpose\": \"rain-gutter cleaning\"}",
+    "stats": {
+      "prompt_tokens": 119,
+      "completion_tokens": 168,
+      "latency_ms": 24719.84,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "a36caa4520c3f9fc583ece5576638d5cbfe700fb523cf2820a33329921a942a2": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 325, \\\"date\\\": \\\"2028-04-09\\\", \\\"sender\\\": \\\"SENDER-AD1\\\", \\\"purpose\\\": \\\"clay pots\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 153,
+      "completion_tokens": 303,
+      "latency_ms": 29276.04,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M006|t0.2|a0": {
+    "answer": "{\"amount\": 510, \"date\": \"2026-06-21\", \"sender\": \"SENDER-F6\", \"purpose\": \"paudhon ke liye mitti\"}",
+    "stats": {
+      "prompt_tokens": 125,
+      "completion_tokens": 216,
+      "latency_ms": 26381.54,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|M011|t0.2|a0": {
+    "answer": "{\"amount\": 4600, \"date\": \"2026-11-07\", \"sender\": \"SENDER-L2\", \"purpose\": \"desk lamp\"}",
+    "stats": {
+      "prompt_tokens": 117,
+      "completion_tokens": 268,
+      "latency_ms": 21681.61,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M026|t0.2|a0": {
+    "answer": "{\n  \"amount\": 760,\n  \"date\": \"2028-02-07\",\n  \"sender\": \"AB8\",\n  \"purpose\": \"rain-gutter cleaning\"\n}",
+    "stats": {
+      "prompt_tokens": 119,
+      "completion_tokens": 508,
+      "latency_ms": 26278.41,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|M006|t0.2|a0": {
+    "answer": "{\"amount\": 510, \"date\": \"2026-06-21\", \"sender\": \"SENDER-F6\", \"purpose\": \"paudhon ke liye mitti\"}",
+    "stats": {
+      "prompt_tokens": 125,
+      "completion_tokens": 397,
+      "latency_ms": 25822.81,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|M030|t0.2|a0": {
+    "answer": "{\"amount\": 940, \"date\": \"2028-06-13\", \"sender\": \"SENDER-AF3\", \"purpose\": \"picnic snacks\"}",
+    "stats": {
+      "prompt_tokens": 118,
+      "completion_tokens": 900,
+      "latency_ms": 60183.73,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "e43b33c71c99add19a1405ec4de3989b02d6a8c3b36605c21ff66e0f2868f453": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 510, \\\"date\\\": \\\"2026-06-21\\\", \\\"sender\\\": \\\"SENDER-F6\\\", \\\"purpose\\\": \\\"paudhon ke liye mitti\\\"}\", \"confidence\": 0.98}",
+    "stats": {
+      "prompt_tokens": 158,
+      "completion_tokens": 230,
+      "latency_ms": 18708.01,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "0aece89ccdba1f25608db361dc6037b423fe7a2c7039bafee5f64aab70a0b891": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 760, \\\"date\\\": \\\"2028-02-07\\\", \\\"sender\\\": \\\"AB8\\\", \\\"purpose\\\": \\\"rain-gutter cleaning\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 152,
+      "completion_tokens": 224,
+      "latency_ms": 22594.93,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "db1b1bf1374de13b718b7b7af17e796ebfd6a892d298cd13fa8c874bff930229": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 940, \\\"date\\\": \\\"2028-06-13\\\", \\\"sender\\\": \\\"SENDER-AF3\\\", \\\"purpose\\\": \\\"picnic snacks\\\"}\", \"confidence\": 0.78}",
+    "stats": {
+      "prompt_tokens": 151,
+      "completion_tokens": 324,
+      "latency_ms": 25246.87,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "5e93a21cc84ad027bc27e21f0b04aa6cda1e68108352c51e2867727305a4a8d7": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 510, \\\"date\\\": \\\"2026-06-21\\\", \\\"sender\\\": \\\"SENDER-F6\\\", \\\"purpose\\\": \\\"paudhon ke liye mitti\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 158,
+      "completion_tokens": 197,
+      "latency_ms": 15883.1,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "d29ec23b6e3dfc48881d5622c9344eda559a9d27f0e9049a3c42cd31ebe1176d": {
+    "answer": "{\"amount\": 760, \"date\": \"2028-02-07\", \"sender\": \"AB8\", \"purpose\": \"rain-gutter cleaning\"}",
+    "stats": {
+      "prompt_tokens": 152,
+      "completion_tokens": 237,
+      "latency_ms": 22259.92,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "c175867822514847f9f5ad5e9d9fce0700732b81acee87dd6d8a1bfa92c59b24": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 940, \\\"date\\\": \\\"2028-06-13\\\", \\\"sender\\\": \\\"SENDER-AF3\\\", \\\"purpose\\\": \\\"picnic snacks\\\"}\", \"confidence\": 0.97}",
+    "stats": {
+      "prompt_tokens": 151,
+      "completion_tokens": 233,
+      "latency_ms": 15599.38,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M011|t0.2|a0": {
+    "answer": "{\"amount\":4600,\"date\":\"2026-11-07\",\"sender\":\"SENDER-L2\",\"purpose\":\"desk lamp\"}",
+    "stats": {
+      "prompt_tokens": 117,
+      "completion_tokens": 892,
+      "latency_ms": 53748.68,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "88268bbb76037b0176d9d0f0609979ecad66de0a5991c885ec0e8f10b7fe8ebf": {
+    "answer": "{\"amount\": 510, \"date\": \"2026-06-21\", \"sender\": \"SENDER-F6\", \"purpose\": \"paudhon ke liye mitti\"}",
+    "stats": {
+      "prompt_tokens": 158,
+      "completion_tokens": 353,
+      "latency_ms": 19825.64,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "7b93a2988bafc6221506a1e65f901b58314fa52311488212f11b89ed876874e0": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 4600, \\\"date\\\": \\\"2026-11-07\\\", \\\"sender\\\": \\\"SENDER-L2\\\", \\\"purpose\\\": \\\"desk lamp\\\"}\", \"confidence\": 0.96}",
+    "stats": {
+      "prompt_tokens": 150,
+      "completion_tokens": 261,
+      "latency_ms": 10573.84,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|M018|t0.2|a0": {
+    "answer": "{\"amount\": 6200, \"date\": \"2027-06-02\", \"sender\": \"SENDER-T9\", \"purpose\": \"laptop stand\"}",
+    "stats": {
+      "prompt_tokens": 123,
+      "completion_tokens": 243,
+      "latency_ms": 15202.66,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "00db4be6f8629d452631e7fec09b315ac663d2c8c82353a4383a5aea8e2409df": {
+    "answer": "{\"amount\": 760, \"date\": \"2028-02-07\", \"sender\": \"AB8\", \"purpose\": \"rain-gutter cleaning\"}",
+    "stats": {
+      "prompt_tokens": 152,
+      "completion_tokens": 546,
+      "latency_ms": 30013.75,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "421da16dd66600f46780006b9a2c80b6cd937c282961376fa5194091ec99bd8e": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 4600, \\\"date\\\": \\\"2026-11-07\\\", \\\"sender\\\": \\\"SENDER-L2\\\", \\\"purpose\\\": \\\"desk lamp\\\"}\", \"confidence\": 0.96}",
+    "stats": {
+      "prompt_tokens": 150,
+      "completion_tokens": 261,
+      "latency_ms": 14849.92,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|M005|t0.2|a0": {
+    "answer": "{\"amount\": 2450, \"date\": \"2026-05-09\", \"sender\": \"SENDER-E5\", \"purpose\": \"cycle repair\"}",
+    "stats": {
+      "prompt_tokens": 119,
+      "completion_tokens": 215,
+      "latency_ms": 15503.76,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "f6e5139ce51f0e8be618e36c0d9c106e4fb148f09b0a617854c280bf9ce53206": {
+    "answer": "{\"amount\": 940, \"date\": \"2028-06-13\", \"sender\": \"SENDER-AF3\", \"purpose\": \"picnic snacks\"}",
+    "stats": {
+      "prompt_tokens": 151,
+      "completion_tokens": 818,
+      "latency_ms": 44202.83,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|M018|t0.2|a0": {
+    "answer": "{\"amount\": 6200, \"date\": \"2027-06-02\", \"sender\": \"SENDER-T9\", \"purpose\": \"laptop stand\"}",
+    "stats": {
+      "prompt_tokens": 123,
+      "completion_tokens": 507,
+      "latency_ms": 21999.92,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "3b2ed19ad4ea37da6f7a02bd3cb100a9fac69aaf537ed599719ab63f1e60af91": {
+    "answer": "{\"amount\": 4600, \"date\": \"2026-11-07\", \"sender\": \"L2\", \"purpose\": \"desk lamp\"}",
+    "stats": {
+      "prompt_tokens": 150,
+      "completion_tokens": 1158,
+      "latency_ms": 53122.48,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|M005|t0.2|a0": {
+    "answer": "{\"amount\": 2450, \"date\": \"2026-05-09\", \"sender\": \"SENDER-E5\", \"purpose\": \"cycle repair\"}",
+    "stats": {
+      "prompt_tokens": 119,
+      "completion_tokens": 462,
+      "latency_ms": 39517.13,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "291379c3f3ed3cc80e07fb9e438fe7fc38d69c0ca1c3a09c878d20e6905e5e3b": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 6200, \\\"date\\\": \\\"2027-06-02\\\", \\\"sender\\\": \\\"SENDER-T9\\\", \\\"purpose\\\": \\\"laptop stand\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 156,
+      "completion_tokens": 189,
+      "latency_ms": 38281.22,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "3606619eee6e3718537e543384681901b5c5096e6dc9cb4ba468f647bb54d667": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 2450, \\\"date\\\": \\\"2026-05-09\\\", \\\"sender\\\": \\\"SENDER-E5\\\", \\\"purpose\\\": \\\"cycle repair\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 152,
+      "completion_tokens": 219,
+      "latency_ms": 27436.71,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "9cfc9c245fdb51a23edb478be2ecc3beacda40d9c9217fa057acab543c0491e9": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 6200, \\\"date\\\": \\\"2027-06-02\\\", \\\"sender\\\": \\\"SENDER-T9\\\", \\\"purpose\\\": \\\"laptop stand\\\"}\", \"confidence\": 0.98}",
+    "stats": {
+      "prompt_tokens": 156,
+      "completion_tokens": 245,
+      "latency_ms": 33277.97,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "a719cb8bb45a8ff264fb1a72820d4377fe535f6e08ba30eb8a2cd46b766a9117": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 2450, \\\"date\\\": \\\"2026-05-09\\\", \\\"sender\\\": \\\"SENDER-E5\\\", \\\"purpose\\\": \\\"cycle repair\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 152,
+      "completion_tokens": 183,
+      "latency_ms": 39723.44,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "dc0e0c0d768fe4c5ca17536abee31cb3d714bccb70c6a2089a9cb7b9e5dd2ef9": {
+    "answer": "{\"amount\": 6200, \"date\": \"2027-06-02\", \"sender\": \"SENDER-T9\", \"purpose\": \"laptop stand\"}",
+    "stats": {
+      "prompt_tokens": 156,
+      "completion_tokens": 401,
+      "latency_ms": 44504.31,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "27b06ea0d4beff5db04ac025edbacfd007611a585f815633f44c21a5de99484d": {
+    "answer": "{\"amount\": 2450, \"date\": \"2026-05-09\", \"sender\": \"SENDER-E5\", \"purpose\": \"cycle repair\"}",
+    "stats": {
+      "prompt_tokens": 152,
+      "completion_tokens": 388,
+      "latency_ms": 39130.32,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|M009|t0.2|a0": {
+    "answer": "{\"amount\": 1040, \"date\": \"2026-09-26\", \"sender\": \"SENDER-J9\", \"purpose\": \"kitchen container\"}",
+    "stats": {
+      "prompt_tokens": 120,
+      "completion_tokens": 1623,
+      "latency_ms": 109884.04,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "f23b55ae8f107c8e646e2cc2b7e23b55ee152819fb8e1b614b4758208e6be976": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 1040, \\\"date\\\": \\\"2026-09-26\\\", \\\"sender\\\": \\\"J9\\\", \\\"purpose\\\": \\\"kitchen container\\\"}\", \"confidence\": 0.96}",
+    "stats": {
+      "prompt_tokens": 153,
+      "completion_tokens": 251,
+      "latency_ms": 79592.04,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "5488df092298be2c1d20aab7bf0aaab7aaceeec9b3c2413c35fffbbf1a50d896": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 1040, \\\"date\\\": \\\"2026-09-26\\\", \\\"sender\\\": \\\"SENDER-J9\\\", \\\"purpose\\\": \\\"kitchen container\\\"}\", \"confidence\": 0.85}",
+    "stats": {
+      "prompt_tokens": 153,
+      "completion_tokens": 325,
+      "latency_ms": 74300.27,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "b8ae72e02b24b26d3f5b473098e880566f40b1471f6ea1ab8e07a90205bfbdde": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'strong': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "f62fd3c6fac42aed55e43b65a839749035dc2dbe7710cf6f9d1c2631ae9fc26a": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'strong': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "9d7237a0c2cb207303c9ec5372cc38b506efed761a0a20060531df14e88fb449": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.99}",
+    "stats": {
+      "prompt_tokens": 112,
+      "completion_tokens": 65,
+      "latency_ms": 114911.48,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "fa4b747b92017218acf9d6bda29f81e436112019660eb5e2550d74863b474a81": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.88}",
+    "stats": {
+      "prompt_tokens": 112,
+      "completion_tokens": 65,
+      "latency_ms": 115509.91,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "71e15e159805f45d9b57cf9984b54e5af9bcf798efc00c46ff8214b557e7ec35": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'cheap': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "6313b8073c974376945bc4baffb3946dc9a817ef2a47ce91b7d2fd84d083da55": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'cheap': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "87b80b266157478cee9bfaaef9e9dcbb91554b4817313344d36ff5a0fc54ac1e": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'cheap': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "98c1648e3d2306b26e3dd75ab38218d7e41c1afbfd7fdda35bf93edefb0816d9": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'cheap': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "d69513daac24d1668138633f39140e9a9e34155c1a5d9a22ba6ef0a19e8bc80d": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'strong': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "fc64ccc1ba8942b71decf578724d6a143b325169c3a9072c99de23f5f8c6368c": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'strong': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "d30fa787d935ea6238ad66d7678d2f3dc5c4afdc1aae19bce12100a5c8f691bf": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'strong': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "585c820e69f60ca6f9059777cdc8b008d8b693f0b1643aef9805c9cbcaa711dc": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'cheap': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "2874749b8c2c17a0eeccbacb2d9b2430d327584e58a293d35145564245419dea": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'strong': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "a06e587907a899f4afefa09d620a1de7b6ff1a91198559b3f0883191503e92c0": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'cheap': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "c01e54f25357c6e639a1c3191c3a5903fd4401456fa7bac30912536d76d33a47": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.98}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 90,
+      "latency_ms": 69856.57,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "4bb1d0b134ee0a15b10f5df07969bad1cce63782921c65c648636ad6fc38396a": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.99}",
+    "stats": {
+      "prompt_tokens": 110,
+      "completion_tokens": 91,
+      "latency_ms": 70015.82,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "3fda141da32c4f31c2d9bc13b0f9dee0aa1b1f61a6a5891f2f8ec8539784ad06": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.99}",
+    "stats": {
+      "prompt_tokens": 110,
+      "completion_tokens": 164,
+      "latency_ms": 70973.01,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "c0c01a66219eef8f2dcdbfc1a88d19d0c72b2a8af821b87114f86552533175e0": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'strong': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "1b59aea3967f5457604734ccc90f1b85ef013515fe9830ac87310548935a9580": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'cheap': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "3c52ba311fb51b7133005b9e893e29a6fca3dcff0bf7bf9998e85bbc1ea7696f": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'cheap': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "ee53aae68c38a22e6e66bf043000e555e0f0935d367bbf805bef3cac483955b1": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'cheap': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "acd6f179a4c079205c060f5804fbf49c061105caadd347a045909c4373187251": {
+    "answer": "{\"answer\":\"safe\",\"confidence\":0.96}",
+    "stats": {
+      "prompt_tokens": 109,
+      "completion_tokens": 92,
+      "latency_ms": 117061.43,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "2654d53ae893e239c6309d3f1980ba6cf6b728b939a280d24f4bd413503b60f8": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.99}",
+    "stats": {
+      "prompt_tokens": 110,
+      "completion_tokens": 171,
+      "latency_ms": 113021.54,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "169170ffa82d65a0b701f420211a4b8be4bd1a91cd38d60b8131d2d4db942234": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.99}",
+    "stats": {
+      "prompt_tokens": 115,
+      "completion_tokens": 210,
+      "latency_ms": 117526.26,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "58d75618d7d71a011544c2eb63d4c02a368fd0f4b33fc00b154dab8689a17adc": {
+    "error_type": "MuseRouteError",
+    "error": "Request failed for tier 'strong': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+  },
+  "ed47d376684531493fb5efe115bd29c3d34c8ee132336bad623d7529dd38c299": {
+    "answer": "{\"answer\":\"scam\",\"confidence\":0.99}",
+    "stats": {
+      "prompt_tokens": 111,
+      "completion_tokens": 85,
+      "latency_ms": 82202.61,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "1da1b54407c321e730bc4d11641ce0af55ca0a1ae96c62f0937938930b8b8f62": {
+    "answer": "{\"answer\": \"144 pages ÷ 12 sections = 12 pages per section.\", \"confidence\": 0.999}",
+    "stats": {
+      "prompt_tokens": 99,
+      "completion_tokens": 75,
+      "latency_ms": 65124.62,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "a9402923cafd8f39dc09e0ff13693eee44efeca0b320ef7c0fd450f1496de7c3": {
+    "answer": "{\"answer\": \"Three buses carry 3 × 24 = 72 students. With 7 more traveling separately, 72 + 7 = 79 students altogether.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 101,
+      "completion_tokens": 103,
+      "latency_ms": 64913.52,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "790101de1daee593065dbda1c12e34eec4b08084337c1c1243598d963489c7fb": {
+    "answer": "{\"answer\": \"13 metres\", \"confidence\": 0.999}",
+    "stats": {
+      "prompt_tokens": 97,
+      "completion_tokens": 91,
+      "latency_ms": 66550.57,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "d861dbd2ef64731ecdb4a5745beaec9fc12e0965d88999b62f08d960ad69b94e": {
+    "answer": "{\"answer\": \"48 ÷ 5 = 9 rolls per basket with a remainder of 3 rolls left over.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 106,
+      "completion_tokens": 94,
+      "latency_ms": 64425.31,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "69e77a43bac0cd7cfb20d39ca88e6028d509461d8840467b3a0da91054ebc2c1": {
+    "answer": "{\"answer\": \"250 - 42 × 3 = 250 - 126 = 124 tokens remain.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 101,
+      "completion_tokens": 86,
+      "latency_ms": 80663.65,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "4974b464201d32ff97a24f65ff429fc042a4f14507e122a4b6820164e445045b": {
+    "answer": "{\"answer\": \"54\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 105,
+      "completion_tokens": 93,
+      "latency_ms": 83928.77,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "d77f9afad28e0f4b495a6373ebe2d33bce88315a1d77894d9f882db65f64f943": {
+    "answer": "{\"answer\": \"96 - 35 - 28 = 33 cards are in the third pile.\", \"confidence\": 0.999}",
+    "stats": {
+      "prompt_tokens": 110,
+      "completion_tokens": 86,
+      "latency_ms": 81681.58,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "6eb6e0a3760d4353a108fede31bea9b5e64dc56aa938b27f3b7f979634a64cd9": {
+    "answer": "{\"answer\": \"19 + 23 + 17 = 59 pages in all.\", \"confidence\": 0.999}",
+    "stats": {
+      "prompt_tokens": 104,
+      "completion_tokens": 78,
+      "latency_ms": 76875.81,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "ce30bc721a4a66602ad1180be301e8bf853389bcfc8d4c2f8e17f3e5c74bfdd8": {
+    "answer": "{\"answer\": \"Eight bottles contain 8 × 750 millilitres = 6,000 millilitres altogether.\", \"confidence\": 0.999}",
+    "stats": {
+      "prompt_tokens": 98,
+      "completion_tokens": 90,
+      "latency_ms": 69332.61,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "134b4c85ad143ff9f624118ea58f78404cbefb2705433b135ecaae527076c67f": {
+    "answer": "{\"answer\": \"18 blue beads + 27 yellow beads = 45 beads in the tray.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 103,
+      "completion_tokens": 76,
+      "latency_ms": 67499.6,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "b4537ad5a5ca93c928df4e9690819a11a06d96903193d15154c82bb5e61624bc": {
+    "answer": "{\"answer\": \"5 levels × 6 tiles per level = 30 tiles on display, plus 4 loose tiles = 34 tiles total.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 104,
+      "completion_tokens": 99,
+      "latency_ms": 103724.4,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "263bcd9e33795f00c2f295a7b7d0a9ba792107714c5c7d11385acdb59afd3a1d": {
+    "answer": "{\"answer\": \"2.5 hours = 150 minutes. 150 minutes / 10 minutes = 15 intervals. 15 × 6 cards = 90 cards finished.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 109,
+      "completion_tokens": 139,
+      "latency_ms": 104451.82,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "8573d956a9f147fb7c23b1625506ccf5032e2080aa1f7741dbe41bd7abea6da1": {
+    "answer": "{\"answer\": \"The width is 15 - 9 = 6 m, so area = 9 m × 6 m = 54 square metres.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 103,
+      "completion_tokens": 117,
+      "latency_ms": 50064.64,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "ffdb6d549fe9d9fc10cec01cdbff204be23fc3a26efba0a235d433a1838b9f5b": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 980, \\\"date\\\": \\\"2027-01-13\\\", \\\"sender\\\": \\\"SENDER-N4\\\", \\\"purpose\\\": \\\"cooking gas share\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 152,
+      "completion_tokens": 165,
+      "latency_ms": 4566043.22,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "3451b2245b7761b5958230ee1b8f5b273bb6ddb1250bb7a9b5b8c8464ca4fc80": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 65, \\\"date\\\": \\\"2026-04-17\\\", \\\"sender\\\": \\\"SENDER-D4\\\", \\\"purpose\\\": \\\"notebook\\\"}\", \"confidence\": 0.98}",
+    "stats": {
+      "prompt_tokens": 153,
+      "completion_tokens": 236,
+      "latency_ms": 4549134.7,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "e5e820faf87f64a7c8cd0ff6da00f0dcba5cd2aadbdd08eb42e752cad14efbbf": {
+    "answer": "{\"answer\": \"Let the lower shelf have x books. Then the upper shelf has x + 8 books.\\n x + (x + 8) = 50\\n 2x + 8 = 50\\n 2x = 42\\n x = 21\\nThe lower shelf has 21 books, and the upper shelf has 21 + 8 = 29 books.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 108,
+      "completion_tokens": 171,
+      "latency_ms": 4575479.35,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "885ba25d1398d34bb0e24c40c5f74e35f1aed8683b0e0c6e02ff36c19c325e0e": {
+    "answer": "{\"answer\": \"Two fifths of 45 learners is 2/5 × 45 = 18 learners.\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 101,
+      "completion_tokens": 93,
+      "latency_ms": 4599939.98,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cca300133fb96fbebb891def8a4099f699661576f1829a98a40b499ba8882cb1": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 199, \\\"date\\\": \\\"2026-08-03\\\", \\\"sender\\\": \\\"SENDER-H8\\\", \\\"purpose\\\": \\\"mobile recharge\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 147,
+      "completion_tokens": 162,
+      "latency_ms": 18257.51,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "816e45ffef6f995c781286d00a3731bdb5162fccec9964057f0ef6b958af28eb": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 2680, \\\"date\\\": \\\"2028-05-27\\\", \\\"sender\\\": \\\"SENDER-AE2\\\", \\\"purpose\\\": \\\"drawing pencils\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 149,
+      "completion_tokens": 182,
+      "latency_ms": 19791.74,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "8ae5490067f8c0c15f7c37f6de5a06e120a558717e8c8ec20a4ef688343be2c7": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 275, \\\"date\\\": \\\"2027-12-30\\\", \\\"sender\\\": \\\"SENDER-Z6\\\", \\\"purpose\\\": \\\"notebook binding\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 154,
+      "completion_tokens": 222,
+      "latency_ms": 23220.37,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "b10a905c21e2078fcca7427471554a96790ddc82612fe2cbaac278a93de2dff5": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 730, \\\"date\\\": \\\"2026-10-15\\\", \\\"sender\\\": \\\"SENDER-K1\\\", \\\"purpose\\\": \\\"auto-rickshaw fare\\\"}\", \"confidence\": 0.98}",
+    "stats": {
+      "prompt_tokens": 157,
+      "completion_tokens": 269,
+      "latency_ms": 23222.01,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "0b1ed2b79054bc2fedc317dfc2ad7bf58f69441a68cb98049bf55bddd305723a": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 875, \\\"date\\\": \\\"2026-02-11\\\", \\\"sender\\\": \\\"SENDER-B2\\\", \\\"purpose\\\": \\\"bus-pass renewal\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 157,
+      "completion_tokens": 200,
+      "latency_ms": 14736.86,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "d52a877b5067857a892d855058b663ea0405487b358cc604a61daa8ca76b0822": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 1320, \\\"date\\\": \\\"2026-03-08\\\", \\\"sender\\\": \\\"SENDER-C3\\\", \\\"purpose\\\": \\\"ghar ka ration\\\"}\", \"confidence\": 0.97}",
+    "stats": {
+      "prompt_tokens": 155,
+      "completion_tokens": 204,
+      "latency_ms": 14134.77,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cd243de8bb2a6a4f71ae8afdde3b4c52cbb26109b97bec056cd54fa9d8fa47e1": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 3075, \\\"date\\\": \\\"2026-07-12\\\", \\\"sender\\\": \\\"yaar\\\", \\\"purpose\\\": \\\"school project material\\\"}\", \"confidence\": 0.68}",
+    "stats": {
+      "prompt_tokens": 156,
+      "completion_tokens": 339,
+      "latency_ms": 12635.14,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "c1fc50277b84bd14a7034417155922d46e0d1955581e8080f79f4659abe93f96": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 3330, \\\"date\\\": \\\"2027-11-11\\\", \\\"sender\\\": \\\"SENDER-Y5\\\", \\\"purpose\\\": \\\"medicine organizer ke liye\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 153,
+      "completion_tokens": 202,
+      "latency_ms": 17448.7,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "094a0b75af3b385643c3cd3e0e84f2e7733b9d1922ddfa59ac11d0887cbf006e": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 1150, \\\"date\\\": \\\"2027-08-14\\\", \\\"sender\\\": \\\"SENDER-V2\\\", \\\"purpose\\\": \\\"blanket cover\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 159,
+      "completion_tokens": 229,
+      "latency_ms": 5523.34,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "640c2a81fb2ba8388b1c23cb8897bc481d290f7d6f982582500d35f8e17d56d1": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 415, \\\"date\\\": \\\"2027-07-20\\\", \\\"sender\\\": \\\"U1\\\", \\\"purpose\\\": \\\"school tiffin box\\\"}\", \"confidence\": 0.99}",
+    "stats": {
+      "prompt_tokens": 150,
+      "completion_tokens": 206,
+      "latency_ms": 11162.94,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "9c1d616e666b0cc3cae61601c7ed00ca7fdc297a1673873df1cb01542556c74e": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 250, \\\"date\\\": \\\"2026-12-19\\\", \\\"sender\\\": \\\"\\\", \\\"purpose\\\": \\\"art paper\\\"}\", \"confidence\": 0.68}",
+    "stats": {
+      "prompt_tokens": 157,
+      "completion_tokens": 404,
+      "latency_ms": 24867.31,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "4c454352dbc913120ccb3cc6144f4437ceffa0f4cc0161b0c760e001d80b6923": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 2025, \\\"date\\\": \\\"2027-09-05\\\", \\\"sender\\\": \\\"SENDER-W3\\\", \\\"purpose\\\": \\\"train-station snack\\\"}\", \"confidence\": 0.96}",
+    "stats": {
+      "prompt_tokens": 155,
+      "completion_tokens": 227,
+      "latency_ms": 18527.82,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "bbc083e01e5f0a29f0553b8baf8215e5fda46879524906287b60993c483e88d3": {
+    "answer": "{\"answer\": \"{\\\"amount\\\": 5050, \\\"date\\\": \\\"2028-03-22\\\", \\\"sender\\\": \\\"SENDER-AC9\\\", \\\"purpose\\\": \\\"ceiling-fan service\\\"}\", \"confidence\": 0.78}",
+    "stats": {
+      "prompt_tokens": 155,
+      "completion_tokens": 336,
+      "latency_ms": 23754.36,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|E028|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 85,
+      "latency_ms": 13726.06,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|E002|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 90,
+      "completion_tokens": 103,
+      "latency_ms": 15346.5,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|E014|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 85,
+      "completion_tokens": 107,
+      "latency_ms": 17414.96,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|E019|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 90,
+      "completion_tokens": 84,
+      "latency_ms": 17697.11,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E019|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 90,
+      "completion_tokens": 171,
+      "latency_ms": 19386.9,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|E028|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 351,
+      "latency_ms": 28965.85,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|E002|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 90,
+      "completion_tokens": 375,
+      "latency_ms": 37401.65,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E003|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 90,
+      "completion_tokens": 75,
+      "latency_ms": 16591.75,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E014|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 85,
+      "completion_tokens": 378,
+      "latency_ms": 36844.26,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E018|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 99,
+      "latency_ms": 19380.45,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E003|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 90,
+      "completion_tokens": 177,
+      "latency_ms": 15112.46,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E005|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 88,
+      "completion_tokens": 85,
+      "latency_ms": 15242.81,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|E029|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 90,
+      "completion_tokens": 75,
+      "latency_ms": 18720.92,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E018|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 208,
+      "latency_ms": 19517.51,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E025|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 88,
+      "completion_tokens": 87,
+      "latency_ms": 21906.67,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E005|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 88,
+      "completion_tokens": 194,
+      "latency_ms": 27954.0,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|E029|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 90,
+      "completion_tokens": 178,
+      "latency_ms": 27655.01,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E008|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 87,
+      "latency_ms": 22346.41,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E025|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 88,
+      "completion_tokens": 160,
+      "latency_ms": 19235.91,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E009|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 88,
+      "completion_tokens": 68,
+      "latency_ms": 14154.09,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|E024|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 84,
+      "completion_tokens": 118,
+      "latency_ms": 17166.18,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|E001|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 93,
+      "completion_tokens": 94,
+      "latency_ms": 8711.54,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E001|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 93,
+      "completion_tokens": 186,
+      "latency_ms": 7865.24,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|E009|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 88,
+      "completion_tokens": 195,
+      "latency_ms": 21461.58,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|E008|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 362,
+      "latency_ms": 33955.07,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|E004|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 87,
+      "completion_tokens": 98,
+      "latency_ms": 13103.6,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|H003|t0.2|a0": {
+    "answer": "144 pages ÷ 12 sections = 12 pages per section.\n\nEach of the 12 equal sections contains 12 pages.",
+    "stats": {
+      "prompt_tokens": 77,
+      "completion_tokens": 99,
+      "latency_ms": 4804.38,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E004|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 87,
+      "completion_tokens": 287,
+      "latency_ms": 7808.07,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|H004|t0.2|a0": {
+    "answer": "Three buses × 24 students per bus = 72 students on the buses\n\n72 students + 7 students traveling separately = 79 students\n\nThere are 79 students altogether.",
+    "stats": {
+      "prompt_tokens": 79,
+      "completion_tokens": 103,
+      "latency_ms": 7843.3,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E024|t0.2|a0": {
+    "answer": "safe",
+    "stats": {
+      "prompt_tokens": 84,
+      "completion_tokens": 374,
+      "latency_ms": 40752.27,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H003|t0.2|a0": {
+    "answer": "144 ÷ 12 = 12 pages\n\nEach of the 12 sections contains 12 pages.",
+    "stats": {
+      "prompt_tokens": 77,
+      "completion_tokens": 214,
+      "latency_ms": 18019.66,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|H022|t0.2|a0": {
+    "answer": "For a square the perimeter is 4 times the length of one side.\n\n$$P = 4 \\times s$$\n\n$$s = \\frac{P}{4} = \\frac{52\\ \\text{m}}{4} = 13\\ \\text{m}$$\n\nEach side is 13 metres long.",
+    "stats": {
+      "prompt_tokens": 75,
+      "completion_tokens": 128,
+      "latency_ms": 10733.54,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|E021|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 89,
+      "completion_tokens": 78,
+      "latency_ms": 36775.55,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|H007|t0.2|a0": {
+    "answer": "48 rolls ÷ 5 baskets\n\n5 × 9 = 45 rolls placed\n\n48 − 45 = 3 rolls left over\n\nEach basket gets 9 rolls and 3 rolls remain.",
+    "stats": {
+      "prompt_tokens": 84,
+      "completion_tokens": 120,
+      "latency_ms": 11994.61,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|H004|t0.2|a0": {
+    "answer": "3 buses × 24 students per bus = 72 students on the buses\n\n72 students + 7 students travelling separately = 79 students\n\nAltogether there are 79 students.",
+    "stats": {
+      "prompt_tokens": 79,
+      "completion_tokens": 194,
+      "latency_ms": 17606.24,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|H005|t0.2|a0": {
+    "answer": "250 tokens − 42 tokens/notebook × 3 notebooks\n= 250 − 126\n= 124 tokens\n\n124 tokens remain.",
+    "stats": {
+      "prompt_tokens": 79,
+      "completion_tokens": 91,
+      "latency_ms": 13330.05,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|E021|t0.2|a0": {
+    "answer": "scam",
+    "stats": {
+      "prompt_tokens": 89,
+      "completion_tokens": 193,
+      "latency_ms": 19225.44,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H022|t0.2|a0": {
+    "answer": "For a square\n\nPerimeter = 4 × side\n\nSo side = Perimeter ÷ 4\n\nside = 52 m ÷ 4 = 13 m\n\nEach side is 13 metres long.",
+    "stats": {
+      "prompt_tokens": 75,
+      "completion_tokens": 238,
+      "latency_ms": 25099.59,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H007|t0.2|a0": {
+    "answer": "48 ÷ 5 = 9 remainder 3\n\n5 baskets × 9 rolls = 45 rolls placed\n\n48 – 45 = 3 rolls are left over, with 9 rolls in each basket.",
+    "stats": {
+      "prompt_tokens": 84,
+      "completion_tokens": 244,
+      "latency_ms": 22233.04,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|H011|t0.2|a0": {
+    "answer": "96 cards total − cards in the first two piles = cards in the third pile\n\n96 − 35 − 28 = 96 − 63 = 33\n\nThere are 33 cards in the third pile.",
+    "stats": {
+      "prompt_tokens": 88,
+      "completion_tokens": 110,
+      "latency_ms": 8622.2,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|H029|t0.2|a0": {
+    "answer": "The terms are multiplied by 3 each time\n\n* 2 × 3 = 6\n* 6 × 3 = 18\n* 18 × 3 = 54\n\nThe next term is **54**.",
+    "stats": {
+      "prompt_tokens": 83,
+      "completion_tokens": 138,
+      "latency_ms": 12437.39,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|H014|t0.2|a0": {
+    "answer": "19 + 23 + 17 = 59 pages\n\nMonday 19 + Tuesday 23 = 42\n42 + Wednesday 17 = 59 pages in all.",
+    "stats": {
+      "prompt_tokens": 82,
+      "completion_tokens": 91,
+      "latency_ms": 8566.44,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|H005|t0.2|a0": {
+    "answer": "250 tokens - 3 × 42 tokens spent\n\n3 × 42 = 126 tokens spent\n\n250 - 126 = 124 tokens\n\n124 tokens remain.",
+    "stats": {
+      "prompt_tokens": 79,
+      "completion_tokens": 203,
+      "latency_ms": 19119.75,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|H023|t0.2|a0": {
+    "answer": "5 levels × 6 tiles per level = 30 tiles on display\n30 tiles + 4 loose tiles = **34 tiles** in total.",
+    "stats": {
+      "prompt_tokens": 82,
+      "completion_tokens": 101,
+      "latency_ms": 2251.95,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|H014|t0.2|a0": {
+    "answer": "19 + 23 + 17 = 42 + 17 = 59 pages\n\nThe reader finished 59 pages in the three days.",
+    "stats": {
+      "prompt_tokens": 82,
+      "completion_tokens": 185,
+      "latency_ms": 4523.27,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H029|t0.2|a0": {
+    "answer": "The terms are multiplied by 3 each time\n\n* 2 × 3 = 6\n* 6 × 3 = 18\n* 18 × 3 = 54\n\nSo the pattern is 2, 6, 18, 54, …",
+    "stats": {
+      "prompt_tokens": 83,
+      "completion_tokens": 376,
+      "latency_ms": 7413.59,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|H006|t0.2|a0": {
+    "answer": "2.5 hours = 2 h 30 min = 150 min\n\nRate = 6 cards / 10 min\n\nNumber of 10-min intervals in 150 min:\n150 min ÷ 10 min = 15 intervals\n\nCards = 15 × 6 = 90 cards\n\nAt a steady 0.6 card/min pace the maker finishes 90 cards in the 2.5-hour workshop.",
+    "stats": {
+      "prompt_tokens": 87,
+      "completion_tokens": 200,
+      "latency_ms": 4056.47,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|H011|t0.2|a0": {
+    "answer": "96 - 35 - 28 = 33 cards\n\nThe first two piles use 35 + 28 = 63 cards, leaving 96 - 63 = 33 cards for the third pile.",
+    "stats": {
+      "prompt_tokens": 88,
+      "completion_tokens": 211,
+      "latency_ms": 13872.57,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|H025|t0.2|a0": {
+    "answer": "8 bottles × 750 ml per bottle = 6,000 ml\n\nAltogether they contain 6,000 millilitres, which is 6 litres.",
+    "stats": {
+      "prompt_tokens": 76,
+      "completion_tokens": 101,
+      "latency_ms": 8087.29,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|H001|t0.2|a0": {
+    "answer": "18 blue beads + 27 yellow beads = 45 beads in the tray.",
+    "stats": {
+      "prompt_tokens": 81,
+      "completion_tokens": 72,
+      "latency_ms": 5321.66,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|H025|t0.2|a0": {
+    "answer": "8 bottles × 750 ml / bottle = 6 000 ml\n\nThat is 6 000 millilitres, i.e. 6 litres altogether.",
+    "stats": {
+      "prompt_tokens": 76,
+      "completion_tokens": 240,
+      "latency_ms": 10871.46,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H001|t0.2|a0": {
+    "answer": "18 blue beads + 27 yellow beads = 45 beads in all\n\n18 + 27 = 45 beads total in the tray.",
+    "stats": {
+      "prompt_tokens": 81,
+      "completion_tokens": 194,
+      "latency_ms": 10438.97,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H023|t0.2|a0": {
+    "answer": "5 levels × 6 tiles/level = 30 tiles on the display.\n\n30 on display + 4 loose = 34 tiles in total.",
+    "stats": {
+      "prompt_tokens": 82,
+      "completion_tokens": 346,
+      "latency_ms": 25285.11,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H006|t0.2|a0": {
+    "answer": "2.5 h = 2 h 30 min = 150 min\n\nRate = 6 cards / 10 min\n\nNumber of 10-min blocks in 150 min = 150 / 10 = 15\n\nCards = 15 × 6 = 90 cards\n\nAt 6 cards per 10 min = 36 cards per hour, 2.5 h × 36 cards/h = 90 cards.",
+    "stats": {
+      "prompt_tokens": 87,
+      "completion_tokens": 395,
+      "latency_ms": 21805.05,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|H026|t0.2|a0": {
+    "answer": "Two fifths of the class is\n\n$$\\frac{2}{5}\\times 45 = \\frac{90}{5}=18$$\n\nSo 18 learners choose the music activity.",
+    "stats": {
+      "prompt_tokens": 79,
+      "completion_tokens": 102,
+      "latency_ms": 6012.72,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|H019|t0.2|a0": {
+    "answer": "Let the number of books on the lower shelf be $x$.\n\nThen the upper shelf has $x+8$ books.\n\n$$x + (x+8) = 50$$\n\n$$2x + 8 = 50$$\n$$2x = 42$$\n$$x = 21$$\n\nThe lower shelf has **21 books**, and the upper shelf has $21+8 = 29$ books.",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 162,
+      "latency_ms": 3068.6,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|H009|t0.2|a0": {
+    "answer": "Perimeter $P = 2(L+W)$\n\n$30 = 2(9 + W)$\n$15 = 9 + W$\n$W = 15 - 9 = 6\\;{\\rm m}$\n\nArea $= L \\times W = 9\\;{\\rm m} \\times 6\\;{\\rm m} = 54\\;{\\rm m^{2}}$\n",
+    "stats": {
+      "prompt_tokens": 81,
+      "completion_tokens": 167,
+      "latency_ms": 11806.6,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|M013|t0.2|a0": {
+    "answer": "{\"amount\": 980, \"date\": \"2027-01-13\", \"sender\": \"SENDER-N4\", \"purpose\": \"cooking gas share\"}",
+    "stats": {
+      "prompt_tokens": 119,
+      "completion_tokens": 197,
+      "latency_ms": 13510.75,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|H009|t0.2|a0": {
+    "answer": "Perimeter $P = 2(L+W)$\n\n$30 = 2(9+W)$\n\n$15 = 9+W$\n\n$W = 6\\;{\\rm m}$\n\nArea $= L\\times W = 9\\;{\\rm m}\\times 6\\;{\\rm m}=54\\;{\\rm m^{2}}$",
+    "stats": {
+      "prompt_tokens": 81,
+      "completion_tokens": 334,
+      "latency_ms": 7356.17,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H026|t0.2|a0": {
+    "answer": "Two fifths of the class is\n\n45 ÷ 5 = 9 learners per fifth\n\n9 × 2 = 18 learners\n\nSo 18 of the 45 learners choose the music activity.",
+    "stats": {
+      "prompt_tokens": 79,
+      "completion_tokens": 192,
+      "latency_ms": 16399.7,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|H019|t0.2|a0": {
+    "answer": "Let the number on the lower shelf be $L$.\n\nThen the upper shelf has $L+8$ books.\n\n$$L + (L+8)=50$$\n\n$$2L+8=50$$\n$$2L=42$$\n$$L=21$$\n\nThe lower shelf has 21 books and the upper shelf has $21+8=29$ books, $21+29=50$.",
+    "stats": {
+      "prompt_tokens": 86,
+      "completion_tokens": 308,
+      "latency_ms": 17219.68,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M004|t0.2|a0": {
+    "answer": "{\"amount\": 65, \"date\": \"2026-04-17\", \"sender\": \"SENDER-D4\", \"purpose\": \"notebook\"}",
+    "stats": {
+      "prompt_tokens": 120,
+      "completion_tokens": 236,
+      "latency_ms": 13111.08,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|M024|t0.2|a0": {
+    "answer": "{\"amount\": 275, \"date\": \"2027-12-30\", \"sender\": \"SENDER-Z6\", \"purpose\": \"notebook binding\"}",
+    "stats": {
+      "prompt_tokens": 121,
+      "completion_tokens": 252,
+      "latency_ms": 10756.49,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M013|t0.2|a0": {
+    "answer": "{\"amount\": 980, \"date\": \"2027-01-13\", \"sender\": \"SENDER-N4\", \"purpose\": \"cooking gas share\"}",
+    "stats": {
+      "prompt_tokens": 119,
+      "completion_tokens": 416,
+      "latency_ms": 21898.87,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M010|t0.2|a0": {
+    "answer": "{\"amount\": 730, \"date\": \"2026-10-15\", \"sender\": \"SENDER-K1\", \"purpose\": \"auto-rickshaw fare\"}",
+    "stats": {
+      "prompt_tokens": 124,
+      "completion_tokens": 251,
+      "latency_ms": 10548.33,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M024|t0.2|a0": {
+    "answer": "{\"amount\": 275, \"date\": \"2027-12-30\", \"sender\": \"SENDER-Z6\", \"purpose\": \"notebook binding\"}",
+    "stats": {
+      "prompt_tokens": 121,
+      "completion_tokens": 461,
+      "latency_ms": 22069.16,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M029|t0.2|a0": {
+    "answer": "{\"amount\": 2680, \"date\": \"2028-05-27\", \"sender\": \"SENDER-AE2\", \"purpose\": \"drawing pencils\"}",
+    "stats": {
+      "prompt_tokens": 116,
+      "completion_tokens": 247,
+      "latency_ms": 38996.91,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|M008|t0.2|a0": {
+    "answer": "{\"amount\": 199, \"date\": \"2026-08-03\", \"sender\": \"SENDER-H8\", \"purpose\": \"mobile recharge\"}",
+    "stats": {
+      "prompt_tokens": 114,
+      "completion_tokens": 222,
+      "latency_ms": 6040.66,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M008|t0.2|a0": {
+    "answer": "{\"amount\": 199, \"date\": \"2026-08-03\", \"sender\": \"SENDER-H8\", \"purpose\": \"mobile recharge\"}",
+    "stats": {
+      "prompt_tokens": 114,
+      "completion_tokens": 406,
+      "latency_ms": 6460.39,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|M010|t0.2|a0": {
+    "answer": "{\"amount\": 730, \"date\": \"2026-10-15\", \"sender\": \"SENDER-K1\", \"purpose\": \"auto-rickshaw fare\"}",
+    "stats": {
+      "prompt_tokens": 124,
+      "completion_tokens": 468,
+      "latency_ms": 23038.12,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M002|t0.2|a0": {
+    "answer": "{\"amount\": 875, \"date\": \"2026-02-11\", \"sender\": \"SENDER-B2\", \"purpose\": \"bus-pass renewal\"}",
+    "stats": {
+      "prompt_tokens": 124,
+      "completion_tokens": 177,
+      "latency_ms": 6427.46,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|M003|t0.2|a0": {
+    "answer": "{\"amount\": 1320, \"date\": \"2026-03-08\", \"sender\": \"SENDER-C3\", \"purpose\": \"ghar ka ration\"}",
+    "stats": {
+      "prompt_tokens": 122,
+      "completion_tokens": 233,
+      "latency_ms": 7047.5,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M002|t0.2|a0": {
+    "answer": "{\"amount\": 875, \"date\": \"2026-02-11\", \"sender\": \"SENDER-B2\", \"purpose\": \"bus-pass renewal\"}",
+    "stats": {
+      "prompt_tokens": 124,
+      "completion_tokens": 391,
+      "latency_ms": 18322.25,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|M029|t0.2|a0": {
+    "answer": "{\"amount\": 2680, \"date\": \"2028-05-27\", \"sender\": \"SENDER-AE2\", \"purpose\": \"drawing pencils\"}",
+    "stats": {
+      "prompt_tokens": 116,
+      "completion_tokens": 980,
+      "latency_ms": 42713.48,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M023|t0.2|a0": {
+    "answer": "{\"amount\": 3330, \"date\": \"2027-11-11\", \"sender\": \"SENDER-Y5\", \"purpose\": \"medicine organizer ke liye\"}",
+    "stats": {
+      "prompt_tokens": 120,
+      "completion_tokens": 226,
+      "latency_ms": 10670.84,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M003|t0.2|a0": {
+    "answer": "{\n  \"amount\": 1320,\n  \"date\": \"2026-03-08\",\n  \"sender\": \"SENDER-C3\",\n  \"purpose\": \"ghar ka ration\"\n}",
+    "stats": {
+      "prompt_tokens": 122,
+      "completion_tokens": 479,
+      "latency_ms": 27670.92,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M019|t0.2|a0": {
+    "answer": "{\"amount\": 415, \"date\": \"2027-07-20\", \"sender\": \"SENDER-U1\", \"purpose\": \"school tiffin box\"}",
+    "stats": {
+      "prompt_tokens": 117,
+      "completion_tokens": 223,
+      "latency_ms": 8165.33,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|M007|t0.2|a0": {
+    "answer": "{\"amount\": 3075, \"date\": \"2026-07-12\", \"sender\": \"SENDER-G7\", \"purpose\": \"school project material ke liye\"}",
+    "stats": {
+      "prompt_tokens": 123,
+      "completion_tokens": 359,
+      "latency_ms": 20942.78,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M023|t0.2|a0": {
+    "answer": "{\"amount\":3330,\"date\":\"2027-11-11\",\"sender\":\"SENDER-Y5\",\"purpose\":\"medicine organizer ke liye\"}",
+    "stats": {
+      "prompt_tokens": 120,
+      "completion_tokens": 494,
+      "latency_ms": 24146.29,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|M004|t0.2|a0": {
+    "answer": "{\"amount\": 65, \"date\": \"2026-04-17\", \"sender\": \"SENDER-D4\", \"purpose\": \"notebook\"}",
+    "stats": {
+      "prompt_tokens": 120,
+      "completion_tokens": 1794,
+      "latency_ms": 99720.0,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M020|t0.2|a0": {
+    "answer": "{\"amount\": 1150, \"date\": \"2027-08-14\", \"sender\": \"SENDER-V2\", \"purpose\": \"blanket cover\"}",
+    "stats": {
+      "prompt_tokens": 126,
+      "completion_tokens": 218,
+      "latency_ms": 11434.92,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "cheap|M012|t0.2|a0": {
+    "answer": "{\"amount\": 250, \"date\": \"2026-12-19\", \"sender\": null, \"purpose\": \"art paper\"}",
+    "stats": {
+      "prompt_tokens": 124,
+      "completion_tokens": 381,
+      "latency_ms": 18616.02,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M020|t0.2|a0": {
+    "answer": "{\"amount\":1150,\"date\":\"2027-08-14\",\"sender\":\"SENDER-V2\",\"purpose\":\"blanket cover\"}",
+    "stats": {
+      "prompt_tokens": 126,
+      "completion_tokens": 543,
+      "latency_ms": 4488.65,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M021|t0.2|a0": {
+    "answer": "{\"amount\": 2025, \"date\": \"2027-09-05\", \"sender\": \"SENDER-W3\", \"purpose\": \"train-station snack\"}",
+    "stats": {
+      "prompt_tokens": 122,
+      "completion_tokens": 252,
+      "latency_ms": 9104.54,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M019|t0.2|a0": {
+    "answer": "{\n  \"amount\": 415,\n  \"date\": \"2027-07-20\",\n  \"sender\": \"U1\",\n  \"purpose\": \"school tiffin box\"\n}",
+    "stats": {
+      "prompt_tokens": 117,
+      "completion_tokens": 924,
+      "latency_ms": 49749.35,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|M021|t0.2|a0": {
+    "answer": "{\n  \"amount\": 2025,\n  \"date\": \"2027-09-05\",\n  \"sender\": \"W3\",\n  \"purpose\": \"train-station snack\"\n}",
+    "stats": {
+      "prompt_tokens": 122,
+      "completion_tokens": 686,
+      "latency_ms": 10743.53,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "cheap|M027|t0.2|a0": {
+    "answer": "{\"amount\": 5050, \"date\": \"2028-03-22\", \"sender\": \"SENDER-AC9\", \"purpose\": \"ceiling-fan service\"}",
+    "stats": {
+      "prompt_tokens": 122,
+      "completion_tokens": 292,
+      "latency_ms": 10050.43,
+      "tier": "cheap",
+      "cost_units": null
+    }
+  },
+  "strong|M007|t0.2|a0": {
+    "answer": "{\n  \"amount\": 3075,\n  \"date\": \"2026-07-12\",\n  \"sender\": \"SENDER-G7\",\n  \"purpose\": \"school project material\"\n}",
+    "stats": {
+      "prompt_tokens": 123,
+      "completion_tokens": 1373,
+      "latency_ms": 79241.16,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|M012|t0.2|a0": {
+    "answer": "{\"amount\": 250, \"date\": \"2026-12-19\", \"sender\": \"SENDER-M3\", \"purpose\": \"art paper\"}",
+    "stats": {
+      "prompt_tokens": 124,
+      "completion_tokens": 1376,
+      "latency_ms": 71604.4,
+      "tier": "strong",
+      "cost_units": null
+    }
+  },
+  "strong|M027|t0.2|a0": {
+    "answer": "{\"amount\": 5050, \"date\": \"2028-03-22\", \"sender\": \"AC9\", \"purpose\": \"ceiling-fan service\"}",
+    "stats": {
+      "prompt_tokens": 122,
+      "completion_tokens": 1373,
+      "latency_ms": 68681.48,
+      "tier": "strong",
+      "cost_units": null
+    }
+  }
+}

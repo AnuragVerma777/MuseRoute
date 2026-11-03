@@ -6,6 +6,7 @@ import hashlib
 import json
 import math
 import re
+import time
 from pathlib import Path
 from typing import Any
 
@@ -54,7 +55,18 @@ def _cached_chat(
     saved = cache.get(key)
     if isinstance(saved, dict) and isinstance(saved.get("answer"), str) and isinstance(saved.get("stats"), dict):
         return saved["answer"], saved["stats"]
-    answer, stats = client.chat(tier, messages, **params)
+    if isinstance(saved, dict) and isinstance(saved.get("error"), str):
+        error_type = getattr(client, saved.get("error_type", "MuseRouteError"), client.MuseRouteError)
+        raise error_type(saved["error"])
+    try:
+        answer, stats = client.chat(tier, messages, **params)
+    except Exception as exc:
+        cache[key] = {
+            "error_type": type(exc).__name__,
+            "error": client.redact_secrets(exc),
+        }
+        _save_cache(cache)
+        raise
     cache[key] = {"answer": answer, "stats": stats}
     _save_cache(cache)
     return answer, stats
@@ -132,7 +144,7 @@ def _record_call(
 ) -> None:
     row: dict[str, Any] = {"tier": tier, "sample": sample}
     if error is not None:
-        row.update({"status": "error", "error": f"{type(error).__name__}: {error}"})
+        row.update({"status": "error", "error": f"{type(error).__name__}: {client.redact_secrets(error)}"})
     else:
         stats = stats or {}
         row.update(
@@ -155,6 +167,7 @@ def _attempt(
     temperature: float,
     sample: int,
 ) -> tuple[str | None, float, dict[str, Any] | None, Exception | None]:
+    started = time.perf_counter()
     try:
         answer, stats = _cached_chat(
             cache,
@@ -165,6 +178,7 @@ def _attempt(
         )
     except Exception as exc:
         _record_call(calls, tier, sample, error=exc)
+        calls[-1]["latency_ms"] = round((time.perf_counter() - started) * 1000, 2)
         return None, 0.0, None, exc
     _record_call(calls, tier, sample, stats=stats)
     parsed_answer, confidence, parse_error = _parse_envelope(answer)
@@ -174,16 +188,26 @@ def _attempt(
 
 
 def _totals(calls: list[dict[str, Any]]) -> dict[str, Any]:
-    prompt_tokens = [c["prompt_tokens"] for c in calls if c.get("status") == "ok" and isinstance(c.get("prompt_tokens"), int)]
-    completion_tokens = [c["completion_tokens"] for c in calls if c.get("status") == "ok" and isinstance(c.get("completion_tokens"), int)]
-    latencies = [c["latency_ms"] for c in calls if c.get("status") == "ok" and isinstance(c.get("latency_ms"), (int, float))]
+    successful = [c for c in calls if c.get("status") == "ok"]
+    prompt_tokens = [c.get("prompt_tokens") for c in successful]
+    completion_tokens = [c.get("completion_tokens") for c in successful]
+    latencies = [c.get("latency_ms") for c in calls]
     successful = [c for c in calls if c.get("status") == "ok"]
     costs = [c.get("cost_units") for c in successful]
+    has_errors = any(c.get("status") != "ok" for c in calls)
     return {
-        "total_prompt_tokens": sum(prompt_tokens),
-        "total_completion_tokens": sum(completion_tokens),
-        "total_latency_ms": round(sum(latencies), 2),
-        "total_cost_units": None if not costs or any(value is None for value in costs) else sum(costs),
+        "total_prompt_tokens": (
+            sum(prompt_tokens) if not has_errors and prompt_tokens and all(isinstance(v, int) for v in prompt_tokens) else None
+        ),
+        "total_completion_tokens": (
+            sum(completion_tokens) if not has_errors and completion_tokens and all(isinstance(v, int) for v in completion_tokens) else None
+        ),
+        "total_latency_ms": (
+            round(sum(latencies), 2) if latencies and all(isinstance(v, (int, float)) for v in latencies) else None
+        ),
+        "total_cost_units": (
+            None if has_errors or not costs or any(value is None for value in costs) else sum(costs)
+        ),
     }
 
 
