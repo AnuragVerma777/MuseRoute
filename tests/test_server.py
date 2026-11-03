@@ -52,8 +52,7 @@ def test_api_route_returns_full_trace(monkeypatch):
 
 
 def test_api_recommend_returns_tier_metadata_without_answer(monkeypatch):
-    trace = _trace()
-    monkeypatch.setattr(server.router, "route", lambda messages, policy: ("private generated text", trace))
+    monkeypatch.setattr(server.router, "route", lambda *args: pytest.fail("recommendation should not call router"))
     client._TIERS["cheap"].update({"extra_params": {"reasoning_effort": "low"}})
 
     result = server.api_recommend({"messages": [{"role": "user", "content": "test"}]})
@@ -61,25 +60,27 @@ def test_api_recommend_returns_tier_metadata_without_answer(monkeypatch):
     assert result["selected_tier"] == "cheap"
     assert result["model_id"] == "meta/muse-spark-open"
     assert result["extra_params"] == {"reasoning_effort": "low"}
+    assert result["prompt_class"] == "direct"
+    assert result["selection_method"] == "text_cue_heuristic"
+    assert "calls" not in result
     assert "answer" not in result
-    assert "private generated text" not in str(result)
 
 
-def test_api_recommend_can_select_strong_without_a_model_call(monkeypatch):
-    monkeypatch.setattr(server.router, "route", lambda *args: pytest.fail("manual strong selection must not call router"))
+def test_api_recommend_detects_complex_prompt_and_selects_strong(monkeypatch):
+    monkeypatch.setattr(server.router, "route", lambda *args: pytest.fail("recommendation should not call router"))
     client._TIERS["strong"].update({"extra_params": {"reasoning_effort": "high"}})
 
     result = server.api_recommend({
-        "mode": "strong",
-        "messages": [{"role": "user", "content": "complex prompt"}],
+        "messages": [{"role": "user", "content": "Solve this logic puzzle with multiple constraints and prove that the result follows."}],
     })
 
     assert result["selected_tier"] == "strong"
     assert result["model_id"] == "meta/muse-glimmer-30b"
     assert result["extra_params"] == {"reasoning_effort": "high"}
-    assert result["calls"] == []
+    assert result["prompt_class"] == "complex"
+    assert result["selection_method"] == "text_cue_heuristic"
     assert "answer" not in result
-    assert "no model call was made" in result["reason"]
+    assert "proof or deduction" in result["reason"]
 
 
 def test_demo_recommend_replays_choice_without_model_call(monkeypatch, tmp_path):
@@ -204,7 +205,7 @@ def test_get_root_serves_plain_static_page():
     assert 'id="recommend-form"' in html
     assert 'id="recommendation"' in html
     assert 'id="prompt-input"' in html
-    assert 'id="mode-select"' in html
+    assert "Strong tier" not in html
     assert any(route.path == "/" for route in server.app.routes)
 
 

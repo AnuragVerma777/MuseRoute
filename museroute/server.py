@@ -317,58 +317,57 @@ def api_route(payload: dict[str, Any], demo: bool = False) -> dict[str, Any]:
 
 @app.post("/api/recommend")
 def api_recommend(payload: dict[str, Any], demo: bool = False) -> dict[str, Any]:
-    """Route a prompt and return only the selected tier metadata, never its answer."""
-    mode = payload.get("mode", "auto")
-    if mode not in {"auto", "strong"}:
-        raise HTTPException(status_code=422, detail="mode must be 'auto' or 'strong'")
-    if mode == "strong":
-        try:
-            _validate_configured_models()
-        except client.ConfigurationError as exc:
-            raise HTTPException(status_code=503, detail=str(exc)) from exc
-        config = client._TIERS.get("strong") or {}
-        model_id = config.get("model_id") if isinstance(config, dict) else None
-        if not model_id:
-            return {
-                "selected_tier": None,
-                "model_id": None,
-                "extra_params": None,
-                "reason": "Strong tier has no configured model_id.",
-                "escalated": False,
-                "calls": [],
-                "cached": False,
-            }
-        return {
-            "selected_tier": "strong",
-            "model_id": model_id,
-            "extra_params": config.get("extra_params"),
-            "reason": "strong_mode_selected_by_user; no model call was made",
-            "escalated": False,
-            "calls": [],
-            "cached": False,
-        }
-    if demo:
-        result = _demo_result(_find_demo_record(payload))
-        trace = result["route_trace"]
-    else:
-        messages = _messages(payload)
-        _answer, trace = _run_route(messages)
-    tier = trace.get("tier_used")
-    config = client._TIERS.get(tier) if isinstance(tier, str) else None
+    """Recommend a tier from prompt text only; never generate or return an answer."""
+    messages = _messages(payload)
+    try:
+        _validate_configured_models()
+    except client.ConfigurationError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    user_text = "\n".join(
+        str(message.get("content", ""))
+        for message in messages
+        if message.get("role") == "user"
+    ).casefold()
+    strong_cues = (
+        ("multi-step reasoning", ("step by step", "step-by-step", "multi-step", "multi step", "several steps", "multiple steps")),
+        ("proof or deduction", ("prove that", "proof", "derive", "deduce", "logic puzzle", "formal reasoning")),
+        ("comparison or trade-offs", ("compare and contrast", "compare both", "evaluate trade-offs", "trade-offs", "tradeoffs", "pros and cons")),
+        ("sequential reasoning", ("after that", "before that", "in sequence")),
+        ("multiple constraints", ("at least", "at most", "exactly one", "only if", "unless", "constraint", "constraints")),
+    )
+    matched_cue = next(
+        ((label, cue) for label, cues in strong_cues for cue in cues if cue in user_text),
+        None,
+    )
+    if matched_cue is None and "first" in user_text and "then" in user_text:
+        matched_cue = ("sequential reasoning", "first…then")
+    tier = "strong" if matched_cue else "cheap"
+    prompt_class = "complex" if matched_cue else "direct"
+    reason = (
+        f"Strong recommended: detected {matched_cue[0]} cue ({matched_cue[1]!r})."
+        if matched_cue
+        else "Cheap recommended: no recognized multi-step, proof, comparison, sequence, or constraint cue."
+    )
+    config = client._TIERS.get(tier)
     if not isinstance(config, dict):
         config = {}
+    if not config.get("model_id"):
+        return {
+            "selected_tier": None,
+            "model_id": None,
+            "extra_params": None,
+            "prompt_class": prompt_class,
+            "reason": f"{tier.title()} tier has no configured model_id.",
+            "selection_method": "text_cue_heuristic",
+        }
     return {
         "selected_tier": tier,
         "model_id": config.get("model_id"),
         "extra_params": config.get("extra_params"),
-        "reason": trace.get("reason"),
-        "escalated": trace.get("escalated"),
-        "calls": [
-            {"tier": call.get("tier"), "status": call.get("status")}
-            for call in trace.get("calls", [])
-            if isinstance(call, dict)
-        ],
-        "cached": bool(trace.get("cached")),
+        "prompt_class": prompt_class,
+        "reason": reason,
+        "selection_method": "text_cue_heuristic",
     }
 
 

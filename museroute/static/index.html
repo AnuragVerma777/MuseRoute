@@ -14,35 +14,30 @@
       <section class="selector" aria-labelledby="title">
         <p class="eyebrow">MUSE MODEL ROUTER</p>
         <h1 id="title">Which Muse tier fits your prompt?</h1>
-        <p class="intro">Enter a prompt to see the tier selected by MuseRoute. No generated answer is shown.</p>
+        <p class="intro">Enter a prompt. MuseRoute automatically estimates whether it is direct or complex and recommends a tier. No generated answer is shown.</p>
         <form id="recommend-form">
           <label class="visually-hidden" for="prompt-input">Your prompt</label>
           <textarea id="prompt-input" rows="3" placeholder="Ask or describe what you need…" required></textarea>
-          <label class="mode-select-label" for="mode-select">Routing mode
-            <select id="mode-select">
-              <option value="auto">Auto</option>
-              <option value="strong">Strong tier</option>
-            </select>
-          </label>
           <div class="form-footer">
             <span id="mode-note" role="status"></span>
-            <button id="recommend-button" type="submit">Find best tier <span aria-hidden="true">↑</span></button>
+            <button id="recommend-button" type="submit">Route prompt <span aria-hidden="true">↑</span></button>
           </div>
         </form>
 
         <section id="recommendation" class="result-card" aria-live="polite" hidden>
           <p class="eyebrow">MUSEROUTE RECOMMENDATION</p>
+          <p id="prompt-assessment" class="prompt-assessment"></p>
           <h2 id="selected-model">NOT MEASURED</h2>
           <p id="selected-mode" class="model-settings"></p>
           <p class="reason-line"><strong>Why:</strong> <span id="recommendation-reason"></span></p>
           <details id="diagnostic-details" hidden>
-            <summary>Routing details</summary>
+            <summary>Classification details</summary>
             <p id="recommendation-path"></p>
             <pre id="diagnostic-text"></pre>
           </details>
         </section>
         <p id="request-error" class="error-message" role="alert" hidden></p>
-        <p class="fine-print">MuseRoute reports the tier chosen by its policy. This is not a guarantee that the tier is better for every prompt.</p>
+        <p class="fine-print">Automatic routing uses text cues as a heuristic. It is not a measured claim that one tier is more accurate.</p>
       </section>
     </main>
   </body>

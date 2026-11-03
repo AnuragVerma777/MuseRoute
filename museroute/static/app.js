@@ -1,23 +1,10 @@
 (() => {
-  const demoMode = new URLSearchParams(window.location.search).get("demo") === "1";
   const el = (id) => document.getElementById(id);
   const form = el("recommend-form");
   const input = el("prompt-input");
-  const modeSelect = el("mode-select");
   const button = el("recommend-button");
 
-  const updateModeNote = () => {
-    if (modeSelect.value === "strong") {
-      el("mode-note").textContent = "Strong selected directly · no model call";
-      button.innerHTML = 'Select strong tier <span aria-hidden="true">↑</span>';
-    } else {
-      el("mode-note").textContent = demoMode
-        ? "Offline demo · exact saved prompts only · no model calls"
-        : "Auto checks the prompt and selects a tier";
-      button.innerHTML = 'Find best tier <span aria-hidden="true">↑</span>';
-    }
-  };
-  updateModeNote();
+  el("mode-note").textContent = "Automatic text-cue routing · no model calls";
 
   const requestJson = async (url, options) => {
     let response;
@@ -37,6 +24,7 @@
 
   const shortReason = (result) => {
     const reason = String(result.reason || "");
+    if (result.selection_method === "text_cue_heuristic") return reason || "Routing reason was not measured.";
     if (!result.selected_tier) {
       if (/WinError 10013|Failed to establish a new connection|ConnectionError|HTTPSConnectionPool/i.test(reason)) {
         return "The configured Muse host could not be reached, so MuseRoute could not select a tier.";
@@ -75,6 +63,9 @@
     const params = result.extra_params;
     el("recommendation").hidden = false;
     el("recommendation").classList.toggle("result-error", !selected);
+    el("prompt-assessment").textContent = result.prompt_class
+      ? `Prompt assessment: ${result.prompt_class}`
+      : "Prompt assessment: NOT MEASURED";
     el("selected-model").textContent = selected
       ? `${selected} tier · ${result.model_id || "model ID NOT MEASURED"}`
       : "No tier selected";
@@ -82,11 +73,12 @@
       ? Object.entries(params).map(([key, value]) => `${key}: ${JSON.stringify(value)}`).join(" · ")
       : "Tier settings: NOT MEASURED";
     el("recommendation-reason").textContent = shortReason(result);
-    const calls = Array.isArray(result.calls) ? result.calls : [];
-    el("recommendation-path").textContent = calls.length
-      ? calls.map((call) => `${call.tier} (${call.status})`).join(" → ")
-      : "NOT MEASURED";
-    el("diagnostic-text").textContent = JSON.stringify({ reason: result.reason, calls }, null, 2);
+    el("recommendation-path").textContent = result.selection_method || "NOT MEASURED";
+    el("diagnostic-text").textContent = JSON.stringify({
+      prompt_class: result.prompt_class,
+      selection_method: result.selection_method,
+      reason: result.reason,
+    }, null, 2);
     el("diagnostic-details").hidden = false;
   };
 
@@ -97,10 +89,10 @@
     el("request-error").hidden = true;
     el("recommendation").hidden = true;
     button.disabled = true;
-    button.textContent = "Checking…";
-    const body = { messages: [{ role: "user", content: prompt }], mode: modeSelect.value };
+    button.textContent = "Routing…";
+    const body = { messages: [{ role: "user", content: prompt }] };
     try {
-      const result = await requestJson(`/api/recommend${demoMode ? "?demo=1" : ""}`, {
+      const result = await requestJson("/api/recommend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -109,19 +101,18 @@
     } catch (error) {
       el("recommendation").hidden = false;
       el("recommendation").classList.add("result-error");
+      el("prompt-assessment").textContent = "Prompt assessment: NOT MEASURED";
       el("selected-model").textContent = "No tier selected";
       el("selected-mode").textContent = "";
       el("recommendation-reason").textContent = "MuseRoute could not complete the routing check.";
       el("recommendation-path").textContent = "NOT MEASURED";
       el("diagnostic-text").textContent = error.message;
       el("diagnostic-details").hidden = false;
-      el("request-error").textContent = demoMode
-        ? "No saved routing result for that exact prompt. Use a prompt from the saved workload."
-        : "Check that the MuseRoute server and configured Muse host are reachable.";
+      el("request-error").textContent = "Check that the MuseRoute server is reachable.";
       el("request-error").hidden = false;
     } finally {
       button.disabled = false;
-      updateModeNote();
+      button.innerHTML = 'Route prompt <span aria-hidden="true">↑</span>';
     }
   });
 
@@ -131,5 +122,4 @@
       form.requestSubmit();
     }
   });
-  modeSelect.addEventListener("change", updateModeNote);
 })();
