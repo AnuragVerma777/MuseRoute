@@ -56,6 +56,9 @@ h2 { margin: 0; font-size: 1.35rem; line-height: 1.2; }
 .chat-composer { display: flex; align-items: flex-end; gap: 10px; margin-top: 12px; }
 .chat-composer textarea { flex: 1; min-height: 54px; max-height: 180px; }
 .chat-composer .button { min-width: 96px; min-height: 54px; }
+.preset-details { margin-top: 14px; color: var(--muted); }
+.preset-details summary { width: fit-content; color: var(--green); font-size: .85rem; font-weight: 800; cursor: pointer; }
+.preset-details[open] .preset-groups { margin: 12px 0 0; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .trace-summary { display: flex; align-items: center; justify-content: space-between; gap: 14px; cursor: pointer; list-style: none; }
 .trace-summary::-webkit-details-marker { display: none; }
