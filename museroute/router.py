@@ -50,14 +50,16 @@ def _cached_chat(
     messages: list[dict[str, Any]],
     params: dict[str, Any],
     sample: int,
-) -> tuple[str, dict[str, Any]]:
+) -> tuple[str, dict[str, Any], bool]:
     key = _cache_key(tier, messages, params, sample)
     saved = cache.get(key)
     if isinstance(saved, dict) and isinstance(saved.get("answer"), str) and isinstance(saved.get("stats"), dict):
-        return saved["answer"], saved["stats"]
+        return saved["answer"], saved["stats"], True
     if isinstance(saved, dict) and isinstance(saved.get("error"), str):
         error_type = getattr(client, saved.get("error_type", "MuseRouteError"), client.MuseRouteError)
-        raise error_type(saved["error"])
+        error = error_type(saved["error"])
+        error.cached = True
+        raise error
     try:
         answer, stats = client.chat(tier, messages, **params)
     except Exception as exc:
@@ -69,7 +71,7 @@ def _cached_chat(
         raise
     cache[key] = {"answer": answer, "stats": stats}
     _save_cache(cache)
-    return answer, stats
+    return answer, stats, False
 
 
 def _with_confidence_request(messages: list[dict[str, Any]], output_format: str) -> list[dict[str, Any]]:
@@ -141,8 +143,9 @@ def _record_call(
     sample: int,
     stats: dict[str, Any] | None = None,
     error: Exception | None = None,
+    cached: bool = False,
 ) -> None:
-    row: dict[str, Any] = {"tier": tier, "sample": sample}
+    row: dict[str, Any] = {"tier": tier, "sample": sample, "cached": cached}
     if error is not None:
         row.update({"status": "error", "error": f"{type(error).__name__}: {client.redact_secrets(error)}"})
     else:
@@ -169,7 +172,7 @@ def _attempt(
 ) -> tuple[str | None, float, dict[str, Any] | None, Exception | None]:
     started = time.perf_counter()
     try:
-        answer, stats = _cached_chat(
+        answer, stats, cached = _cached_chat(
             cache,
             tier,
             messages,
@@ -177,13 +180,18 @@ def _attempt(
             sample,
         )
     except Exception as exc:
-        _record_call(calls, tier, sample, error=exc)
+        _record_call(calls, tier, sample, error=exc, cached=bool(getattr(exc, "cached", False)))
         calls[-1]["latency_ms"] = round((time.perf_counter() - started) * 1000, 2)
         return None, 0.0, None, exc
-    _record_call(calls, tier, sample, stats=stats)
+    _record_call(calls, tier, sample, stats=stats, cached=cached)
     parsed_answer, confidence, parse_error = _parse_envelope(answer)
     if parse_error:
+        calls[-1]["answer"] = ""
+        calls[-1]["confidence"] = None
+        calls[-1]["parse_error"] = parse_error
         return None, 0.0, stats, ValueError(parse_error)
+    calls[-1]["answer"] = parsed_answer
+    calls[-1]["confidence"] = confidence
     return parsed_answer, confidence, stats, None
 
 

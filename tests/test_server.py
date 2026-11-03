@@ -107,3 +107,104 @@ def test_api_facts_rejects_non_muse_model():
 
     assert exc.value.status_code == 503
     assert "unrelated-model" in exc.value.detail
+
+
+def _write_demo_sources(monkeypatch, tmp_path):
+    import json
+
+    workload = []
+    answer_cache = {}
+    details = []
+    for band, prefix in (("easy", "E"), ("medium", "M"), ("hard", "H")):
+        for index in (1, 2):
+            prompt_id = f"{prefix}{index}"
+            prompt = f"Cached {band} prompt {index}?"
+            workload.append({"id": prompt_id, "band": band, "prompt": prompt})
+            for tier in ("cheap", "strong"):
+                answer_cache[f"{tier}|{prompt_id}|t0.2|a0"] = {
+                    "answer": f"{tier} answer {prompt_id}",
+                    "stats": {
+                        "prompt_tokens": 7,
+                        "completion_tokens": 3,
+                        "latency_ms": 12.5 if tier == "cheap" else 24.5,
+                        "cost_units": None,
+                    },
+                }
+            details.append({
+                "id": prompt_id,
+                "band": band,
+                "escalated": index == 2,
+                "confidence": "cheap_confidence_below_threshold" if index == 2 else "cheap_answer_accepted",
+                "answer": f"routed answer {prompt_id}",
+                "tokens": None,
+                "latency_ms": 31.0,
+                "cost_units": None,
+            })
+    workload_path = tmp_path / "workload.jsonl"
+    workload_path.write_text("".join(json.dumps(row) + "\n" for row in workload), encoding="utf-8")
+    answer_cache_path = tmp_path / "answer_cache.json"
+    answer_cache_path.write_text(json.dumps(answer_cache), encoding="utf-8")
+    sweep_path = tmp_path / "sweep.json"
+    sweep_path.write_text(json.dumps({"operating_point": {"holdout": {"details": details}}}), encoding="utf-8")
+    monkeypatch.setattr(server, "_WORKLOAD_PATH", workload_path)
+    monkeypatch.setattr(server, "_ANSWER_CACHE_PATH", answer_cache_path)
+    monkeypatch.setattr(server, "_OPERATING_POINT_PATH", sweep_path)
+    return workload
+
+
+def test_get_root_serves_plain_static_page():
+    response = server.home()
+
+    assert response.path.name == "index.html"
+    assert "Hackathon teams evaluating Meta Muse" in open(response.path, encoding="utf-8").read()
+    assert any(route.path == "/" for route in server.app.routes)
+
+
+def test_demo_prompts_are_six_cached_examples(monkeypatch, tmp_path):
+    _write_demo_sources(monkeypatch, tmp_path)
+    monkeypatch.setattr(server.client, "chat", lambda *args, **kwargs: pytest.fail("demo must not call a tier"))
+
+    result = server.api_demo_prompts()
+
+    assert len(result["prompts"]) == 6
+    assert [sum(row["band"] == band for row in result["prompts"]) for band in ("easy", "medium", "hard")] == [2, 2, 2]
+
+
+def test_demo_route_replays_cache_and_returns_timeline(monkeypatch, tmp_path):
+    _write_demo_sources(monkeypatch, tmp_path)
+    monkeypatch.setattr(server.client, "chat", lambda *args, **kwargs: pytest.fail("demo must not call a tier"))
+    payload = {"prompt_id": "E2", "messages": [{"role": "user", "content": "Cached easy prompt 2?"}]}
+
+    result = server.api_route(payload, demo=True)
+
+    assert result["answer"] == "routed answer E2"
+    assert result["route_trace"]["decision"] == "escalate"
+    assert [call["tier"] for call in result["route_trace"]["calls"]] == ["cheap", "strong"]
+    assert all(call["cached"] for call in result["route_trace"]["calls"])
+    assert result["route_trace"]["confidence"] is None
+
+
+def test_demo_compare_uses_saved_answers_and_null_costs(monkeypatch, tmp_path):
+    _write_demo_sources(monkeypatch, tmp_path)
+    monkeypatch.setattr(server.client, "chat", lambda *args, **kwargs: pytest.fail("demo must not call a tier"))
+    payload = {"prompt_id": "M1", "messages": [{"role": "user", "content": "Cached medium prompt 1?"}]}
+
+    result = server.api_compare(payload, demo=True)
+
+    assert result["strong_only"]["answer"] == "strong answer M1"
+    assert result["strong_only"]["stats"]["total_tokens"] == 10
+    assert result["museroute"]["answer"] == "routed answer M1"
+    assert result["strong_only"]["stats"]["cost_units"] is None
+    assert result["museroute"]["route_trace"]["total_cost_units"] is None
+
+
+def test_demo_cache_miss_is_clear_and_never_calls_tier(monkeypatch, tmp_path):
+    _write_demo_sources(monkeypatch, tmp_path)
+    monkeypatch.setattr(server.client, "chat", lambda *args, **kwargs: pytest.fail("demo must not call a tier"))
+    payload = {"prompt_id": "unknown", "messages": [{"role": "user", "content": "uncached"}]}
+
+    with pytest.raises(HTTPException) as exc:
+        server.api_route(payload, demo=True)
+
+    assert exc.value.status_code == 404
+    assert "demo mode made no live call" in exc.value.detail

@@ -94,6 +94,8 @@ uvicorn museroute.server:app --host 127.0.0.1 --port 8000
 
 `museroute/client.py` sends chat-completions HTTP requests. `museroute/router.py` tries the cheap tier, applies its format/confidence checks, and may escalate. `museroute/server.py` exposes `/health`, `/v1/chat/completions`, `/api/route`, `/api/compare`, and `/api/facts`. Workload, tune and holdout inputs are under `data/`; measured outputs and caches are under `results/`.
 
+The plain HTML/CSS/JavaScript demo is served at `/`. Open `http://127.0.0.1:8000/?demo=1` for cache-only examples; that mode does not make model calls.
+
 ## API example
 
 ```bash

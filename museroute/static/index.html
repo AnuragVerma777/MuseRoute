@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f1eb">
+    <title>MuseRoute</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="hero">
+        <p class="eyebrow">MUSEROUTE · MUSE-ONLY ROUTING</p>
+        <h1>Hackathon teams evaluating Meta Muse need to see when a cheap first answer is enough and when to escalate.</h1>
+        <p id="mode-note" class="mode-note" role="status"></p>
+      </header>
+
+      <section class="panel prompt-panel" aria-labelledby="prompt-title">
+        <div class="section-heading">
+          <div><p class="eyebrow">01 / TRY A PROMPT</p><h2 id="prompt-title">Choose a cached example or write a prompt</h2></div>
+          <span id="cache-status" class="pill">Loading saved examples…</span>
+        </div>
+        <div id="preset-groups" class="preset-groups" aria-label="Saved prompt examples"></div>
+        <label class="field-label" for="prompt-input">Your prompt</label>
+        <textarea id="prompt-input" rows="3" placeholder="Select a saved example or enter a prompt…"></textarea>
+        <div class="actions">
+          <button id="route-button" class="button button-primary" type="button">Route prompt</button>
+          <span id="request-error" class="error-message" role="alert"></span>
+        </div>
+      </section>
+
+      <section class="panel timeline-panel" aria-labelledby="timeline-title">
+        <div class="section-heading"><div><p class="eyebrow">02 / ROUTE TIMELINE</p><h2 id="timeline-title">What happened</h2></div><span id="request-badge" class="pill pill-muted">Waiting for a prompt</span></div>
+        <div id="timeline" class="timeline empty-state">Run a prompt to see each tier, decision, timing, and final answer.</div>
+      </section>
+
+      <section class="panel compare-panel" aria-labelledby="compare-title">
+        <div class="section-heading"><div><p class="eyebrow">03 / SIDE BY SIDE</p><h2 id="compare-title">Before and after</h2></div><button id="compare-button" class="button button-secondary" type="button">Compare strong-only vs MuseRoute</button></div>
+        <div id="comparison" class="comparison empty-state">Run a saved example, then compare its cached strong-only and routed measurements.</div>
+      </section>
+
+      <aside class="cost-banner" aria-label="Cost estimate notice">
+        <strong>Cost units are an estimate. Savings are projections from held-out tests.</strong>
+        <span>Null values are shown as NOT MEASURED. This demo does not report dollar prices.</span>
+      </aside>
+      <footer>Evaluation examples replay saved tier answers and a saved holdout decision. Demo mode makes no model calls.</footer>
+    </main>
+  </body>
+</html>

@@ -10,12 +10,136 @@ from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from . import client, router
 
 app = FastAPI(title="MuseRoute", version="0.1.0")
 _OPERATING_POINT_PATH = Path(__file__).resolve().parents[1] / "results" / "sweep.json"
 _FACTS_PATH = Path(__file__).resolve().parents[1] / "results" / "facts.json"
+_STATIC_DIR = Path(__file__).with_name("static")
+_WORKLOAD_PATH = Path(__file__).resolve().parents[1] / "data" / "workload.jsonl"
+_ANSWER_CACHE_PATH = Path(__file__).resolve().parents[1] / "results" / "answer_cache.json"
+app.mount("/static", StaticFiles(directory=_STATIC_DIR), name="static")
+
+
+def _read_demo_sources() -> tuple[list[dict[str, Any]], dict[str, Any], dict[str, Any]]:
+    try:
+        workload = [json.loads(line) for line in _WORKLOAD_PATH.read_text(encoding="utf-8").splitlines() if line.strip()]
+        answer_cache = json.loads(_ANSWER_CACHE_PATH.read_text(encoding="utf-8"))
+        sweep = json.loads(_OPERATING_POINT_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise HTTPException(status_code=503, detail=f"Cached demo data is unavailable: {exc}") from exc
+    if not isinstance(answer_cache, dict) or not isinstance(sweep, dict):
+        raise HTTPException(status_code=503, detail="Cached demo data has an invalid format")
+    return workload, answer_cache, sweep
+
+
+def _cache_entry(answer_cache: dict[str, Any], tier: str, prompt_id: str) -> dict[str, Any] | None:
+    entry = answer_cache.get(f"{tier}|{prompt_id}|t0.2|a0")
+    if isinstance(entry, dict) and isinstance(entry.get("answer"), str) and isinstance(entry.get("stats"), dict):
+        return entry
+    return None
+
+
+def _demo_records() -> list[dict[str, Any]]:
+    _validate_configured_models()
+    workload, answer_cache, sweep = _read_demo_sources()
+    holdout = ((sweep.get("operating_point") or {}).get("holdout") or {}).get("details") or []
+    prompts = {row.get("id"): row for row in workload if isinstance(row, dict)}
+    by_id = {row.get("id"): row for row in holdout if isinstance(row, dict)}
+    selected: list[dict[str, Any]] = []
+    for band in ("easy", "medium", "hard"):
+        candidates = []
+        for prompt_id, decision in by_id.items():
+            prompt = prompts.get(prompt_id)
+            if not prompt or prompt.get("band") != band or not decision.get("answer"):
+                continue
+            cheap = _cache_entry(answer_cache, "cheap", prompt_id)
+            strong = _cache_entry(answer_cache, "strong", prompt_id)
+            if cheap is None or strong is None:
+                continue
+            candidates.append((prompt_id, prompt, decision, cheap, strong))
+        for prompt_id, prompt, decision, cheap, strong in sorted(candidates, key=lambda item: item[0])[:2]:
+            selected.append({
+                "id": prompt_id,
+                "band": band,
+                "prompt": prompt["prompt"],
+                "decision": decision,
+                "cheap_cache": cheap,
+                "strong_cache": strong,
+            })
+    if len(selected) != 6:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Cached demo needs 2 successful cached prompts per band; found {len(selected)} total.",
+        )
+    return selected
+
+
+def _find_demo_record(payload: dict[str, Any]) -> dict[str, Any]:
+    prompt_id = payload.get("prompt_id")
+    messages = _messages(payload)
+    user_text = next((message.get("content") for message in reversed(messages) if message.get("role") == "user"), None)
+    try:
+        records = _demo_records()
+    except client.ConfigurationError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    for record in records:
+        if record["id"] == prompt_id and record["prompt"] == user_text:
+            return record
+    raise HTTPException(status_code=404, detail="This prompt has no complete disk-cache replay; demo mode made no live call.")
+
+
+def _demo_call(tier: str, entry: dict[str, Any]) -> dict[str, Any]:
+    stats = entry["stats"]
+    return {
+        "tier": tier,
+        "status": "ok",
+        "sample": 0,
+        "answer": entry["answer"],
+        "confidence": None,
+        "prompt_tokens": stats.get("prompt_tokens"),
+        "completion_tokens": stats.get("completion_tokens"),
+        "latency_ms": stats.get("latency_ms"),
+        "cost_units": stats.get("cost_units"),
+        "cached": True,
+        "source": "saved tier-answer cache",
+    }
+
+
+def _demo_result(record: dict[str, Any]) -> dict[str, Any]:
+    decision = record["decision"]
+    reason = decision.get("confidence")
+    escalated = bool(decision.get("escalated"))
+    strong_failed = isinstance(reason, str) and "strong_call_error" in reason
+    calls = [_demo_call("cheap", record["cheap_cache"])]
+    if escalated:
+        strong_call = _demo_call("strong", record["strong_cache"])
+        if strong_failed:
+            strong_call.update({"status": "error", "answer": "", "error": "Saved holdout record says the strong call failed."})
+        calls.append(strong_call)
+    return {
+        "id": record["id"],
+        "band": record["band"],
+        "answer": decision.get("answer") or "",
+        "route_trace": {
+            "tier_used": "strong" if escalated and not strong_failed else "cheap",
+            "reason": reason,
+            "calls": calls,
+            "decision": "escalate" if escalated else "stay",
+            "escalated": escalated,
+            "total_prompt_tokens": None,
+            "total_completion_tokens": None,
+            "total_tokens": decision.get("tokens"),
+            "total_latency_ms": decision.get("latency_ms"),
+            "total_cost_units": decision.get("cost_units"),
+            "confidence": None,
+            "cached": True,
+            "cache_note": "Tier answers are replayed from disk; the holdout decision is a saved evaluation result. Confidence was not retained.",
+        },
+    }
 
 
 def _validate_configured_models() -> None:
@@ -77,6 +201,23 @@ def _route_trace(trace: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+@app.get("/", include_in_schema=False)
+def home() -> FileResponse:
+    return FileResponse(_STATIC_DIR / "index.html")
+
+
+@app.get("/api/demo-prompts")
+def api_demo_prompts() -> dict[str, Any]:
+    try:
+        records = _demo_records()
+    except client.ConfigurationError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    return {
+        "mode": "cached",
+        "prompts": [{"id": row["id"], "band": row["band"], "prompt": row["prompt"]} for row in records],
+    }
+
+
 @app.get("/health")
 def health() -> dict[str, str]:
     try:
@@ -129,14 +270,40 @@ def chat_completions(payload: dict[str, Any]) -> dict[str, Any]:
 
 
 @app.post("/api/route")
-def api_route(payload: dict[str, Any]) -> dict[str, Any]:
+def api_route(payload: dict[str, Any], demo: bool = False) -> dict[str, Any]:
+    if demo:
+        return _demo_result(_find_demo_record(payload))
     messages = _messages(payload)
     answer, trace = _run_route(messages)
     return {"answer": answer, "route_trace": trace}
 
 
 @app.post("/api/compare")
-def api_compare(payload: dict[str, Any]) -> dict[str, Any]:
+def api_compare(payload: dict[str, Any], demo: bool = False) -> dict[str, Any]:
+    if demo:
+        record = _find_demo_record(payload)
+        result = _demo_result(record)
+        strong = _demo_call("strong", record["strong_cache"])
+        strong_total = (
+            strong["prompt_tokens"] + strong["completion_tokens"]
+            if isinstance(strong.get("prompt_tokens"), int) and isinstance(strong.get("completion_tokens"), int)
+            else None
+        )
+        after_trace = result["route_trace"]
+        return {
+            "strong_only": {
+                "answer": record["strong_cache"]["answer"],
+                "stats": {
+                    "prompt_tokens": strong.get("prompt_tokens"),
+                    "completion_tokens": strong.get("completion_tokens"),
+                    "total_tokens": strong_total,
+                    "latency_ms": strong.get("latency_ms"),
+                    "cost_units": strong.get("cost_units"),
+                    "cached": True,
+                },
+            },
+            "museroute": {"answer": result["answer"], "route_trace": after_trace},
+        }
     messages = _messages(payload)
     _policy()
     try:

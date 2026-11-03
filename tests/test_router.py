@@ -37,6 +37,9 @@ def test_accepts_cheap_when_confident_and_format_valid(monkeypatch):
     assert trace["reason"] == "cheap_answer_accepted"
     assert trace["escalated"] is False
     assert trace["calls"][0]["prompt_tokens"] == 7
+    assert trace["calls"][0]["answer"] == "hello"
+    assert trace["calls"][0]["confidence"] == 0.9
+    assert trace["calls"][0]["cached"] is False
     assert trace["total_cost_units"] == 0.25
     call.assert_called_once()
 
@@ -174,5 +177,8 @@ def test_repeated_route_uses_disk_cache(monkeypatch):
     first = router.route(messages, {})
     second = router.route(messages, {})
 
-    assert first == second
+    assert first[0] == second[0]
+    assert first[1]["reason"] == second[1]["reason"]
+    assert first[1]["calls"][0]["cached"] is False
+    assert second[1]["calls"][0]["cached"] is True
     call.assert_called_once()
