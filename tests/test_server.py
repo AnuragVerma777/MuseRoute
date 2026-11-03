@@ -65,6 +65,23 @@ def test_api_recommend_returns_tier_metadata_without_answer(monkeypatch):
     assert "private generated text" not in str(result)
 
 
+def test_api_recommend_can_select_strong_without_a_model_call(monkeypatch):
+    monkeypatch.setattr(server.router, "route", lambda *args: pytest.fail("manual strong selection must not call router"))
+    client._TIERS["strong"].update({"extra_params": {"reasoning_effort": "high"}})
+
+    result = server.api_recommend({
+        "mode": "strong",
+        "messages": [{"role": "user", "content": "complex prompt"}],
+    })
+
+    assert result["selected_tier"] == "strong"
+    assert result["model_id"] == "meta/muse-glimmer-30b"
+    assert result["extra_params"] == {"reasoning_effort": "high"}
+    assert result["calls"] == []
+    assert "answer" not in result
+    assert "no model call was made" in result["reason"]
+
+
 def test_demo_recommend_replays_choice_without_model_call(monkeypatch, tmp_path):
     _write_demo_sources(monkeypatch, tmp_path)
     monkeypatch.setattr(server.client, "chat", lambda *args, **kwargs: pytest.fail("demo must not call a tier"))
@@ -187,6 +204,7 @@ def test_get_root_serves_plain_static_page():
     assert 'id="recommend-form"' in html
     assert 'id="recommendation"' in html
     assert 'id="prompt-input"' in html
+    assert 'id="mode-select"' in html
     assert any(route.path == "/" for route in server.app.routes)
 
 

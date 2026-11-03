@@ -18,6 +18,12 @@
         <form id="recommend-form">
           <label class="visually-hidden" for="prompt-input">Your prompt</label>
           <textarea id="prompt-input" rows="3" placeholder="Ask or describe what you need…" required></textarea>
+          <label class="mode-select-label" for="mode-select">Routing mode
+            <select id="mode-select">
+              <option value="auto">Auto</option>
+              <option value="strong">Strong tier</option>
+            </select>
+          </label>
           <div class="form-footer">
             <span id="mode-note" role="status"></span>
             <button id="recommend-button" type="submit">Find best tier <span aria-hidden="true">↑</span></button>

@@ -3,11 +3,21 @@
   const el = (id) => document.getElementById(id);
   const form = el("recommend-form");
   const input = el("prompt-input");
+  const modeSelect = el("mode-select");
   const button = el("recommend-button");
 
-  el("mode-note").textContent = demoMode
-    ? "Offline demo · exact saved prompts only · no model calls"
-    : "MuseRoute will check the prompt and select a tier";
+  const updateModeNote = () => {
+    if (modeSelect.value === "strong") {
+      el("mode-note").textContent = "Strong selected directly · no model call";
+      button.innerHTML = 'Select strong tier <span aria-hidden="true">↑</span>';
+    } else {
+      el("mode-note").textContent = demoMode
+        ? "Offline demo · exact saved prompts only · no model calls"
+        : "Auto checks the prompt and selects a tier";
+      button.innerHTML = 'Find best tier <span aria-hidden="true">↑</span>';
+    }
+  };
+  updateModeNote();
 
   const requestJson = async (url, options) => {
     let response;
@@ -35,6 +45,9 @@
         return "The Muse host timed out, so MuseRoute could not select a tier.";
       }
       return "Neither Muse tier returned a usable routing result.";
+    }
+    if (reason.includes("strong_mode_selected_by_user")) {
+      return "You selected strong mode directly; no model call was made.";
     }
     if (reason.includes("strong_call_error_fallback_to_cheap")) {
       return "The strong-tier check failed, so MuseRoute fell back to the cheap tier.";
@@ -85,7 +98,7 @@
     el("recommendation").hidden = true;
     button.disabled = true;
     button.textContent = "Checking…";
-    const body = { messages: [{ role: "user", content: prompt }] };
+    const body = { messages: [{ role: "user", content: prompt }], mode: modeSelect.value };
     try {
       const result = await requestJson(`/api/recommend${demoMode ? "?demo=1" : ""}`, {
         method: "POST",
@@ -108,7 +121,7 @@
       el("request-error").hidden = false;
     } finally {
       button.disabled = false;
-      button.innerHTML = 'Find best tier <span aria-hidden="true">↑</span>';
+      updateModeNote();
     }
   });
 
@@ -118,4 +131,5 @@
       form.requestSubmit();
     }
   });
+  modeSelect.addEventListener("change", updateModeNote);
 })();

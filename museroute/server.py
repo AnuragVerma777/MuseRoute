@@ -318,6 +318,35 @@ def api_route(payload: dict[str, Any], demo: bool = False) -> dict[str, Any]:
 @app.post("/api/recommend")
 def api_recommend(payload: dict[str, Any], demo: bool = False) -> dict[str, Any]:
     """Route a prompt and return only the selected tier metadata, never its answer."""
+    mode = payload.get("mode", "auto")
+    if mode not in {"auto", "strong"}:
+        raise HTTPException(status_code=422, detail="mode must be 'auto' or 'strong'")
+    if mode == "strong":
+        try:
+            _validate_configured_models()
+        except client.ConfigurationError as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+        config = client._TIERS.get("strong") or {}
+        model_id = config.get("model_id") if isinstance(config, dict) else None
+        if not model_id:
+            return {
+                "selected_tier": None,
+                "model_id": None,
+                "extra_params": None,
+                "reason": "Strong tier has no configured model_id.",
+                "escalated": False,
+                "calls": [],
+                "cached": False,
+            }
+        return {
+            "selected_tier": "strong",
+            "model_id": model_id,
+            "extra_params": config.get("extra_params"),
+            "reason": "strong_mode_selected_by_user; no model call was made",
+            "escalated": False,
+            "calls": [],
+            "cached": False,
+        }
     if demo:
         result = _demo_result(_find_demo_record(payload))
         trace = result["route_trace"]
