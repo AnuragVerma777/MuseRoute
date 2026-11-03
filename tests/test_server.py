@@ -33,6 +33,17 @@ def test_chat_completions_returns_standard_shape_and_compact_trace(monkeypatch):
     }
 
 
+def test_chat_completions_preserves_unmeasured_usage_as_null(monkeypatch):
+    trace = _trace()
+    trace["total_prompt_tokens"] = None
+    trace["total_completion_tokens"] = None
+    monkeypatch.setattr(server.router, "route", lambda messages, policy: ("hello", trace))
+
+    body = server.chat_completions({"messages": [{"role": "user", "content": "Hi"}]})
+
+    assert body["usage"] == {"prompt_tokens": None, "completion_tokens": None, "total_tokens": None}
+
+
 def test_api_route_returns_full_trace(monkeypatch):
     monkeypatch.setattr(server.router, "route", lambda messages, policy: ("answer", _trace()))
     assert server.api_route({"messages": [{"role": "user", "content": "x"}]}) == {
@@ -68,3 +79,31 @@ def test_request_rechecks_all_configured_models():
         server.api_route({"messages": [{"role": "user", "content": "x"}]})
     assert exc.value.status_code == 503
     assert "some-other-model" in exc.value.detail
+
+
+def test_api_facts_reads_generated_facts(monkeypatch, tmp_path):
+    facts_path = tmp_path / "facts.json"
+    facts_path.write_text('{"prompt_counts":{"holdout":45}}', encoding="utf-8")
+    monkeypatch.setattr(server, "_FACTS_PATH", facts_path)
+
+    assert server.api_facts() == {"prompt_counts": {"holdout": 45}}
+
+
+def test_api_facts_returns_clear_missing_artifact_error(monkeypatch, tmp_path):
+    monkeypatch.setattr(server, "_FACTS_PATH", tmp_path / "missing.json")
+
+    with pytest.raises(HTTPException) as exc:
+        server.api_facts()
+
+    assert exc.value.status_code == 404
+    assert "scripts/make_facts.py" in exc.value.detail
+
+
+def test_api_facts_rejects_non_muse_model():
+    client._TIERS["strong"]["model_id"] = "unrelated-model"
+
+    with pytest.raises(HTTPException) as exc:
+        server.api_facts()
+
+    assert exc.value.status_code == 503
+    assert "unrelated-model" in exc.value.detail

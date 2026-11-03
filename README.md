@@ -53,6 +53,7 @@ The split has 45 tune prompts and 45 held-out prompts (15 easy, 15 medium, 15 ha
 - `POST /v1/chat/completions` returns chat-completions JSON, usage counts, and a compact `route_trace`.
 - `POST /api/route` returns the answer and full trace.
 - `POST /api/compare` runs strong-only and MuseRoute on the same messages.
+- `GET /api/facts` serves the generated `results/facts.json` measurement summary.
 
 Example:
 
@@ -62,31 +63,25 @@ curl http://127.0.0.1:8000/v1/chat/completions \
   -d '{"model":"museroute","messages":[{"role":"user","content":"Which number is larger, 9.11 or 9.8?"}]}'
 ```
 
+Fetch the measured summary:
+
+```bash
+curl http://127.0.0.1:8000/api/facts
+```
+
+Generate or refresh it from the saved evaluation artifacts with `python scripts/make_facts.py`.
+
 ## Results — 45 held-out prompts
 
-The holdout set contains **45 prompts**, with 15 prompts in each band. A complete holdout evaluation is not present in this checkout, so accuracy, token, cost, and latency values below are reported as unavailable rather than inferred from failed or partial requests. The archived partial baseline has successful answers for 41/45 cheap-only prompts and 6/45 strong-only prompts; MuseRoute has not been evaluated on holdout. No complete 45-prompt comparison can be calculated from those partial records.
+`results/facts.json` is generated from the saved baseline, sweep and split artifacts. It reports measured accuracy and per-band results for cheap-only, strong-only and MuseRoute, prompt counts, token/latency measurements, the selected tune threshold, and routed holdout mistakes. Run `python scripts/make_facts.py` to refresh the summary; `GET /api/facts` serves the same JSON.
 
-| System | Accuracy | Escalation % | Tokens | Cost units | Average latency |
-|---|---:|---:|---:|---:|---:|
-| cheap-only | N/A (41/45 answers saved) | 0% (reference) | N/A | N/A | N/A |
-| strong-only | N/A (6/45 answers saved) | 100% (reference) | N/A | N/A | N/A |
-| MuseRoute | N/A (not run) | N/A | N/A | N/A | N/A |
+There are 45 holdout prompts, stratified across easy, medium and hard. The recorded overall accuracies are 60.0% cheap-only, 57.8% strong-only, and 48.9% MuseRoute. Six routed holdout prompts have no returned answer after request failures; those failures are listed separately from the answered mistakes. Per-band accuracy, escalation, token, latency and cost fields are in `results/facts.json`; values absent from the source records remain JSON `null` and should be displayed as **NOT MEASURED**. Both tier cost weights are null, so cost units are not measured. **Cost units are a relative estimate, not dollars.**
 
-Per-band holdout status (15 prompts per band):
+The facts artifact contains up to five deterministic examples of incorrect answered holdout prompts, ordered hard then medium then easy, with the check failure explained. It does not mislabel failed requests as model mistakes. The accuracy-versus-cost chart is at `results/pareto.png`.
 
-| Band | cheap-only accuracy | strong-only accuracy | MuseRoute accuracy | Escalation / tokens / cost / latency |
-|---|---:|---:|---:|---|
-| Easy | N/A (15 answers saved) | N/A (6 answers saved) | N/A (not run) | N/A |
-| Medium | N/A (11 answers saved) | N/A (0 answers saved) | N/A (not run) | N/A |
-| Hard | N/A (15 answers saved) | N/A (0 answers saved) | N/A (not run) | N/A |
-
-**Cost units are a relative estimate, not dollars.** They are computed from token counts and `cost_weight`; both configured weights are null, so cost units cannot currently be calculated. No accuracy-versus-cost points are available from a complete holdout comparison. The chart is saved at `results/pareto.png` and marks this missing measurement explicitly.
-
-### Five worst holdout mistakes
-
-There are no completed MuseRoute holdout answers, so five routed mistakes cannot be ranked or explained yet. The 4 missing cheap-only and 39 missing strong-only responses are request failures or absent records, not model mistakes. Re-run the sweep after the configured endpoint is responding to generate valid comparisons and mistake explanations.
-
-![Accuracy versus cost units; complete holdout measurements are unavailable](results/pareto.png)
+```bash
+python scripts/make_facts.py
+```
 
 ## Serve Glimmer from a free GPU notebook
 

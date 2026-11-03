@@ -15,6 +15,7 @@ from . import client, router
 
 app = FastAPI(title="MuseRoute", version="0.1.0")
 _OPERATING_POINT_PATH = Path(__file__).resolve().parents[1] / "results" / "sweep.json"
+_FACTS_PATH = Path(__file__).resolve().parents[1] / "results" / "facts.json"
 
 
 def _validate_configured_models() -> None:
@@ -85,14 +86,33 @@ def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
+@app.get("/api/facts")
+def api_facts() -> dict[str, Any]:
+    try:
+        _validate_configured_models()
+    except client.ConfigurationError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    try:
+        return json.loads(_FACTS_PATH.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="Facts are not generated; run python scripts/make_facts.py") from exc
+    except json.JSONDecodeError as exc:
+        raise HTTPException(status_code=500, detail="results/facts.json is not valid JSON") from exc
+
+
 @app.post("/v1/chat/completions")
 def chat_completions(payload: dict[str, Any]) -> dict[str, Any]:
     messages = _messages(payload)
     answer, trace = _run_route(messages)
     if not answer:
         raise HTTPException(status_code=502, detail={"message": "No tier returned an answer", "route_trace": trace})
-    prompt_tokens = trace.get("total_prompt_tokens", 0)
-    completion_tokens = trace.get("total_completion_tokens", 0)
+    prompt_tokens = trace.get("total_prompt_tokens")
+    completion_tokens = trace.get("total_completion_tokens")
+    total_tokens = (
+        prompt_tokens + completion_tokens
+        if isinstance(prompt_tokens, int) and isinstance(completion_tokens, int)
+        else None
+    )
     return {
         "id": f"museroute-{uuid.uuid4().hex}",
         "object": "chat.completion",
@@ -102,7 +122,7 @@ def chat_completions(payload: dict[str, Any]) -> dict[str, Any]:
         "usage": {
             "prompt_tokens": prompt_tokens,
             "completion_tokens": completion_tokens,
-            "total_tokens": prompt_tokens + completion_tokens,
+            "total_tokens": total_tokens,
         },
         "route_trace": _route_trace(trace),
     }

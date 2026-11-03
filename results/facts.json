@@ -1,0 +1,299 @@
+{
+  "prompt_counts": {
+    "workload": 90,
+    "tune": 45,
+    "holdout": 45,
+    "baseline": {
+      "cheap": {
+        "expected": 90,
+        "finished": 90,
+        "errors": 0
+      },
+      "strong": {
+        "expected": 90,
+        "finished": 90,
+        "errors": 0
+      }
+    }
+  },
+  "models_and_hosts": {
+    "cheap": {
+      "model_id": "meta/muse-glimmer-30b",
+      "host": "integrate.api.nvidia.com"
+    },
+    "strong": {
+      "model_id": "meta/muse-glimmer-30b",
+      "host": "integrate.api.nvidia.com"
+    }
+  },
+  "baseline": {
+    "averages": {
+      "cheap": {
+        "average_prompt_tokens": 96.19,
+        "average_completion_tokens": 164.87,
+        "average_total_tokens": 261.06,
+        "average_latency_ms": 31914.9,
+        "cost_units": null
+      },
+      "strong": {
+        "average_prompt_tokens": 96.19,
+        "average_completion_tokens": 461.83,
+        "average_total_tokens": 558.02,
+        "average_latency_ms": 28940.99,
+        "cost_units": null
+      }
+    },
+    "accuracy": {
+      "cheap": {
+        "overall": 0.6,
+        "by_band": {
+          "easy": 1.0,
+          "hard": 0.0,
+          "medium": 0.8
+        }
+      },
+      "strong": {
+        "overall": 0.6,
+        "by_band": {
+          "easy": 1.0,
+          "hard": 0.0,
+          "medium": 0.8
+        }
+      }
+    }
+  },
+  "holdout": {
+    "overall": {
+      "prompt_count": 45,
+      "cheap_only": {
+        "accuracy": 0.6,
+        "escalation_rate": 0.0,
+        "finished_prompts": 45,
+        "errors": 0,
+        "tier_call_errors": null,
+        "average_total_tokens": 249.93,
+        "total_tokens": 11247,
+        "latency_ms": 12947.69,
+        "cost_units": null
+      },
+      "strong_only": {
+        "accuracy": 0.5778,
+        "escalation_rate": 1.0,
+        "finished_prompts": 45,
+        "errors": 0,
+        "tier_call_errors": null,
+        "average_total_tokens": 537.33,
+        "total_tokens": 24180,
+        "latency_ms": 26021.18,
+        "cost_units": null
+      },
+      "museroute": {
+        "accuracy": 0.4889,
+        "escalation_rate": 0.2,
+        "finished_prompts": 39,
+        "errors": 6,
+        "tier_call_errors": 15,
+        "average_total_tokens": null,
+        "total_tokens": null,
+        "latency_ms": 452626.58,
+        "cost_units": null
+      }
+    },
+    "by_band": {
+      "easy": {
+        "prompt_count": 15,
+        "cheap_only": {
+          "accuracy": 1.0,
+          "escalation_rate": 0.0,
+          "finished_prompts": null,
+          "errors": null,
+          "tier_call_errors": null,
+          "average_total_tokens": 177.53,
+          "total_tokens": 2663,
+          "latency_ms": 17885.64,
+          "cost_units": null
+        },
+        "strong_only": {
+          "accuracy": 1.0,
+          "escalation_rate": 1.0,
+          "finished_prompts": null,
+          "errors": null,
+          "tier_call_errors": null,
+          "average_total_tokens": 340.6,
+          "total_tokens": 5109,
+          "latency_ms": 24209.41,
+          "cost_units": null
+        },
+        "museroute": {
+          "accuracy": 0.6,
+          "escalation_rate": 0.6,
+          "finished_prompts": 9,
+          "errors": 6,
+          "tier_call_errors": 15,
+          "average_total_tokens": null,
+          "total_tokens": null,
+          "latency_ms": 58071.94,
+          "cost_units": null
+        }
+      },
+      "hard": {
+        "prompt_count": 15,
+        "cheap_only": {
+          "accuracy": 0.0,
+          "escalation_rate": 0.0,
+          "finished_prompts": null,
+          "errors": null,
+          "tier_call_errors": null,
+          "average_total_tokens": 200.27,
+          "total_tokens": 3004,
+          "latency_ms": 7929.15,
+          "cost_units": null
+        },
+        "strong_only": {
+          "accuracy": 0.0,
+          "escalation_rate": 1.0,
+          "finished_prompts": null,
+          "errors": null,
+          "tier_call_errors": null,
+          "average_total_tokens": 339.53,
+          "total_tokens": 5093,
+          "latency_ms": 15817.59,
+          "cost_units": null
+        },
+        "museroute": {
+          "accuracy": 0.1333,
+          "escalation_rate": 0.0,
+          "finished_prompts": 15,
+          "errors": 0,
+          "tier_call_errors": 0,
+          "average_total_tokens": 202.67,
+          "total_tokens": 3040,
+          "latency_ms": 676977.08,
+          "cost_units": null
+        }
+      },
+      "medium": {
+        "prompt_count": 15,
+        "cheap_only": {
+          "accuracy": 0.8,
+          "escalation_rate": 0.0,
+          "finished_prompts": null,
+          "errors": null,
+          "tier_call_errors": null,
+          "average_total_tokens": 372.0,
+          "total_tokens": 5580,
+          "latency_ms": 13028.27,
+          "cost_units": null
+        },
+        "strong_only": {
+          "accuracy": 0.7333,
+          "escalation_rate": 1.0,
+          "finished_prompts": null,
+          "errors": null,
+          "tier_call_errors": null,
+          "average_total_tokens": 931.87,
+          "total_tokens": 13978,
+          "latency_ms": 38036.54,
+          "cost_units": null
+        },
+        "museroute": {
+          "accuracy": 0.7333,
+          "escalation_rate": 0.0,
+          "finished_prompts": 15,
+          "errors": 0,
+          "tier_call_errors": 0,
+          "average_total_tokens": 392.8,
+          "total_tokens": 5892,
+          "latency_ms": 622830.72,
+          "cost_units": null
+        }
+      }
+    }
+  },
+  "router": {
+    "chosen_threshold": 0.5,
+    "self_consistency": false,
+    "selection_basis": "total_tokens_fallback",
+    "tune_accuracy": 0.6444,
+    "strong_only_tune_accuracy": 0.6,
+    "average_prompt_tokens": null,
+    "average_completion_tokens": null,
+    "average_total_tokens": null,
+    "latency_ms": 452626.58,
+    "cost_units": null
+  },
+  "worst_holdout_mistakes": [
+    {
+      "id": "H001",
+      "band": "hard",
+      "check": "numeric",
+      "answer": "18 blue beads + 27 yellow beads = 45 beads in the tray.",
+      "gold": 45,
+      "reason": "The numeric answer did not match the expected value."
+    },
+    {
+      "id": "H003",
+      "band": "hard",
+      "check": "numeric",
+      "answer": "144 pages ÷ 12 sections = 12 pages per section.",
+      "gold": 12,
+      "reason": "The numeric answer did not match the expected value."
+    },
+    {
+      "id": "H004",
+      "band": "hard",
+      "check": "numeric",
+      "answer": "Three buses carry 3 × 24 = 72 students. With 7 more traveling separately, 72 + 7 = 79 students altogether.",
+      "gold": 79,
+      "reason": "The numeric answer did not match the expected value."
+    },
+    {
+      "id": "H005",
+      "band": "hard",
+      "check": "numeric",
+      "answer": "250 - 42 × 3 = 250 - 126 = 124 tokens remain.",
+      "gold": 124,
+      "reason": "The numeric answer did not match the expected value."
+    },
+    {
+      "id": "H006",
+      "band": "hard",
+      "check": "numeric",
+      "answer": "2.5 hours = 150 minutes. 150 minutes / 10 minutes = 15 intervals. 15 × 6 cards = 90 cards finished.",
+      "gold": 90,
+      "reason": "The numeric answer did not match the expected value."
+    }
+  ],
+  "holdout_request_failures": [
+    {
+      "id": "E028",
+      "band": "easy",
+      "reason": "cheap_call_error: MuseRouteError: Request failed for tier 'cheap': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120); strong_call_error: MuseRouteError: Request failed for tier 'strong': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+    },
+    {
+      "id": "E014",
+      "band": "easy",
+      "reason": "cheap_call_error: MuseRouteError: Request failed for tier 'cheap': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120); strong_call_error: MuseRouteError: Request failed for tier 'strong': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+    },
+    {
+      "id": "E003",
+      "band": "easy",
+      "reason": "cheap_call_error: MuseRouteError: Request failed for tier 'cheap': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120); strong_call_error: MuseRouteError: Request failed for tier 'strong': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+    },
+    {
+      "id": "E018",
+      "band": "easy",
+      "reason": "cheap_call_error: MuseRouteError: Request failed for tier 'cheap': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120); strong_call_error: MuseRouteError: Request failed for tier 'strong': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+    },
+    {
+      "id": "E029",
+      "band": "easy",
+      "reason": "cheap_call_error: MuseRouteError: Request failed for tier 'cheap': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120); strong_call_error: MuseRouteError: Request failed for tier 'strong': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+    },
+    {
+      "id": "E024",
+      "band": "easy",
+      "reason": "cheap_call_error: MuseRouteError: Request failed for tier 'cheap': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120); strong_call_error: MuseRouteError: Request failed for tier 'strong': HTTPSConnectionPool(host='integrate.api.nvidia.com', port=443): Read timed out. (read timeout=120)"
+    }
+  ]
+}
