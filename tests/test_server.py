@@ -68,7 +68,7 @@ def test_api_recommend_returns_tier_metadata_without_answer(monkeypatch):
 def test_demo_recommend_replays_choice_without_model_call(monkeypatch, tmp_path):
     _write_demo_sources(monkeypatch, tmp_path)
     monkeypatch.setattr(server.client, "chat", lambda *args, **kwargs: pytest.fail("demo must not call a tier"))
-    payload = {"prompt_id": "E1", "messages": [{"role": "user", "content": "Cached easy prompt 1?"}]}
+    payload = {"messages": [{"role": "user", "content": "Cached easy prompt 1?"}]}
 
     result = server.api_recommend(payload, demo=True)
 
@@ -183,8 +183,8 @@ def test_get_root_serves_plain_static_page():
     html = open(response.path, encoding="utf-8").read()
 
     assert response.path.name == "index.html"
-    assert "Find the Muse tier that best fits your prompt." in html
-    assert 'id="chat-form"' in html
+    assert "Which Muse tier fits your prompt?" in html
+    assert 'id="recommend-form"' in html
     assert 'id="recommendation"' in html
     assert 'id="prompt-input"' in html
     assert any(route.path == "/" for route in server.app.routes)

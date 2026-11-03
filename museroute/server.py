@@ -87,7 +87,7 @@ def _find_demo_record(payload: dict[str, Any]) -> dict[str, Any]:
     except client.ConfigurationError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     for record in records:
-        if record["id"] == prompt_id and record["prompt"] == user_text:
+        if record["prompt"] == user_text and (not prompt_id or record["id"] == prompt_id):
             return record
     raise HTTPException(status_code=404, detail="This prompt has no complete disk-cache replay; demo mode made no live call.")
 
