@@ -53,7 +53,7 @@ h2 { margin: 0; font-size: 1.35rem; line-height: 1.2; }
 .user-message { align-self: flex-end; border-color: #b4d8ca; border-bottom-right-radius: 4px; background: var(--green-soft); }
 .assistant-message { align-self: flex-start; border-bottom-left-radius: 4px; }
 .pending-message p { color: var(--muted); font-style: italic; }
-.chat-composer { display: flex; align-items: flex-end; gap: 10px; margin-top: 12px; }
+.chat-composer { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 10px; margin-top: 12px; }
 .chat-composer textarea { flex: 1; min-height: 54px; max-height: 180px; }
 .chat-composer .button { min-width: 96px; min-height: 54px; }
 .preset-details { margin-top: 14px; color: var(--muted); }
@@ -65,7 +65,7 @@ h2 { margin: 0; font-size: 1.35rem; line-height: 1.2; }
 .trace-summary::after { content: "＋"; color: var(--green); font-size: 1.2rem; font-weight: 800; }
 .timeline-panel details[open] .trace-summary { margin-bottom: 16px; }
 .timeline-panel details[open] .trace-summary::after { content: "−"; }
-.trace-summary > span:first-child { display: grid; }
+.trace-summary > span:first-child { display: grid; gap: 2px; }
 .field-label { display: block; margin: 5px 0 6px; font-weight: 750; }
 textarea { display: block; width: 100%; min-height: 78px; resize: vertical; padding: 12px 14px; border: 1px solid #aebbb5; border-radius: 10px; color: var(--ink); background: #fff; font: inherit; }
 textarea:focus-visible, button:focus-visible { outline: 3px solid #36967c; outline-offset: 2px; }
