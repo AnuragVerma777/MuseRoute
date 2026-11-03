@@ -94,12 +94,29 @@ def _find_demo_record(payload: dict[str, Any]) -> dict[str, Any]:
 
 def _demo_call(tier: str, entry: dict[str, Any]) -> dict[str, Any]:
     stats = entry["stats"]
+    # Some saved tier answers retain the router confidence envelope; unwrap
+    # that exact shape so it is not shown as if it were the model's answer.
+    answer = entry["answer"]
+    confidence = None
+    try:
+        envelope = json.loads(answer)
+    except (TypeError, json.JSONDecodeError):
+        envelope = None
+    if (
+        isinstance(envelope, dict)
+        and set(envelope) == {"answer", "confidence"}
+        and isinstance(envelope.get("answer"), str)
+    ):
+        answer = envelope["answer"]
+        value = envelope.get("confidence")
+        if isinstance(value, (int, float)) and not isinstance(value, bool) and 0 <= value <= 1:
+            confidence = float(value)
     return {
         "tier": tier,
         "status": "ok",
         "sample": 0,
-        "answer": entry["answer"],
-        "confidence": None,
+        "answer": answer,
+        "confidence": confidence,
         "prompt_tokens": stats.get("prompt_tokens"),
         "completion_tokens": stats.get("completion_tokens"),
         "latency_ms": stats.get("latency_ms"),

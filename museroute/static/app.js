@@ -12,7 +12,7 @@
   compareButton.disabled = true;
 
   el("mode-note").textContent = demoMode
-    ? "Cached demo mode: presets replay saved tier answers and holdout decisions. No model calls are made."
+    ? "Offline demo mode: presets replay saved tier answers and holdout decisions; no model calls are made. Cached latency is historical, not playback time."
     : "Live mode: requests go to the configured Muse tiers; connection failures appear here.";
 
   const requestJson = async (url, options = {}) => {

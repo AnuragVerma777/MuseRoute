@@ -184,6 +184,24 @@ def test_demo_route_replays_cache_and_returns_timeline(monkeypatch, tmp_path):
     assert result["route_trace"]["confidence"] is None
 
 
+def test_demo_timeline_unwraps_saved_confidence_envelope(monkeypatch, tmp_path):
+    import json
+
+    _write_demo_sources(monkeypatch, tmp_path)
+    answer_cache_path = tmp_path / "answer_cache.json"
+    cache = json.loads(answer_cache_path.read_text(encoding="utf-8"))
+    cache["cheap|E1|t0.2|a0"]["answer"] = json.dumps({"answer": "scam", "confidence": 0.83})
+    answer_cache_path.write_text(json.dumps(cache), encoding="utf-8")
+
+    result = server.api_route(
+        {"prompt_id": "E1", "messages": [{"role": "user", "content": "Cached easy prompt 1?"}]},
+        demo=True,
+    )
+
+    assert result["route_trace"]["calls"][0]["answer"] == "scam"
+    assert result["route_trace"]["calls"][0]["confidence"] == 0.83
+
+
 def test_demo_compare_uses_saved_answers_and_null_costs(monkeypatch, tmp_path):
     _write_demo_sources(monkeypatch, tmp_path)
     monkeypatch.setattr(server.client, "chat", lambda *args, **kwargs: pytest.fail("demo must not call a tier"))
