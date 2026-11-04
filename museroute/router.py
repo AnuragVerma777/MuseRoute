@@ -241,6 +241,9 @@ def _totals(calls: list[dict[str, Any]]) -> dict[str, Any]:
         # from successful calls remains available instead of being discarded.
         "total_prompt_tokens": sum(prompt_tokens) if complete_usage else None,
         "total_completion_tokens": sum(completion_tokens) if complete_usage else None,
+        "total_tokens": (
+            sum(prompt_tokens) + sum(completion_tokens) if complete_usage else None
+        ),
         "successful_call_prompt_tokens": (
             sum(prompt_tokens) if successful and all(isinstance(v, int) and not isinstance(v, bool) for v in prompt_tokens) else None
         ),

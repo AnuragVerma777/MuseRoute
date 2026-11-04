@@ -1,12 +1,16 @@
 (() => {
   const el = (id) => document.getElementById(id);
-  const form = el("recommend-form");
+  const demoMode = new URLSearchParams(window.location.search).get("demo") === "1";
+  const form = el("route-form");
   const input = el("prompt-input");
-  const button = el("recommend-button");
+  const routeButton = el("route-button");
+  const state = { selectedPresetId: null, lastPrompt: null, factsLoaded: false };
 
-  el("mode-note").textContent = "Automatic text-cue routing · no model calls";
+  el("mode-note").textContent = demoMode
+    ? "Cached demo mode · no model calls are made"
+    : "Live routing · configured Muse tiers may be called";
 
-  const requestJson = async (url, options) => {
+  async function requestJson(url, options = {}) {
     let response;
     try {
       response = await fetch(url, options);
@@ -20,106 +24,321 @@
       throw new Error(detail || `HTTP ${response.status}`);
     }
     return body;
-  };
+  }
 
-  const shortReason = (result) => {
-    const reason = String(result.reason || "");
-    if (result.selection_method === "text_cue_heuristic") return reason || "Routing reason was not measured.";
-    if (!result.selected_tier) {
-      if (/WinError 10013|Failed to establish a new connection|ConnectionError|HTTPSConnectionPool/i.test(reason)) {
-        return "The configured Muse host could not be reached, so MuseRoute could not select a tier.";
-      }
-      if (/timed out|ReadTimeout/i.test(reason)) {
-        return "The Muse host timed out, so MuseRoute could not select a tier.";
-      }
-      return "Neither Muse tier returned a usable routing result.";
-    }
-    if (reason.includes("strong_mode_selected_by_user")) {
-      return "You selected strong mode directly; no model call was made.";
-    }
-    if (reason.includes("strong_call_error_fallback_to_cheap")) {
-      return "The strong-tier check failed, so MuseRoute fell back to the cheap tier.";
-    }
-    if (reason.includes("cheap_call_error") && result.selected_tier === "strong") {
-      return "The cheap-tier check failed, so MuseRoute tried the strong tier.";
-    }
-    if (reason.includes("cheap_format_check_failed")) {
-      return "The cheap-tier result failed a format check, so MuseRoute escalated.";
-    }
-    if (reason.includes("cheap_self_consistency_disagreement")) {
-      return "Two cheap-tier samples disagreed, so MuseRoute escalated.";
-    }
-    if (reason.includes("cheap_confidence_below_threshold")) {
-      return "The cheap-tier confidence was below the routing threshold, so MuseRoute escalated.";
-    }
-    if (reason.includes("cheap_answer_accepted")) {
-      return "The cheap tier met the routing policy checks.";
-    }
-    return reason || "Routing reason was not measured.";
-  };
-
-  const showRecommendation = (result) => {
-    const selected = result.selected_tier;
-    const params = result.extra_params;
-    el("recommendation").hidden = false;
-    el("recommendation").classList.toggle("result-error", !selected);
-    el("prompt-assessment").textContent = result.prompt_class
-      ? `Prompt assessment: ${result.prompt_class}`
-      : "Prompt assessment: NOT MEASURED";
-    el("selected-model").textContent = selected
-      ? `${selected} tier · ${result.model_id || "model ID NOT MEASURED"}`
-      : "No tier selected";
-    el("selected-mode").textContent = params && Object.keys(params).length
-      ? Object.entries(params).map(([key, value]) => `${key}: ${JSON.stringify(value)}`).join(" · ")
-      : "Tier settings: NOT MEASURED";
-    el("recommendation-reason").textContent = shortReason(result);
-    el("recommendation-path").textContent = result.selection_method || "NOT MEASURED";
-    el("diagnostic-text").textContent = JSON.stringify({
-      prompt_class: result.prompt_class,
-      selection_method: result.selection_method,
-      reason: result.reason,
-    }, null, 2);
-    el("diagnostic-details").hidden = false;
-  };
-
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const prompt = input.value.trim();
-    if (!prompt) return;
-    el("request-error").hidden = true;
-    el("recommendation").hidden = true;
-    button.disabled = true;
-    button.textContent = "Routing…";
-    const body = { messages: [{ role: "user", content: prompt }] };
-    try {
-      const result = await requestJson("/api/recommend", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      showRecommendation(result);
-    } catch (error) {
-      el("recommendation").hidden = false;
-      el("recommendation").classList.add("result-error");
-      el("prompt-assessment").textContent = "Prompt assessment: NOT MEASURED";
-      el("selected-model").textContent = "No tier selected";
-      el("selected-mode").textContent = "";
-      el("recommendation-reason").textContent = "MuseRoute could not complete the routing check.";
-      el("recommendation-path").textContent = "NOT MEASURED";
-      el("diagnostic-text").textContent = error.message;
-      el("diagnostic-details").hidden = false;
-      el("request-error").textContent = "Check that the MuseRoute server is reachable.";
-      el("request-error").hidden = false;
-    } finally {
-      button.disabled = false;
-      button.innerHTML = 'Route prompt <span aria-hidden="true">↑</span>';
-    }
+  const jsonPost = (url, body) => requestJson(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
   });
 
+  function measured(value, formatter = (number) => String(number), legacyValue = null) {
+    if (legacyValue !== null && legacyValue !== undefined) return "NOT MEASURED";
+    if (value === null || value === undefined || typeof value !== "number" || !Number.isFinite(value)) return "NOT MEASURED";
+    return formatter(value);
+  }
+
+  const percent = (value) => measured(value, (number) => `${(number * 100).toFixed(1)}%`);
+  const tokens = (value) => measured(value, (number) => Math.round(number).toLocaleString());
+  const latency = (value, call) => measured(value, (number) => `${Math.round(number).toLocaleString()} ms`, call?.legacy_latency_ms);
+
+  function addText(parent, tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    node.textContent = text ?? "";
+    parent.append(node);
+    return node;
+  }
+
+  function addMetricLine(parent, values) {
+    const line = document.createElement("p");
+    line.className = "metric-line";
+    line.textContent = values.join(" · ");
+    parent.append(line);
+  }
+
+  async function loadPresets() {
+    const list = el("preset-list");
+    list.replaceChildren();
+    try {
+      const data = await requestJson("/api/demo-prompts");
+      for (const item of data.prompts || []) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "preset-button";
+        button.dataset.promptId = item.id;
+        button.setAttribute("aria-label", `${item.band} saved prompt ${item.id}`);
+        const band = document.createElement("span");
+        band.className = `band-tag band-${item.band}`;
+        band.textContent = item.band;
+        const text = document.createElement("span");
+        text.textContent = item.prompt;
+        button.append(band, text);
+        button.addEventListener("click", () => {
+          input.value = item.prompt;
+          state.selectedPresetId = item.id;
+          form.requestSubmit();
+        });
+        list.append(button);
+      }
+      if (!list.children.length) addText(list, "span", "muted", "No saved prompts are available.");
+    } catch (error) {
+      addText(list, "span", "error-message", `Saved prompts unavailable: ${error.message}`);
+    }
+  }
+
+  function renderCall(call, index) {
+    const section = document.createElement("article");
+    section.className = `timeline-step ${call.status === "error" ? "step-error" : ""}`;
+    const header = document.createElement("div");
+    header.className = "step-heading";
+    addText(header, "h3", "", `${call.tier || "Tier"} answer`);
+    if (call.cached === true) addText(header, "span", "cached-badge", "cached");
+    section.append(header);
+    if (call.status === "error") {
+      addText(section, "p", "error-message", call.error || "Tier call failed; exact error was not saved.");
+    } else {
+      addText(section, "p", "answer-text", call.answer || "Empty answer");
+      addMetricLine(section, [
+        `Confidence: ${percent(call.confidence)}`,
+        `Latency: ${latency(call.latency_ms, call)}`,
+        `Prompt tokens: ${tokens(call.prompt_tokens)}`,
+        `Completion tokens: ${tokens(call.completion_tokens)}`,
+      ]);
+    }
+    if (Number.isInteger(call.retry_count) || Number.isFinite(call.retry_sleep_ms)) {
+      addMetricLine(section, [
+        `Retries: ${measured(call.retry_count)}`,
+        `Retry sleep: ${measured(call.retry_sleep_ms, (value) => `${Math.round(value)} ms`)}`,
+      ]);
+    }
+    return section;
+  }
+
+  function renderTimeline(result) {
+    const trace = result.route_trace || {};
+    const calls = Array.isArray(trace.calls) ? trace.calls : [];
+    const steps = el("timeline-steps");
+    steps.replaceChildren();
+    const cheap = calls.find((call) => call.tier === "cheap");
+    if (cheap) steps.append(renderCall(cheap, 0));
+
+    const decision = document.createElement("article");
+    decision.className = "timeline-step decision-step";
+    const escalated = trace.escalated === true || trace.decision === "escalate";
+    addText(decision, "div", "decision-label", escalated ? "Decision · escalate" : "Decision · stay on cheap");
+    addText(decision, "p", "", trace.reason || "Routing reason: NOT MEASURED");
+    addMetricLine(decision, [`Decision latency: ${latency(trace.decision_latency_ms)}`]);
+    steps.append(decision);
+
+    const strong = calls.find((call) => call.tier === "strong");
+    if (strong) steps.append(renderCall(strong, 1));
+    else {
+      const skipped = document.createElement("article");
+      skipped.className = "timeline-step skipped-step";
+      addText(skipped, "h3", "", "Strong answer");
+      addText(skipped, "p", "muted", "Not called for this request.");
+      steps.append(skipped);
+    }
+
+    el("final-tier").textContent = trace.tier_used ? `${trace.tier_used} tier` : "No tier returned an answer";
+    el("final-text").textContent = result.answer || "No tier returned an answer.";
+    el("final-latency").textContent = latency(trace.total_latency_ms, trace);
+    el("final-tokens").textContent = tokens(trace.total_tokens);
+    el("timeline").hidden = false;
+    el("compare-result").hidden = true;
+    el("compare-result").replaceChildren();
+  }
+
+  async function runRoute() {
+    const prompt = input.value.trim();
+    if (!prompt) return;
+    state.lastPrompt = prompt;
+    el("request-error").hidden = true;
+    el("timeline").hidden = true;
+    routeButton.disabled = true;
+    routeButton.textContent = "Routing…";
+    const payload = { messages: [{ role: "user", content: prompt }] };
+    if (state.selectedPresetId) payload.prompt_id = state.selectedPresetId;
+    try {
+      const suffix = demoMode ? "?demo=true" : "";
+      const result = await jsonPost(`/api/route${suffix}`, payload);
+      renderTimeline(result);
+    } catch (error) {
+      el("request-error").textContent = demoMode
+        ? `Cached demo could not replay this prompt: ${error.message}`
+        : `MuseRoute request failed: ${error.message}`;
+      el("request-error").hidden = false;
+    } finally {
+      routeButton.disabled = false;
+      routeButton.innerHTML = 'Route prompt <span aria-hidden="true">↑</span>';
+    }
+  }
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    runRoute();
+  });
   input.addEventListener("keydown", (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       form.requestSubmit();
     }
   });
+
+  function addCompareCard(container, title, answer, stats, trace = null) {
+    const card = document.createElement("article");
+    card.className = "compare-card";
+    addText(card, "h3", "", title);
+    addText(card, "p", "answer-text", answer || "No answer returned.");
+    let totalTokens = stats?.total_tokens;
+    if (totalTokens === undefined && Number.isInteger(stats?.prompt_tokens) && Number.isInteger(stats?.completion_tokens)) {
+      totalTokens = stats.prompt_tokens + stats.completion_tokens;
+    }
+    if (trace && totalTokens === undefined) totalTokens = trace.total_tokens;
+    const timeValue = trace ? trace.total_latency_ms : (stats?.request_time_ms ?? stats?.latency_ms);
+    addMetricLine(card, [
+      `Tokens: ${tokens(totalTokens)}`,
+      `Latency: ${latency(timeValue, trace || stats)}`,
+      `Cost units: ${measured(trace ? trace.total_cost_units : stats?.cost_units)}`,
+    ]);
+    if (stats?.cached === true || trace?.cached === true) addText(card, "span", "cached-badge", "cached");
+    container.append(card);
+  }
+
+  el("compare-button").addEventListener("click", async () => {
+    if (!state.lastPrompt) return;
+    const button = el("compare-button");
+    button.disabled = true;
+    button.textContent = "Comparing…";
+    const output = el("compare-result");
+    output.replaceChildren();
+    try {
+      const payload = { messages: [{ role: "user", content: state.lastPrompt }] };
+      if (state.selectedPresetId) payload.prompt_id = state.selectedPresetId;
+      const result = await jsonPost(`/api/compare${demoMode ? "?demo=true" : ""}`, payload);
+      addCompareCard(output, "Before · strong-only", result.strong_only?.answer, result.strong_only?.stats);
+      addCompareCard(output, "After · MuseRoute", result.museroute?.answer, null, result.museroute?.route_trace);
+      output.hidden = false;
+    } catch (error) {
+      addText(output, "p", "error-message", `Compare failed: ${error.message}`);
+      output.hidden = false;
+    } finally {
+      button.disabled = false;
+      button.textContent = "Compare strong-only vs MuseRoute";
+    }
+  });
+
+  function addTableCell(row, value, className = "") {
+    const cell = document.createElement("td");
+    if (className) cell.className = className;
+    cell.textContent = value;
+    row.append(cell);
+  }
+
+  function renderProof(facts) {
+    const overall = facts?.holdout?.overall || {};
+    const tableBody = el("holdout-table").querySelector("tbody");
+    tableBody.replaceChildren();
+    const rows = [["Overall", overall]];
+    for (const [band, values] of Object.entries(facts?.holdout?.by_band || {})) rows.push([band, values]);
+    for (const [label, systems] of rows) {
+      for (const name of ["cheap_only", "strong_only", "museroute"]) {
+        const metrics = systems[name] || {};
+        const row = document.createElement("tr");
+        addTableCell(row, label);
+        addTableCell(row, name.replaceAll("_", " "));
+        addTableCell(row, percent(metrics.accuracy));
+        addTableCell(row, percent(metrics.escalation_rate));
+        addTableCell(row, tokens(metrics.average_total_tokens));
+        addTableCell(row, latency(metrics.latency_ms));
+        addTableCell(row, measured(metrics.cost_units));
+        tableBody.append(row);
+      }
+    }
+
+    const bandBody = el("band-table").querySelector("tbody");
+    bandBody.replaceChildren();
+    for (const [band, systems] of Object.entries(facts?.holdout?.by_band || {})) {
+      const row = document.createElement("tr");
+      addTableCell(row, band);
+      addTableCell(row, percent(systems.cheap_only?.accuracy));
+      addTableCell(row, percent(systems.strong_only?.accuracy));
+      addTableCell(row, percent(systems.museroute?.accuracy));
+      bandBody.append(row);
+    }
+
+    const routedAccuracy = overall.museroute?.accuracy;
+    const strongAccuracy = overall.strong_only?.accuracy;
+    const guard = el("guard-status");
+    if (typeof routedAccuracy !== "number" || typeof strongAccuracy !== "number") {
+      guard.textContent = "NOT MEASURED";
+      guard.className = "guard-unknown";
+    } else {
+      const passed = routedAccuracy >= strongAccuracy - 0.02;
+      guard.textContent = `${passed ? "PASS" : "FAIL"} · post-hoc, exploratory`;
+      guard.className = passed ? "guard-pass" : "guard-fail";
+    }
+
+    const failures = el("failure-list");
+    failures.replaceChildren();
+    const mistakes = facts?.worst_holdout_mistakes || [];
+    for (const item of mistakes.slice(0, 5)) {
+      const li = document.createElement("li");
+      addText(li, "strong", "", `${item.id || "Prompt"} · ${item.band || "band NOT MEASURED"}`);
+      addText(li, "p", "", `Answer: ${item.answer || "No answer returned"}`);
+      addText(li, "p", "muted", `Expected: ${typeof item.gold === "object" ? JSON.stringify(item.gold) : item.gold ?? "NOT MEASURED"} · ${item.reason || "Reason NOT MEASURED"}`);
+      failures.append(li);
+    }
+    if (!mistakes.length) addText(failures, "li", "muted", "No failure cases are recorded.");
+  }
+
+  async function loadProof() {
+    if (state.factsLoaded) return;
+    el("proof-error").hidden = true;
+    try {
+      renderProof(await requestJson("/api/facts"));
+      state.factsLoaded = true;
+    } catch (error) {
+      el("proof-error").textContent = `Could not load saved facts: ${error.message}`;
+      el("proof-error").hidden = false;
+    }
+  }
+
+  document.querySelectorAll("[data-tab]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = button.dataset.tab;
+      document.querySelectorAll("[data-tab]").forEach((tab) => tab.classList.toggle("active", tab === button));
+      document.querySelectorAll(".view").forEach((view) => {
+        view.hidden = view.id !== `${target}-view`;
+        view.classList.toggle("active-view", !view.hidden);
+      });
+      if (target === "proof") loadProof();
+    });
+  });
+
+  el("calculator-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const payload = {};
+    for (const [key, value] of formData.entries()) payload[key] = value.trim() === "" ? null : Number(value);
+    el("calculator-error").hidden = true;
+    const output = el("calculator-result");
+    output.replaceChildren();
+    try {
+      const result = await jsonPost("/api/calculate", payload);
+      addText(output, "h2", "", result.status === "quality_drop_too_large" ? "Quality drop too large" : result.status.replaceAll("_", " "));
+      addText(output, "p", "", `Accuracy guard: ${result.quality_gate_pass === null ? "NOT MEASURED" : result.quality_gate_pass ? "PASS" : "FAIL"}`);
+      addText(output, "p", "", `Strong-only projected cost: ${measured(result.strong_only_monthly_cost)}`);
+      addText(output, "p", "", `MuseRoute projected cost: ${measured(result.museroute_monthly_cost)}`);
+      addText(output, "p", "", `Projected savings: ${measured(result.projected_savings)}`);
+      output.hidden = false;
+    } catch (error) {
+      el("calculator-error").textContent = `Calculation failed: ${error.message}`;
+      el("calculator-error").hidden = false;
+    }
+  });
+
+  input.addEventListener("input", () => { state.selectedPresetId = null; });
+  loadPresets();
 })();

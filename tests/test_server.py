@@ -201,12 +201,48 @@ def test_get_root_serves_plain_static_page():
     html = open(response.path, encoding="utf-8").read()
 
     assert response.path.name == "index.html"
-    assert "Which Muse tier fits your prompt?" in html
-    assert 'id="recommend-form"' in html
-    assert 'id="recommendation"' in html
+    assert "Teams need a quick way to decide" in html
+    assert 'id="route-form"' in html
+    assert 'id="timeline"' in html
+    assert 'id="compare-button"' in html
+    assert 'id="proof-view"' in html
+    assert 'id="savings-view"' in html
     assert 'id="prompt-input"' in html
-    assert "Strong tier" not in html
     assert any(route.path == "/" for route in server.app.routes)
+    assert any(route.path == "/static" for route in server.app.routes)
+
+
+def test_ui_has_cache_presets_timeline_compare_proof_and_measurement_banner():
+    html = open(server.home().path, encoding="utf-8").read()
+    script = open(server._STATIC_DIR / "app.js", encoding="utf-8").read()
+
+    assert "Cost units are an estimate. Savings are projections from held-out tests." in html
+    assert 'data-tab="proof"' in html
+    assert "Five holdout failure cases" in html
+    assert "NOT MEASURED" in html
+    assert '"/api/demo-prompts"' in script
+    assert '"/api/facts"' in script
+    assert "api/compare" in script
+    assert '"/api/calculate"' in script
+    assert "cached" in script
+
+
+def test_live_route_timeline_is_renderable_with_mocked_tiers(monkeypatch):
+    trace = _trace()
+    trace["calls"] = [{
+        "tier": "cheap", "status": "ok", "answer": "mock cheap answer", "confidence": 0.82,
+        "prompt_tokens": 4, "completion_tokens": 3, "latency_ms": 11.0,
+        "request_time_ms": 11.0, "retry_count": 0, "retry_sleep_ms": 0, "cached": False,
+    }]
+    trace["total_tokens"] = 7
+    monkeypatch.setattr(server.router, "route", lambda messages, policy: ("mock final answer", trace))
+
+    result = server.api_route({"messages": [{"role": "user", "content": "mock prompt"}]})
+
+    assert result["answer"] == "mock final answer"
+    assert result["route_trace"]["calls"][0]["answer"] == "mock cheap answer"
+    assert result["route_trace"]["calls"][0]["confidence"] == 0.82
+    assert result["route_trace"]["calls"][0]["prompt_tokens"] == 4
 
 
 def test_demo_prompts_are_six_cached_examples(monkeypatch, tmp_path):
@@ -249,6 +285,39 @@ def test_demo_timeline_unwraps_saved_confidence_envelope(monkeypatch, tmp_path):
 
     assert result["route_trace"]["calls"][0]["answer"] == "scam"
     assert result["route_trace"]["calls"][0]["confidence"] == 0.83
+
+
+def test_demo_timeline_uses_cached_route_call_and_hides_legacy_latency(monkeypatch, tmp_path):
+    import json
+
+    _write_demo_sources(monkeypatch, tmp_path)
+    sweep_path = tmp_path / "sweep.json"
+    sweep = json.loads(sweep_path.read_text(encoding="utf-8"))
+    decision = sweep["operating_point"]["holdout"]["details"][0]
+    decision["trace"] = {
+        "tier_used": "cheap", "reason": "cheap_answer_accepted", "escalated": False,
+        "total_prompt_tokens": 7, "total_completion_tokens": 3, "total_tokens": 10,
+        "total_latency_ms": None, "total_cost_units": None,
+        "calls": [{
+            "tier": "cheap", "status": "ok", "answer": "saved routed answer", "confidence": 0.91,
+            "prompt_tokens": 7, "completion_tokens": 3, "request_time_ms": None,
+            "latency_ms": None, "legacy_latency_ms": 9876, "cached": True,
+        }],
+    }
+    sweep_path.write_text(json.dumps(sweep), encoding="utf-8")
+
+    result = server.api_route(
+        {"prompt_id": "E1", "messages": [{"role": "user", "content": "Cached easy prompt 1?"}]},
+        demo=True,
+    )
+
+    call = result["route_trace"]["calls"][0]
+    assert call["answer"] == "saved routed answer"
+    assert call["confidence"] == 0.91
+    assert call["latency_ms"] is None
+    assert call["legacy_latency_ms"] == 9876
+    assert call["cached"] is True
+    assert result["route_trace"]["total_tokens"] == 10
 
 
 def test_demo_compare_uses_saved_answers_and_null_costs(monkeypatch, tmp_path):

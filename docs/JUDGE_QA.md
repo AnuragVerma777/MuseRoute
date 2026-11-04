@@ -1,31 +1,33 @@
 # MuseRoute: judge questions and honest answers
 
-1. **What problem does MuseRoute solve?**  
-   It tests whether a cheap-first, confidence-gated route can reduce work while preserving answer quality. On the saved 45-prompt holdout, MuseRoute scored 48.89%, below cheap-only at 60.00% and strong-only at 57.78%, so this evaluation does not show that it achieved that goal.
+All figures below are from `results/facts.json`. Holdout accuracy is exploratory because the checker was corrected after inspecting saved holdout answers.
 
-2. **What exact models and hosts were evaluated?**  
-   The facts record `meta/muse-glimmer-30b` for both cheap and strong tiers, hosted at `integrate.api.nvidia.com`. They are different tier settings of the same model ID, not two distinct models.
+1. **What does MuseRoute do?**  
+   It runs a cheap-first Muse routing policy and records its decision, answer, and available usage data. The saved evaluation compares that route with each tier alone; it does not establish that the chosen tier is better for every prompt.
 
-3. **How large and representative is the evaluation?**  
-   The workload contains 90 prompts, split into 45 tune and 45 holdout prompts, with 15 holdout prompts in each band. Generalization beyond this workload is SAY: not measured.
+2. **What was the observed holdout result?**  
+   The post-hoc facts report 75.56% accuracy for MuseRoute and 66.67% for both cheap-only and strong-only, with 20% routed escalation. Treat that comparison as exploratory rather than a confirmatory performance claim.
 
-4. **Did routing improve accuracy?**  
-   No, not on the recorded holdout: MuseRoute reached 48.89%, versus 60.00% cheap-only and 57.78% strong-only. Its band scores were 60% easy, 73.33% medium, and 13.33% hard.
+3. **How large is the holdout?**  
+   There are 45 held-out prompts, 15 per band. 45 prompts: one prompt is about 2.2 points, so small gaps are noise; performance beyond this workload is SAY: not measured.
 
-5. **How much money or compute did it save?**  
-   Cost units are null for all three holdout systems, and MuseRoute total tokens are also null. SAY: not measured; the 20% escalation rate is not a cost measurement.
+4. **Did the router save tokens or money?**  
+   The complete MuseRoute token total and all cost units are null in the facts, so SAY: not measured. The saved escalation rate is not itself a cost measurement.
 
-6. **Why is MuseRoute latency so high?**  
-   The saved average routed latency is 452,626.58 ms, compared with 12,947.69 ms cheap-only and 26,021.18 ms strong-only. The facts artifact does not establish a cause for that latency; SAY: not measured.
+5. **What does the tier audit show?**  
+   Cheap-only averaged 249.93 tokens per request at 66.67% accuracy; strong-only averaged 537.33 tokens at the same 66.67% accuracy. Average latency for both tiers is NOT MEASURED in the saved facts.
 
-7. **Why use the same model for both tiers?**  
-   The facts list the same `meta/muse-glimmer-30b` model ID and host for both tiers. The facts do not specify which tier parameter caused any behavioral difference; SAY: not measured.
+6. **What exact models were evaluated?**  
+   The facts list `meta/muse-glimmer-30b` and host `integrate.api.nvidia.com` for both tiers. The facts do not establish two distinct model IDs or explain a causal effect for tier settings; SAY: not measured.
 
-8. **What happens when a request fails?**  
-   Six routed holdout prompts have no returned answer, and the facts record 15 tier-call errors across requests and fallbacks. The artifact does not identify a single root cause for all errors; SAY: not measured.
+7. **How did accuracy vary by band?**  
+   Cheap-only scored 100% easy, 80% medium, and 20% hard; strong-only scored 100%, 73.33%, and 26.67%. MuseRoute scored 60% easy, 73.33% medium, and 93.33% hard in this exploratory rescore.
 
-9. **How is MuseRoute different from OpenRouter Auto Router, Not Diamond, LiteLLM Router, or RouteLLM?**  
-   The project enforces a Muse-only model policy and includes a format/confidence guard plus a held-out evaluation. The four source descriptions were not included in the brief, and this project has no comparative benchmark against them; a claim of superiority would be unsupported.
+8. **Why were some route results missing?**  
+   The facts show six holdout prompts without a final routed answer and 15 tier-call errors. Saved failure records include request timeouts; the facts do not establish one cause for every failed call.
 
-10. **Does it require a payment card, and is it ready for production?**  
-    Card requirements and production reliability are absent from `results/facts.json`; SAY: not measured. The saved results include six unanswered routed prompts and worse overall holdout accuracy than either single tier, so the evidence does not support a production-readiness claim.
+9. **How does it compare with the named routing products?**  
+   The repo lists OpenRouter Auto Router, Not Diamond, LiteLLM Router, and RouteLLM, but the supplied factual descriptions are missing and `facts.json` contains no comparative measurements. SAY: comparative behavior not measured.
+
+10. **Is this production-ready, and are the savings numbers reliable?**  
+    Production reliability, cost, retry counts, retry sleeps, and isolated model time are NOT MEASURED in these cached results. Six unanswered routed prompts remain in the facts, so this evaluation does not support a production-readiness or savings claim.

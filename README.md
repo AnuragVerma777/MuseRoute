@@ -2,19 +2,21 @@
 
 ## Problem and target user
 
-Teams evaluating Meta Muse models need to understand whether a cheaper first attempt can answer a request well enough, and when a stronger attempt should be used. MuseRoute is for hackathon teams and developers testing that question with measurable, repeatable prompts.
+Teams evaluating Meta Muse models need to see which tier the routing policy selects and how the saved outcomes compare on a held-out workload. MuseRoute is for hackathon teams and developers inspecting that experiment.
 
 ## Unique value
 
-MuseRoute is a Muse-only, confidence-gated routing experiment that records its decisions and evaluates them on prompts held out from tuning.
+MuseRoute records a cheap-first Muse routing experiment and its outcomes across separate tune and held-out prompt sets.
 
 ## Key features
 
 - **Muse-only model policy and two configured tiers:** both tiers currently use `meta/muse-glimmer-30b` on `integrate.api.nvidia.com`; [measured model and host facts](results/facts.json).
-- **Cheap-first routing with a format and confidence guard:** see the [router implementation](museroute/router.py) and measured [holdout route results](results/facts.json).
+- **Cheap-first routing with a format and confidence guard:** see the [router implementation](museroute/router.py) and the saved [holdout results](results/facts.json).
 - **Tune/holdout evaluation:** 45 prompts were held out from the 45-prompt tune set; inspect [all recorded facts](results/facts.json).
 - **API endpoints for routing, comparison, health and facts:** see [the FastAPI service](museroute/server.py).
 - **Presentation material:** [3-minute demo script](docs/DEMO_SCRIPT.md) and [judge Q&A](docs/JUDGE_QA.md).
+
+![MuseRoute chat timeline in cache-only demo mode](docs/img/museroute-chat.png)
 
 ## Existing alternatives
 
@@ -32,13 +34,13 @@ MuseRoute makes no claim that it beats these alternatives.
 ## Why MuseRoute is different
 
 - **Muse-only:** the saved facts identify `meta/muse-glimmer-30b` for both tiers, and the project enforces a Muse model policy.
-- **Accuracy guard:** the router checks answer format and self-reported confidence before deciding whether to escalate. Its measured accuracy is reported below; this guard did not improve the recorded holdout accuracy over either single tier.
+- **Accuracy guard:** the router checks answer format and self-reported confidence before deciding whether to escalate. The observed post-hoc holdout score is reported below; this does not establish that the guard generalizes.
 - **Held-out evaluation:** the reported comparison uses 45 holdout prompts separate from the 45 tune prompts.
 - **No card:** payment-card requirements are not recorded in `results/facts.json`; **SAY: not measured**.
 
 ## Results
 
-All results below come from [results/facts.json](results/facts.json). The set contains 45 held-out prompts (15 per band). A JSON `null` means **NOT MEASURED**.
+All results below come from [results/facts.json](results/facts.json). The set contains 45 held-out prompts (15 per band). A JSON `null` means **NOT MEASURED**. 45 prompts: one prompt is about 2.2 points, so small gaps are noise.
 
 | System | Accuracy | Escalation | Average total tokens/request | Average active request time (ms) | Isolated model time (ms) | Retry count / sleep | Cost units |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -60,9 +62,9 @@ Per-band results:
 | Hard | Strong-only | 26.67% | 100% | 339.53 | NOT MEASURED |
 | Hard | MuseRoute | 93.33% | 0% | 202.67 | NOT MEASURED |
 
-**Exploratory, post-hoc holdout rescoring:** the numeric checker previously rejected worked answers containing intermediate numbers even when their final equation or explicit remainder equaled the gold answer. The checker was corrected and the saved 45 holdout responses were rescored offline. This post-hoc holdout accuracy is exploratory and must not be treated as an untouched estimate of generalization. The threshold (`0.5`, self-consistency off) was selected using tune data only; no holdout result was used to choose the policy.
+**Exploratory, post-hoc holdout rescoring:** the numeric checker previously rejected worked answers containing intermediate numbers even when their final equation or explicit remainder equaled the gold answer. The checker was corrected and the saved holdout responses were rescored offline. MuseRoute's observed score is 75.56%, versus 66.67% for each single tier, but this post-hoc result is exploratory and is not an untouched estimate of generalization. The threshold (`0.5`, self-consistency off) was selected using tune data only; no holdout result was used to choose the policy.
 
-The prior `452,626.58 ms` mean mixed active HTTP time with retry waits and was not a valid isolated model-time figure. New client telemetry measures active HTTP request time across attempts and records retry count and sleep time separately. The host does not expose isolated model-compute time, so `model_time_ms` remains **NOT MEASURED**. The saved answer cache predates this split; replaying it cannot recover active time, retry counts, or sleeps, so those averages are now null rather than guessed. Per-call token usage is retained in the route trace. Since failed calls have unknown usage, the complete MuseRoute token total is **NOT MEASURED**; known successful-call usage is 10,962 tokens across the cached trace calls. Cost units are a relative estimate, not dollars; no cost weights are configured, so cost is **NOT MEASURED**.
+The tier audit shows cheap-only at 66.67% accuracy and 249.93 average tokens per request, while strong-only is also 66.67% accurate at 537.33 average tokens per request. Both tiers use the same model ID and host in the saved facts. MuseRoute's complete token total is **NOT MEASURED** because 15 tier calls have no saved usage; 10,962 tokens are known across successful calls only. Average latency, retry counts, retry sleeps, and isolated model time are **NOT MEASURED** in the cache-backed facts. Cost units are a relative estimate, not dollars; cost is **NOT MEASURED**. Six routed requests returned no final answer. These limits mean the observed accuracy does not establish a resource saving or broad reliability.
 
 The operating point remains a tune-only choice. Cheap and strong currently use the same model ID and host, with different reasoning modes.
 
@@ -104,7 +106,7 @@ uvicorn museroute.server:app --host 127.0.0.1 --port 8000
 
 `museroute/client.py` sends chat-completions HTTP requests. `museroute/router.py` tries the cheap tier, applies its format/confidence checks, and may escalate. `museroute/server.py` exposes `/health`, `/v1/chat/completions`, `/api/route`, `/api/compare`, and `/api/facts`. Workload, tune and holdout inputs are under `data/`; measured outputs and caches are under `results/`.
 
-The plain HTML/CSS/JavaScript demo is served at `/`. Open `http://127.0.0.1:8000/?demo=1` for cache-only examples; that mode does not make model calls.
+The plain HTML/CSS/JavaScript demo is served at `/`. Open `http://127.0.0.1:8000/?demo=1` for cache-only examples; presets, route timeline and comparison replay saved results without model calls.
 
 ## API example
 

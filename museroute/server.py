@@ -92,48 +92,64 @@ def _find_demo_record(payload: dict[str, Any]) -> dict[str, Any]:
     raise HTTPException(status_code=404, detail="This prompt has no complete disk-cache replay; demo mode made no live call.")
 
 
-def _demo_call(tier: str, entry: dict[str, Any]) -> dict[str, Any]:
+def _demo_call(
+    tier: str,
+    entry: dict[str, Any],
+    saved_call: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     stats = entry["stats"]
     # Some saved tier answers retain the router confidence envelope; unwrap
     # that exact shape so it is not shown as if it were the model's answer.
-    answer = entry["answer"]
-    confidence = None
-    try:
-        envelope = json.loads(answer)
-    except (TypeError, json.JSONDecodeError):
-        envelope = None
-    if (
-        isinstance(envelope, dict)
-        and set(envelope) == {"answer", "confidence"}
-        and isinstance(envelope.get("answer"), str)
-    ):
-        answer = envelope["answer"]
-        value = envelope.get("confidence")
-        if isinstance(value, (int, float)) and not isinstance(value, bool) and 0 <= value <= 1:
-            confidence = float(value)
+    answer = (saved_call or {}).get("answer", entry["answer"])
+    confidence = (saved_call or {}).get("confidence")
+    if saved_call is None:
+        try:
+            envelope = json.loads(answer)
+        except (TypeError, json.JSONDecodeError):
+            envelope = None
+        if (
+            isinstance(envelope, dict)
+            and set(envelope) == {"answer", "confidence"}
+            and isinstance(envelope.get("answer"), str)
+        ):
+            answer = envelope["answer"]
+            value = envelope.get("confidence")
+            if isinstance(value, (int, float)) and not isinstance(value, bool) and 0 <= value <= 1:
+                confidence = float(value)
+    status = (saved_call or {}).get("status", "ok")
     return {
         "tier": tier,
-        "status": "ok",
+        "status": status,
         "sample": 0,
         "answer": answer,
         "confidence": confidence,
-        "prompt_tokens": stats.get("prompt_tokens"),
-        "completion_tokens": stats.get("completion_tokens"),
-        "latency_ms": stats.get("latency_ms"),
-        "cost_units": stats.get("cost_units"),
+        "prompt_tokens": (saved_call or {}).get("prompt_tokens", stats.get("prompt_tokens")),
+        "completion_tokens": (saved_call or {}).get("completion_tokens", stats.get("completion_tokens")),
+        # Only new active request measurements may be presented as latency.
+        "latency_ms": (saved_call or {}).get("request_time_ms", (saved_call or {}).get("latency_ms"))
+        if saved_call is not None else stats.get("request_time_ms"),
+        "legacy_latency_ms": (saved_call or {}).get("legacy_latency_ms"),
+        "retry_count": (saved_call or {}).get("retry_count", stats.get("retry_count")),
+        "retry_sleep_ms": (saved_call or {}).get("retry_sleep_ms", stats.get("retry_sleep_ms")),
+        "cost_units": (saved_call or {}).get("cost_units", stats.get("cost_units")),
         "cached": True,
         "source": "saved tier-answer cache",
+        "error": (saved_call or {}).get("error"),
     }
 
 
 def _demo_result(record: dict[str, Any]) -> dict[str, Any]:
     decision = record["decision"]
-    reason = decision.get("confidence")
-    escalated = bool(decision.get("escalated"))
+    saved_trace = decision.get("trace") or {}
+    reason = saved_trace.get("reason") or decision.get("confidence")
+    escalated = bool(saved_trace.get("escalated", decision.get("escalated")))
     strong_failed = isinstance(reason, str) and "strong_call_error" in reason
-    calls = [_demo_call("cheap", record["cheap_cache"])]
+    saved_calls = saved_trace.get("calls") or []
+    cheap_call = next((call for call in saved_calls if call.get("tier") == "cheap"), None)
+    calls = [_demo_call("cheap", record["cheap_cache"], cheap_call)]
     if escalated:
-        strong_call = _demo_call("strong", record["strong_cache"])
+        saved_strong_call = next((call for call in saved_calls if call.get("tier") == "strong"), None)
+        strong_call = _demo_call("strong", record["strong_cache"], saved_strong_call)
         if strong_failed:
             strong_call.update({"status": "error", "answer": "", "error": "Saved holdout record says the strong call failed."})
         calls.append(strong_call)
@@ -142,19 +158,22 @@ def _demo_result(record: dict[str, Any]) -> dict[str, Any]:
         "band": record["band"],
         "answer": decision.get("answer") or "",
         "route_trace": {
-            "tier_used": "strong" if escalated and not strong_failed else "cheap",
+            "tier_used": saved_trace.get("tier_used") or ("strong" if escalated and not strong_failed else "cheap"),
             "reason": reason,
             "calls": calls,
             "decision": "escalate" if escalated else "stay",
             "escalated": escalated,
-            "total_prompt_tokens": None,
-            "total_completion_tokens": None,
-            "total_tokens": decision.get("tokens"),
-            "total_latency_ms": decision.get("latency_ms"),
-            "total_cost_units": decision.get("cost_units"),
-            "confidence": None,
+            "total_prompt_tokens": saved_trace.get("total_prompt_tokens"),
+            "total_completion_tokens": saved_trace.get("total_completion_tokens"),
+            "total_tokens": saved_trace.get("total_tokens", decision.get("tokens")),
+            "total_latency_ms": saved_trace.get("total_latency_ms"),
+            "decision_latency_ms": saved_trace.get("decision_latency_ms"),
+            "total_cost_units": saved_trace.get("total_cost_units", decision.get("cost_units")),
+            "confidence": calls[0].get("confidence"),
+            "retry_count": saved_trace.get("retry_count"),
+            "retry_sleep_ms": saved_trace.get("retry_sleep_ms"),
             "cached": True,
-            "cache_note": "Tier answers are replayed from disk; the holdout decision is a saved evaluation result. Confidence was not retained.",
+            "cache_note": "Tier calls and the holdout decision are replayed from disk cache.",
         },
     }
 
@@ -376,7 +395,9 @@ def api_compare(payload: dict[str, Any], demo: bool = False) -> dict[str, Any]:
     if demo:
         record = _find_demo_record(payload)
         result = _demo_result(record)
-        strong = _demo_call("strong", record["strong_cache"])
+        saved_calls = (record["decision"].get("trace") or {}).get("calls") or []
+        saved_strong_call = next((call for call in saved_calls if call.get("tier") == "strong"), None)
+        strong = _demo_call("strong", record["strong_cache"], saved_strong_call)
         strong_total = (
             strong["prompt_tokens"] + strong["completion_tokens"]
             if isinstance(strong.get("prompt_tokens"), int) and isinstance(strong.get("completion_tokens"), int)
@@ -385,7 +406,7 @@ def api_compare(payload: dict[str, Any], demo: bool = False) -> dict[str, Any]:
         after_trace = result["route_trace"]
         return {
             "strong_only": {
-                "answer": record["strong_cache"]["answer"],
+                "answer": strong["answer"],
                 "stats": {
                     "prompt_tokens": strong.get("prompt_tokens"),
                     "completion_tokens": strong.get("completion_tokens"),
