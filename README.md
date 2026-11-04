@@ -1,5 +1,7 @@
 # MuseRoute
 
+**Try it locally:** start the server with `uvicorn museroute.server:app --host 127.0.0.1 --port 8000`, then [open the MuseRoute chat](http://127.0.0.1:8000/?demo=1).
+
 ## Problem and target user
 
 Teams evaluating Meta Muse models need to see which tier the routing policy selects and how the saved outcomes compare on a held-out workload. MuseRoute is for hackathon teams and developers inspecting that experiment.
