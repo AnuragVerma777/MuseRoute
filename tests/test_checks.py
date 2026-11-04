@@ -24,6 +24,15 @@ def test_numeric_rejects_ambiguous_multiple_numbers():
     assert not score("It could be 4 or 5", 4, "numeric")
 
 
+@pytest.mark.parametrize("answer,gold", [
+    ("18 blue beads + 27 yellow beads = 45 beads in the tray.", 45),
+    ("48 ÷ 5 = 9 rolls per basket with a remainder of 3 rolls left over.", 3),
+    ("Eight bottles contain 8 × 750 millilitres = 6,000 millilitres altogether.", 6000),
+])
+def test_numeric_extracts_unambiguous_final_result_from_work(answer, gold):
+    assert score(answer, gold, "numeric")
+
+
 def test_json_fields_match_required_fields_and_allow_extras():
     assert score('{"amount": 240, "sender": "SENDER-A1", "extra": true}', {"amount": 240, "sender": "SENDER-A1"}, "json_fields")
 
