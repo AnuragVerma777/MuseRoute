@@ -115,9 +115,32 @@ uvicorn museroute.server:app --host 127.0.0.1 --port 8000
 
 ## Architecture
 
-`museroute/client.py` sends chat-completions HTTP requests. `museroute/router.py` tries the cheap tier, applies its format/confidence checks, and may escalate. `museroute/server.py` exposes `/health`, `/v1/chat/completions`, `/api/route`, `/api/compare`, and `/api/facts`. Workload, tune and holdout inputs are under `data/`; measured outputs and caches are under `results/`.
+Both configured tiers currently use the same Meta Muse model, `meta/muse-glimmer-30b`, through `integrate.api.nvidia.com`. The cheap tier sends `reasoning_effort: low`; the strong tier sends `reasoning_effort: high`. MuseRoute therefore compares two configured modes of one Muse model, not two different model IDs. The client makes plain chat-completions HTTP requests with `requests`; it does not use a model vendor SDK.
 
-The plain HTML/CSS/JavaScript demo is served at `/`. Enter any prompt in the chat box; the router reuses a saved answer when available and otherwise calls the configured Muse tiers. `/` and `/?demo=1` show the same freeform prompt UI.
+`museroute/server.py` serves the plain HTML/CSS/JavaScript chat UI at `/` and API endpoints `/v1/chat/completions`, `/api/route`, `/api/compare`, and `/api/facts`. Workload, tune and holdout inputs are under `data/`; measured outputs and successful-answer caches are under `results/`.
+
+### Prompt input to routed output
+
+```mermaid
+flowchart TD
+    A[User types a prompt] --> B[Chat UI sends messages to FastAPI]
+    B --> C{Matching successful answer in disk cache?}
+    C -- Yes --> H[Return saved answer and route trace]
+    C -- No --> D[Router asks cheap Muse tier for answer and confidence]
+    D --> E{Answer format valid and confidence meets policy?}
+    E -- Yes --> H
+    E -- No --> F[Call strong Muse tier]
+    F --> G{Strong call succeeds?}
+    G -- Yes --> H
+    G -- No --> I[Use cheap answer if available, otherwise show request failure]
+    H --> J[UI shows final answer, selected tier, decision reason and available usage]
+```
+
+The router tries cheap first. It escalates when the answer is empty, a refusal, invalid for the requested format, below the configured confidence threshold, or when enabled self-consistency samples disagree. Successful answers are cached by prompt, tier and request parameters so repeats can be served locally. Failed calls are not cached. If a tier errors, the router tries the other tier when policy allows; if neither returns an answer, the UI shows the error instead of a fabricated response.
+
+At the HTTP boundary, the UI sends a chat-completions `messages` array to `/api/route`. FastAPI calls the router, and the response includes the answer plus a `route_trace` containing the tier calls and routing decision. The `/v1/chat/completions` endpoint returns the standard completion shape with the additional `route_trace` field.
+
+For the measured evaluation behind the charts, the workload was split into tune and holdout sets; the operating point was chosen on tune data, then evaluated on holdout. See [the data files](data/) and [saved facts](results/facts.json).
 
 ## API example
 
