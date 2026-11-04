@@ -76,10 +76,6 @@ th { color: #4b5b54; background: #f3f6f3; }
 .failure-list { display: grid; gap: 8px; padding-left: 26px; }
 .failure-list li { padding: 10px 12px; border: 1px solid var(--line); border-radius: 11px; background: white; }
 .failure-list p { margin: 3px 0; overflow-wrap: anywhere; }
-.calculator-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 820px; margin: 16px 0; }
-.calculator-grid label { display: grid; gap: 5px; color: #485751; font-size: .78rem; font-weight: 700; }
-.calculator-grid input { width: 100%; min-height: 42px; padding: 7px 10px; border: 1px solid #cbd3ce; border-radius: 9px; color: var(--ink); background: white; font: inherit; font-size: .9rem; }
-.calculator-grid button { align-self: end; justify-self: start; }
 .result-card { max-width: 820px; background: var(--green-soft); }
 .result-card h2 { margin: 0; font-size: 1.05rem; }
 .result-card p { margin: 5px 0; }
@@ -92,7 +88,6 @@ th { color: #4b5b54; background: #f3f6f3; }
   .compare-result { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
-  .calculator-grid { grid-template-columns: 1fr; }
   .composer-footer { align-items: flex-end; }
   .composer-footer .muted { max-width: 56%; }
 }

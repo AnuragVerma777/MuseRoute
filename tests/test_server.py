@@ -206,7 +206,6 @@ def test_get_root_serves_plain_static_page():
     assert 'id="timeline"' in html
     assert 'id="compare-button"' in html
     assert 'id="proof-view"' in html
-    assert 'id="savings-view"' in html
     assert 'id="prompt-input"' in html
     assert any(route.path == "/" for route in server.app.routes)
     assert any(route.path == "/static" for route in server.app.routes)
@@ -216,10 +215,13 @@ def test_ui_has_freeform_prompt_timeline_compare_proof_and_measurement_banner():
     html = open(server.home().path, encoding="utf-8").read()
     script = open(server._STATIC_DIR / "app.js", encoding="utf-8").read()
 
-    assert "Cost units are an estimate. Savings are projections from held-out tests." in html
     assert 'data-tab="proof"' in html
     assert "Five holdout failure cases" in html
     assert "NOT MEASURED" in html
+    assert 'data-tab="savings"' not in html
+    assert 'id="savings-view"' not in html
+    assert "<th>Latency</th>" not in html
+    assert "<th>Cost units</th>" not in html
     assert "Type any prompt you want to route" in html
     assert 'id="preset-list"' not in html
     assert 'id="final-latency"' not in html
@@ -232,7 +234,7 @@ def test_ui_has_freeform_prompt_timeline_compare_proof_and_measurement_banner():
     assert 'jsonPost("/api/route", payload)' in script
     assert '"/api/facts"' in script
     assert "api/compare" in script
-    assert '"/api/calculate"' in script
+    assert '"/api/calculate"' not in script
     assert "cached" in script
 
 

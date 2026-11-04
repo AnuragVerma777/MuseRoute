@@ -190,7 +190,6 @@
     const timeValue = trace ? trace.total_latency_ms : (stats?.request_time_ms ?? stats?.latency_ms);
     const metrics = [`Tokens: ${tokens(totalTokens)}`];
     if (typeof timeValue === "number" && !(trace || stats)?.legacy_latency_ms) metrics.push(`Latency: ${latency(timeValue, trace || stats)}`);
-    metrics.push(`Cost units: ${measured(trace ? trace.total_cost_units : stats?.cost_units)}`);
     addMetricLine(card, metrics);
     if (stats?.cached === true || trace?.cached === true) addText(card, "span", "cached-badge", "cached");
     container.append(card);
@@ -240,8 +239,6 @@
         addTableCell(row, percent(metrics.accuracy));
         addTableCell(row, percent(metrics.escalation_rate));
         addTableCell(row, tokens(metrics.average_total_tokens));
-        addTableCell(row, latency(metrics.latency_ms));
-        addTableCell(row, measured(metrics.cost_units));
         tableBody.append(row);
       }
     }
@@ -304,28 +301,6 @@
       });
       if (target === "proof") loadProof();
     });
-  });
-
-  el("calculator-form").addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const payload = {};
-    for (const [key, value] of formData.entries()) payload[key] = value.trim() === "" ? null : Number(value);
-    el("calculator-error").hidden = true;
-    const output = el("calculator-result");
-    output.replaceChildren();
-    try {
-      const result = await jsonPost("/api/calculate", payload);
-      addText(output, "h2", "", result.status === "quality_drop_too_large" ? "Quality drop too large" : result.status.replaceAll("_", " "));
-      addText(output, "p", "", `Accuracy guard: ${result.quality_gate_pass === null ? "NOT MEASURED" : result.quality_gate_pass ? "PASS" : "FAIL"}`);
-      addText(output, "p", "", `Strong-only projected cost: ${measured(result.strong_only_monthly_cost)}`);
-      addText(output, "p", "", `MuseRoute projected cost: ${measured(result.museroute_monthly_cost)}`);
-      addText(output, "p", "", `Projected savings: ${measured(result.projected_savings)}`);
-      output.hidden = false;
-    } catch (error) {
-      el("calculator-error").textContent = `Calculation failed: ${error.message}`;
-      el("calculator-error").hidden = false;
-    }
   });
 
 })();

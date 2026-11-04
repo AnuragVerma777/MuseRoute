@@ -15,13 +15,10 @@
         <nav class="tabs" aria-label="Main views">
           <button class="tab active" type="button" data-tab="chat">Chat</button>
           <button class="tab" type="button" data-tab="proof">Proof</button>
-          <button class="tab" type="button" data-tab="savings">Savings</button>
         </nav>
       </header>
 
       <p class="problem">Teams need a quick way to decide when a direct Muse prompt merits the stronger reasoning tier.</p>
-      <div class="notice" role="note">Cost units are an estimate. Savings are projections from held-out tests.</div>
-
       <section id="chat-view" class="view active-view" aria-labelledby="chat-title">
         <div class="chat-heading">
           <p class="eyebrow">MUSE MODEL ROUTING</p>
@@ -57,7 +54,7 @@
         <h1 id="proof-title">Proof</h1>
         <p class="muted">Facts are loaded from the saved evaluation. Post-hoc rescoring is exploratory and was not used to select the tune-only policy.</p>
         <p id="proof-error" class="error-message" role="alert" hidden></p>
-        <div class="table-wrap"><table id="holdout-table"><caption>Holdout results</caption><thead><tr><th>Set</th><th>System</th><th>Accuracy</th><th>Escalation</th><th>Avg tokens</th><th>Latency</th><th>Cost units</th></tr></thead><tbody></tbody></table></div>
+        <div class="table-wrap"><table id="holdout-table"><caption>Holdout results</caption><thead><tr><th>Set</th><th>System</th><th>Accuracy</th><th>Escalation</th><th>Avg tokens</th></tr></thead><tbody></tbody></table></div>
         <h2 class="section-title">Accuracy by band</h2>
         <div class="table-wrap"><table id="band-table"><thead><tr><th>Band</th><th>Cheap-only</th><th>Strong-only</th><th>MuseRoute</th></tr></thead><tbody></tbody></table></div>
         <section class="guard-card">
@@ -67,24 +64,6 @@
         </section>
         <h2 class="section-title">Five holdout failure cases</h2>
         <ol id="failure-list" class="failure-list"></ol>
-      </section>
-
-      <section id="savings-view" class="view" aria-labelledby="savings-title" hidden>
-        <p class="eyebrow">ESTIMATE · EDITABLE INPUTS</p>
-        <h1 id="savings-title">Savings calculator</h1>
-        <p class="muted">Projection from held-out test; prices are inputs; not real savings.</p>
-        <form id="calculator-form" class="calculator-grid">
-          <label>Monthly requests<input name="monthly_requests" type="number" min="0" step="1" placeholder="NOT MEASURED" required></label>
-          <label>Average prompt tokens<input name="average_prompt_tokens" type="number" min="0" step="any" placeholder="NOT MEASURED" required></label>
-          <label>Average completion tokens<input name="average_completion_tokens" type="number" min="0" step="any" placeholder="NOT MEASURED" required></label>
-          <label>Cheap input price / million<input name="cheap_input_price_per_million" type="number" min="0" step="any" placeholder="NOT MEASURED" required></label>
-          <label>Cheap output price / million<input name="cheap_output_price_per_million" type="number" min="0" step="any" placeholder="NOT MEASURED" required></label>
-          <label>Strong input price / million<input name="strong_input_price_per_million" type="number" min="0" step="any" placeholder="NOT MEASURED" required></label>
-          <label>Strong output price / million<input name="strong_output_price_per_million" type="number" min="0" step="any" placeholder="NOT MEASURED" required></label>
-          <button type="submit">Calculate projection</button>
-        </form>
-        <section id="calculator-result" class="result-card" aria-live="polite" hidden></section>
-        <p id="calculator-error" class="error-message" role="alert" hidden></p>
       </section>
 
       <footer class="footnote">MuseRoute reports the tier selected by its routing policy. It does not guarantee that the tier is better for every prompt.</footer>
