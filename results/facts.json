@@ -32,31 +32,37 @@
         "average_prompt_tokens": 96.19,
         "average_completion_tokens": 164.87,
         "average_total_tokens": 261.06,
-        "average_latency_ms": 31914.9,
+        "average_latency_ms": null,
+        "total_retries": null,
+        "retry_sleep_ms": null,
+        "model_time_ms": null,
         "cost_units": null
       },
       "strong": {
         "average_prompt_tokens": 96.19,
         "average_completion_tokens": 461.83,
         "average_total_tokens": 558.02,
-        "average_latency_ms": 28940.99,
+        "average_latency_ms": null,
+        "total_retries": null,
+        "retry_sleep_ms": null,
+        "model_time_ms": null,
         "cost_units": null
       }
     },
     "accuracy": {
       "cheap": {
-        "overall": 0.6,
+        "overall": 0.6556,
         "by_band": {
           "easy": 1.0,
-          "hard": 0.0,
+          "hard": 0.1667,
           "medium": 0.8
         }
       },
       "strong": {
-        "overall": 0.6,
+        "overall": 0.6444,
         "by_band": {
           "easy": 1.0,
-          "hard": 0.0,
+          "hard": 0.1333,
           "medium": 0.8
         }
       }
@@ -66,36 +72,48 @@
     "overall": {
       "prompt_count": 45,
       "cheap_only": {
-        "accuracy": 0.6,
+        "accuracy": 0.6667,
         "escalation_rate": 0.0,
         "finished_prompts": 45,
         "errors": 0,
         "tier_call_errors": null,
         "average_total_tokens": 249.93,
         "total_tokens": 11247,
-        "latency_ms": 12947.69,
+        "latency_ms": null,
+        "request_time_ms": null,
+        "model_time_ms": null,
+        "retry_count": null,
+        "retry_sleep_ms": null,
         "cost_units": null
       },
       "strong_only": {
-        "accuracy": 0.5778,
+        "accuracy": 0.6667,
         "escalation_rate": 1.0,
         "finished_prompts": 45,
         "errors": 0,
         "tier_call_errors": null,
         "average_total_tokens": 537.33,
         "total_tokens": 24180,
-        "latency_ms": 26021.18,
+        "latency_ms": null,
+        "request_time_ms": null,
+        "model_time_ms": null,
+        "retry_count": null,
+        "retry_sleep_ms": null,
         "cost_units": null
       },
       "museroute": {
-        "accuracy": 0.4889,
+        "accuracy": 0.7556,
         "escalation_rate": 0.2,
         "finished_prompts": 39,
         "errors": 6,
         "tier_call_errors": 15,
         "average_total_tokens": null,
         "total_tokens": null,
-        "latency_ms": 452626.58,
+        "latency_ms": null,
+        "request_time_ms": null,
+        "model_time_ms": null,
+        "retry_count": null,
+        "retry_sleep_ms": null,
         "cost_units": null
       }
     },
@@ -110,7 +128,11 @@
           "tier_call_errors": null,
           "average_total_tokens": 177.53,
           "total_tokens": 2663,
-          "latency_ms": 17885.64,
+          "latency_ms": null,
+          "request_time_ms": null,
+          "model_time_ms": null,
+          "retry_count": null,
+          "retry_sleep_ms": null,
           "cost_units": null
         },
         "strong_only": {
@@ -121,7 +143,11 @@
           "tier_call_errors": null,
           "average_total_tokens": 340.6,
           "total_tokens": 5109,
-          "latency_ms": 24209.41,
+          "latency_ms": null,
+          "request_time_ms": null,
+          "model_time_ms": null,
+          "retry_count": null,
+          "retry_sleep_ms": null,
           "cost_units": null
         },
         "museroute": {
@@ -132,43 +158,59 @@
           "tier_call_errors": 15,
           "average_total_tokens": null,
           "total_tokens": null,
-          "latency_ms": 58071.94,
+          "latency_ms": null,
+          "request_time_ms": null,
+          "model_time_ms": null,
+          "retry_count": null,
+          "retry_sleep_ms": null,
           "cost_units": null
         }
       },
       "hard": {
         "prompt_count": 15,
         "cheap_only": {
-          "accuracy": 0.0,
+          "accuracy": 0.2,
           "escalation_rate": 0.0,
           "finished_prompts": null,
           "errors": null,
           "tier_call_errors": null,
           "average_total_tokens": 200.27,
           "total_tokens": 3004,
-          "latency_ms": 7929.15,
+          "latency_ms": null,
+          "request_time_ms": null,
+          "model_time_ms": null,
+          "retry_count": null,
+          "retry_sleep_ms": null,
           "cost_units": null
         },
         "strong_only": {
-          "accuracy": 0.0,
+          "accuracy": 0.2667,
           "escalation_rate": 1.0,
           "finished_prompts": null,
           "errors": null,
           "tier_call_errors": null,
           "average_total_tokens": 339.53,
           "total_tokens": 5093,
-          "latency_ms": 15817.59,
+          "latency_ms": null,
+          "request_time_ms": null,
+          "model_time_ms": null,
+          "retry_count": null,
+          "retry_sleep_ms": null,
           "cost_units": null
         },
         "museroute": {
-          "accuracy": 0.1333,
+          "accuracy": 0.9333,
           "escalation_rate": 0.0,
           "finished_prompts": 15,
           "errors": 0,
           "tier_call_errors": 0,
           "average_total_tokens": 202.67,
           "total_tokens": 3040,
-          "latency_ms": 676977.08,
+          "latency_ms": null,
+          "request_time_ms": null,
+          "model_time_ms": null,
+          "retry_count": null,
+          "retry_sleep_ms": null,
           "cost_units": null
         }
       },
@@ -182,7 +224,11 @@
           "tier_call_errors": null,
           "average_total_tokens": 372.0,
           "total_tokens": 5580,
-          "latency_ms": 13028.27,
+          "latency_ms": null,
+          "request_time_ms": null,
+          "model_time_ms": null,
+          "retry_count": null,
+          "retry_sleep_ms": null,
           "cost_units": null
         },
         "strong_only": {
@@ -193,7 +239,11 @@
           "tier_call_errors": null,
           "average_total_tokens": 931.87,
           "total_tokens": 13978,
-          "latency_ms": 38036.54,
+          "latency_ms": null,
+          "request_time_ms": null,
+          "model_time_ms": null,
+          "retry_count": null,
+          "retry_sleep_ms": null,
           "cost_units": null
         },
         "museroute": {
@@ -204,7 +254,11 @@
           "tier_call_errors": 0,
           "average_total_tokens": 392.8,
           "total_tokens": 5892,
-          "latency_ms": 622830.72,
+          "latency_ms": null,
+          "request_time_ms": null,
+          "model_time_ms": null,
+          "retry_count": null,
+          "retry_sleep_ms": null,
           "cost_units": null
         }
       }
@@ -214,54 +268,83 @@
     "chosen_threshold": 0.5,
     "self_consistency": false,
     "selection_basis": "total_tokens_fallback",
-    "tune_accuracy": 0.6444,
-    "strong_only_tune_accuracy": 0.6,
+    "tune_accuracy": 0.8667,
+    "strong_only_tune_accuracy": 0.6444,
     "average_prompt_tokens": null,
     "average_completion_tokens": null,
     "average_total_tokens": null,
-    "latency_ms": 452626.58,
-    "cost_units": null
+    "latency_ms": null,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null,
+    "cost_units": null,
+    "known_successful_call_tokens": 10962,
+    "known_successful_call_prompt_tokens": 4855,
+    "known_successful_call_completion_tokens": 6107,
+    "prompts_with_complete_call_usage": 36,
+    "calls_missing_usage": 15
   },
   "worst_holdout_mistakes": [
     {
-      "id": "H001",
+      "id": "H019",
       "band": "hard",
       "check": "numeric",
-      "answer": "18 blue beads + 27 yellow beads = 45 beads in the tray.",
-      "gold": 45,
+      "answer": "Let the lower shelf have x books. Then the upper shelf has x + 8 books.\n x + (x + 8) = 50\n 2x + 8 = 50\n 2x = 42\n x = 21\nThe lower shelf has 21 books, and the upper shelf has 21 + 8 = 29 books.",
+      "gold": 21,
       "reason": "The numeric answer did not match the expected value."
     },
     {
-      "id": "H003",
-      "band": "hard",
-      "check": "numeric",
-      "answer": "144 pages ÷ 12 sections = 12 pages per section.",
-      "gold": 12,
-      "reason": "The numeric answer did not match the expected value."
+      "id": "M007",
+      "band": "medium",
+      "check": "json_fields",
+      "answer": "{\"amount\": 3075, \"date\": \"2026-07-12\", \"sender\": \"yaar\", \"purpose\": \"school project material\"}",
+      "gold": {
+        "amount": 3075,
+        "date": "2026-07-12",
+        "sender": "SENDER-G7",
+        "purpose": "school project material"
+      },
+      "reason": "One or more expected JSON fields were missing or different."
     },
     {
-      "id": "H004",
-      "band": "hard",
-      "check": "numeric",
-      "answer": "Three buses carry 3 × 24 = 72 students. With 7 more traveling separately, 72 + 7 = 79 students altogether.",
-      "gold": 79,
-      "reason": "The numeric answer did not match the expected value."
+      "id": "M012",
+      "band": "medium",
+      "check": "json_fields",
+      "answer": "{\"amount\": 250, \"date\": \"2026-12-19\", \"sender\": \"\", \"purpose\": \"art paper\"}",
+      "gold": {
+        "amount": 250,
+        "date": "2026-12-19",
+        "sender": "SENDER-M3",
+        "purpose": "art paper"
+      },
+      "reason": "One or more expected JSON fields were missing or different."
     },
     {
-      "id": "H005",
-      "band": "hard",
-      "check": "numeric",
-      "answer": "250 - 42 × 3 = 250 - 126 = 124 tokens remain.",
-      "gold": 124,
-      "reason": "The numeric answer did not match the expected value."
+      "id": "M019",
+      "band": "medium",
+      "check": "json_fields",
+      "answer": "{\"amount\": 415, \"date\": \"2027-07-20\", \"sender\": \"U1\", \"purpose\": \"school tiffin box\"}",
+      "gold": {
+        "amount": 415,
+        "date": "2027-07-20",
+        "sender": "SENDER-U1",
+        "purpose": "school tiffin box"
+      },
+      "reason": "One or more expected JSON fields were missing or different."
     },
     {
-      "id": "H006",
-      "band": "hard",
-      "check": "numeric",
-      "answer": "2.5 hours = 150 minutes. 150 minutes / 10 minutes = 15 intervals. 15 × 6 cards = 90 cards finished.",
-      "gold": 90,
-      "reason": "The numeric answer did not match the expected value."
+      "id": "M023",
+      "band": "medium",
+      "check": "json_fields",
+      "answer": "{\"amount\": 3330, \"date\": \"2027-11-11\", \"sender\": \"SENDER-Y5\", \"purpose\": \"medicine organizer ke liye\"}",
+      "gold": {
+        "amount": 3330,
+        "date": "2027-11-11",
+        "sender": "SENDER-Y5",
+        "purpose": "medicine organizer"
+      },
+      "reason": "One or more expected JSON fields were missing or different."
     }
   ],
   "holdout_request_failures": [

@@ -158,6 +158,48 @@ def _mistake_reason(check: str) -> str:
     }.get(check, "The answer failed the configured check.")
 
 
+def _known_router_usage(details: list[dict[str, Any]]) -> dict[str, Any]:
+    """Summarize returned usage without presenting failed calls as zero tokens."""
+    if not details:
+        return {
+            "known_successful_call_tokens": None,
+            "known_successful_call_prompt_tokens": None,
+            "known_successful_call_completion_tokens": None,
+            "prompts_with_complete_call_usage": None,
+            "calls_missing_usage": None,
+        }
+    calls = [
+        call
+        for detail in details
+        for call in ((detail.get("trace") or {}).get("calls") or [])
+        if isinstance(call, dict)
+    ]
+    measured = [
+        call for call in calls
+        if isinstance(call.get("prompt_tokens"), int) and isinstance(call.get("completion_tokens"), int)
+    ]
+    prompt_total = sum(call["prompt_tokens"] for call in measured) if measured else None
+    completion_total = sum(call["completion_tokens"] for call in measured) if measured else None
+    complete_prompts = sum(
+        bool((detail.get("trace") or {}).get("calls"))
+        and all(
+            isinstance(call.get("prompt_tokens"), int)
+            and isinstance(call.get("completion_tokens"), int)
+            for call in (detail.get("trace") or {}).get("calls", [])
+        )
+        for detail in details
+    )
+    return {
+        "known_successful_call_tokens": (
+            prompt_total + completion_total if prompt_total is not None and completion_total is not None else None
+        ),
+        "known_successful_call_prompt_tokens": prompt_total,
+        "known_successful_call_completion_tokens": completion_total,
+        "prompts_with_complete_call_usage": complete_prompts,
+        "calls_missing_usage": len(calls) - len(measured),
+    }
+
+
 def build_facts(
     baseline_rows: list[dict[str, Any]],
     sweep: dict[str, Any],
@@ -280,6 +322,7 @@ def build_facts(
             "retry_count": holdout_router.get("retry_count"),
             "retry_sleep_ms": holdout_router.get("retry_sleep_ms"),
             "cost_units": holdout_router.get("total_cost_units"),
+            **_known_router_usage(holdout_router.get("details") or []),
         },
         "worst_holdout_mistakes": mistakes[:5],
         "holdout_request_failures": [

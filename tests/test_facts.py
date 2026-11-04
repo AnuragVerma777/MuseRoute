@@ -67,3 +67,23 @@ def test_build_facts_includes_only_answered_mistakes_and_limits_to_five():
     assert facts["holdout_request_failures"] == [
         {"id": "H8", "band": "hard", "reason": "cheap_call_error: timeout"}
     ]
+
+
+def test_build_facts_keeps_successful_call_usage_when_another_call_failed():
+    workload = [{"id": "E1", "band": "easy", "check": "exact", "gold": "ok"}]
+    details = [{
+        "id": "E1", "band": "easy", "correct": False, "answer": "",
+        "confidence": "cheap_call_error: timeout",
+        "trace": {"calls": [
+            {"tier": "cheap", "status": "error", "prompt_tokens": None, "completion_tokens": None},
+            {"tier": "strong", "status": "ok", "prompt_tokens": 8, "completion_tokens": 5},
+        ]},
+    }]
+    facts = build_facts([], {"operating_point": {"holdout": {"details": details}}}, workload, [], workload, {})
+
+    route_facts = facts["router"]
+    assert route_facts["known_successful_call_tokens"] == 13
+    assert route_facts["known_successful_call_prompt_tokens"] == 8
+    assert route_facts["known_successful_call_completion_tokens"] == 5
+    assert route_facts["prompts_with_complete_call_usage"] == 0
+    assert route_facts["calls_missing_usage"] == 1

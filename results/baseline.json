@@ -10,10 +10,15 @@
       "completion_tokens": 92,
       "total_tokens": 185
     },
-    "latency_ms": 15442.24,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:51:57.614559+00:00"
+    "completed_at": "2026-11-03T06:51:57.614559+00:00",
+    "legacy_elapsed_ms": 15442.24,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E002",
@@ -26,10 +31,15 @@
       "completion_tokens": 110,
       "total_tokens": 200
     },
-    "latency_ms": 19106.08,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:52:01.275513+00:00"
+    "completed_at": "2026-11-03T06:52:01.275513+00:00",
+    "legacy_elapsed_ms": 19106.08,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E003",
@@ -42,10 +52,15 @@
       "completion_tokens": 74,
       "total_tokens": 164
     },
-    "latency_ms": 16768.03,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:51:58.940880+00:00"
+    "completed_at": "2026-11-03T06:51:58.940880+00:00",
+    "legacy_elapsed_ms": 16768.03,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E004",
@@ -58,10 +73,15 @@
       "completion_tokens": 78,
       "total_tokens": 165
     },
-    "latency_ms": 19218.92,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:52:01.390252+00:00"
+    "completed_at": "2026-11-03T06:52:01.390252+00:00",
+    "legacy_elapsed_ms": 19218.92,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E005",
@@ -74,10 +94,15 @@
       "completion_tokens": 91,
       "total_tokens": 179
     },
-    "latency_ms": 15954.69,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:52:13.571362+00:00"
+    "completed_at": "2026-11-03T06:52:13.571362+00:00",
+    "legacy_elapsed_ms": 15954.69,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E006",
@@ -90,10 +115,15 @@
       "completion_tokens": 117,
       "total_tokens": 203
     },
-    "latency_ms": 25332.67,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:52:24.275693+00:00"
+    "completed_at": "2026-11-03T06:52:24.275693+00:00",
+    "legacy_elapsed_ms": 25332.67,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E007",
@@ -106,10 +136,15 @@
       "completion_tokens": 75,
       "total_tokens": 162
     },
-    "latency_ms": 26459.66,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:52:27.737044+00:00"
+    "completed_at": "2026-11-03T06:52:27.737044+00:00",
+    "legacy_elapsed_ms": 26459.66,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E008",
@@ -122,10 +157,15 @@
       "completion_tokens": 92,
       "total_tokens": 178
     },
-    "latency_ms": 28798.85,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:52:30.191218+00:00"
+    "completed_at": "2026-11-03T06:52:30.191218+00:00",
+    "legacy_elapsed_ms": 28798.85,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E009",
@@ -138,10 +178,15 @@
       "completion_tokens": 79,
       "total_tokens": 167
     },
-    "latency_ms": 28063.34,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:52:41.636632+00:00"
+    "completed_at": "2026-11-03T06:52:41.636632+00:00",
+    "legacy_elapsed_ms": 28063.34,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E010",
@@ -154,10 +199,15 @@
       "completion_tokens": 128,
       "total_tokens": 216
     },
-    "latency_ms": 27676.01,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:52:51.953817+00:00"
+    "completed_at": "2026-11-03T06:52:51.953817+00:00",
+    "legacy_elapsed_ms": 27676.01,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E011",
@@ -170,10 +220,15 @@
       "completion_tokens": 73,
       "total_tokens": 163
     },
-    "latency_ms": 29696.43,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:52:57.435222+00:00"
+    "completed_at": "2026-11-03T06:52:57.435222+00:00",
+    "legacy_elapsed_ms": 29696.43,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E012",
@@ -186,10 +241,15 @@
       "completion_tokens": 144,
       "total_tokens": 230
     },
-    "latency_ms": 42889.96,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:53:13.082976+00:00"
+    "completed_at": "2026-11-03T06:53:13.082976+00:00",
+    "legacy_elapsed_ms": 42889.96,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E013",
@@ -202,10 +262,15 @@
       "completion_tokens": 74,
       "total_tokens": 164
     },
-    "latency_ms": 22011.52,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:53:03.649378+00:00"
+    "completed_at": "2026-11-03T06:53:03.649378+00:00",
+    "legacy_elapsed_ms": 22011.52,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E014",
@@ -218,10 +283,15 @@
       "completion_tokens": 101,
       "total_tokens": 186
     },
-    "latency_ms": 20095.52,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:53:12.051383+00:00"
+    "completed_at": "2026-11-03T06:53:12.051383+00:00",
+    "legacy_elapsed_ms": 20095.52,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E015",
@@ -234,10 +304,15 @@
       "completion_tokens": 67,
       "total_tokens": 155
     },
-    "latency_ms": 21448.4,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:53:18.886224+00:00"
+    "completed_at": "2026-11-03T06:53:18.886224+00:00",
+    "legacy_elapsed_ms": 21448.4,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E016",
@@ -250,10 +325,15 @@
       "completion_tokens": 124,
       "total_tokens": 210
     },
-    "latency_ms": 30152.55,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:53:33.803623+00:00"
+    "completed_at": "2026-11-03T06:53:33.803623+00:00",
+    "legacy_elapsed_ms": 30152.55,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E017",
@@ -266,10 +346,15 @@
       "completion_tokens": 83,
       "total_tokens": 170
     },
-    "latency_ms": 58109.06,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:54:10.162052+00:00"
+    "completed_at": "2026-11-03T06:54:10.162052+00:00",
+    "legacy_elapsed_ms": 58109.06,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E018",
@@ -282,10 +367,15 @@
       "completion_tokens": 73,
       "total_tokens": 159
     },
-    "latency_ms": 26588.18,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:53:39.673669+00:00"
+    "completed_at": "2026-11-03T06:53:39.673669+00:00",
+    "legacy_elapsed_ms": 26588.18,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E019",
@@ -298,10 +388,15 @@
       "completion_tokens": 74,
       "total_tokens": 164
     },
-    "latency_ms": 26541.39,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:53:45.429657+00:00"
+    "completed_at": "2026-11-03T06:53:45.429657+00:00",
+    "legacy_elapsed_ms": 26541.39,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E020",
@@ -314,10 +409,15 @@
       "completion_tokens": 142,
       "total_tokens": 226
     },
-    "latency_ms": 66316.25,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:54:40.122335+00:00"
+    "completed_at": "2026-11-03T06:54:40.122335+00:00",
+    "legacy_elapsed_ms": 66316.25,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E021",
@@ -330,10 +430,15 @@
       "completion_tokens": 96,
       "total_tokens": 185
     },
-    "latency_ms": 39318.77,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:54:18.994387+00:00"
+    "completed_at": "2026-11-03T06:54:18.994387+00:00",
+    "legacy_elapsed_ms": 39318.77,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E022",
@@ -346,10 +451,15 @@
       "completion_tokens": 110,
       "total_tokens": 196
     },
-    "latency_ms": 35355.6,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:54:20.787021+00:00"
+    "completed_at": "2026-11-03T06:54:20.787021+00:00",
+    "legacy_elapsed_ms": 35355.6,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E023",
@@ -362,10 +472,15 @@
       "completion_tokens": 68,
       "total_tokens": 158
     },
-    "latency_ms": 40592.54,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:54:50.761407+00:00"
+    "completed_at": "2026-11-03T06:54:50.761407+00:00",
+    "legacy_elapsed_ms": 40592.54,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E024",
@@ -378,10 +493,15 @@
       "completion_tokens": 106,
       "total_tokens": 190
     },
-    "latency_ms": 43859.78,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:55:02.855883+00:00"
+    "completed_at": "2026-11-03T06:55:02.855883+00:00",
+    "legacy_elapsed_ms": 43859.78,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E025",
@@ -394,10 +514,15 @@
       "completion_tokens": 88,
       "total_tokens": 176
     },
-    "latency_ms": 40020.76,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:55:00.809466+00:00"
+    "completed_at": "2026-11-03T06:55:00.809466+00:00",
+    "legacy_elapsed_ms": 40020.76,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E026",
@@ -410,10 +535,15 @@
       "completion_tokens": 92,
       "total_tokens": 177
     },
-    "latency_ms": 62757.0,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:55:42.881022+00:00"
+    "completed_at": "2026-11-03T06:55:42.881022+00:00",
+    "legacy_elapsed_ms": 62757.0,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E027",
@@ -426,10 +556,15 @@
       "completion_tokens": 55,
       "total_tokens": 144
     },
-    "latency_ms": 59000.16,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:55:49.764525+00:00"
+    "completed_at": "2026-11-03T06:55:49.764525+00:00",
+    "legacy_elapsed_ms": 59000.16,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E028",
@@ -442,10 +577,15 @@
       "completion_tokens": 100,
       "total_tokens": 186
     },
-    "latency_ms": 62440.65,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:56:03.251402+00:00"
+    "completed_at": "2026-11-03T06:56:03.251402+00:00",
+    "legacy_elapsed_ms": 62440.65,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E029",
@@ -458,10 +598,15 @@
       "completion_tokens": 75,
       "total_tokens": 165
     },
-    "latency_ms": 68512.91,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:56:11.370414+00:00"
+    "completed_at": "2026-11-03T06:56:11.370414+00:00",
+    "legacy_elapsed_ms": 68512.91,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E030",
@@ -474,138 +619,183 @@
       "completion_tokens": 96,
       "total_tokens": 182
     },
-    "latency_ms": 63693.19,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:56:46.576187+00:00"
+    "completed_at": "2026-11-03T06:56:46.576187+00:00",
+    "legacy_elapsed_ms": 63693.19,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H001",
     "tier": "cheap",
     "band": "hard",
-    "correct": false,
+    "correct": true,
     "answer": "18 blue beads + 27 yellow beads = 45 beads in the tray.",
     "tokens": {
       "prompt_tokens": 81,
       "completion_tokens": 71,
       "total_tokens": 152
     },
-    "latency_ms": 17899.85,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:02:37.928494+00:00"
+    "completed_at": "2026-11-03T07:02:37.928494+00:00",
+    "legacy_elapsed_ms": 17899.85,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H002",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "There are\n\n* 5 boxes × 8 sticks/box = 40 sticks in all\n\nIf 3 sticks in total are used up\n\n40 – 3 = 37 sticks remain\n\n*Remark:* If you mean 3 sticks are used from each box, then each box has 8 – 3 = 5 sticks left, i.e. 5 × 5 = 25 sticks in total.",
+    "answer": "There are\n\n* 5 boxes Ãƒâ€” 8 sticks/box = 40 sticks in all\n\nIf 3 sticks in total are used up\n\n40 Ã¢â‚¬â€œ 3 = 37 sticks remain\n\n*Remark:* If you mean 3 sticks are used from each box, then each box has 8 Ã¢â‚¬â€œ 3 = 5 sticks left, i.e. 5 Ãƒâ€” 5 = 25 sticks in total.",
     "tokens": {
       "prompt_tokens": 79,
       "completion_tokens": 225,
       "total_tokens": 304
     },
-    "latency_ms": 30767.9,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:02:52.852903+00:00"
+    "completed_at": "2026-11-03T07:02:52.852903+00:00",
+    "legacy_elapsed_ms": 30767.9,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H003",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "144 pages ÷ 12 sections = 12 pages per section.\n\nEach of the 12 equal sections contains 12 pages.",
+    "answer": "144 pages ÃƒÂ· 12 sections = 12 pages per section.\n\nEach of the 12 equal sections contains 12 pages.",
     "tokens": {
       "prompt_tokens": 77,
       "completion_tokens": 102,
       "total_tokens": 179
     },
-    "latency_ms": 12476.59,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:02:50.406945+00:00"
+    "completed_at": "2026-11-03T07:02:50.406945+00:00",
+    "legacy_elapsed_ms": 12476.59,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H004",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "Three buses × 24 students per bus = 72 students\n\n72 students + 7 students traveling separately = 79 students\n\nThere are 79 students altogether.",
+    "answer": "Three buses Ãƒâ€” 24 students per bus = 72 students\n\n72 students + 7 students traveling separately = 79 students\n\nThere are 79 students altogether.",
     "tokens": {
       "prompt_tokens": 79,
       "completion_tokens": 102,
       "total_tokens": 181
     },
-    "latency_ms": 14433.15,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:02:55.716745+00:00"
+    "completed_at": "2026-11-03T07:02:55.716745+00:00",
+    "legacy_elapsed_ms": 14433.15,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H005",
     "tier": "cheap",
     "band": "hard",
-    "correct": false,
-    "answer": "250 tokens - cost of notebooks\n\nCost per notebook = 42 tokens  \nNumber of notebooks = 3\n\nTotal spent = 42 × 3 = 126 tokens\n\nTokens remaining = 250 - 126 = 124 tokens\n",
+    "correct": true,
+    "answer": "250 tokens - cost of notebooks\n\nCost per notebook = 42 tokens  \nNumber of notebooks = 3\n\nTotal spent = 42 Ãƒâ€” 3 = 126 tokens\n\nTokens remaining = 250 - 126 = 124 tokens\n",
     "tokens": {
       "prompt_tokens": 79,
       "completion_tokens": 109,
       "total_tokens": 188
     },
-    "latency_ms": 15899.91,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:02:57.601488+00:00"
+    "completed_at": "2026-11-03T07:02:57.601488+00:00",
+    "legacy_elapsed_ms": 15899.91,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H006",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "2.5 h = 2 h 30 min = 150 min\n\nRate = 6 cards / 10 min\n\nNumber of 10-min intervals in 150 min:\n150 min ÷ 10 min = 15 intervals\n\nCards = 15 × 6 = 90 cards\n\nAt 0.6 cards/min the maker finishes 90 cards in 2.5 hours.",
+    "answer": "2.5 h = 2 h 30 min = 150 min\n\nRate = 6 cards / 10 min\n\nNumber of 10-min intervals in 150 min:\n150 min ÃƒÂ· 10 min = 15 intervals\n\nCards = 15 Ãƒâ€” 6 = 90 cards\n\nAt 0.6 cards/min the maker finishes 90 cards in 2.5 hours.",
     "tokens": {
       "prompt_tokens": 87,
       "completion_tokens": 192,
       "total_tokens": 279
     },
-    "latency_ms": 24788.97,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:15.197625+00:00"
+    "completed_at": "2026-11-03T07:03:15.197625+00:00",
+    "legacy_elapsed_ms": 24788.97,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H007",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "48 ÷ 5 = 9 rolls per basket with a remainder.\n\n5 baskets × 9 rolls = 45 rolls placed\n48 − 45 = 3 rolls left over.\n\nSo 3 rolls remain unplaced.",
+    "answer": "48 ÃƒÂ· 5 = 9 rolls per basket with a remainder.\n\n5 baskets Ãƒâ€” 9 rolls = 45 rolls placed\n48 Ã¢Ë†â€™ 45 = 3 rolls left over.\n\nSo 3 rolls remain unplaced.",
     "tokens": {
       "prompt_tokens": 84,
       "completion_tokens": 119,
       "total_tokens": 203
     },
-    "latency_ms": 20064.92,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:12.919942+00:00"
+    "completed_at": "2026-11-03T07:03:12.919942+00:00",
+    "legacy_elapsed_ms": 20064.92,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H008",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "9 jars/minute × 6 minutes = 54 jars\n\nThe machine labels 54 jars in 6 minutes.",
+    "answer": "9 jars/minute Ãƒâ€” 6 minutes = 54 jars\n\nThe machine labels 54 jars in 6 minutes.",
     "tokens": {
       "prompt_tokens": 76,
       "completion_tokens": 86,
       "total_tokens": 162
     },
-    "latency_ms": 17537.6,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:13.256282+00:00"
+    "completed_at": "2026-11-03T07:03:13.256282+00:00",
+    "legacy_elapsed_ms": 17537.6,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H009",
@@ -618,90 +808,120 @@
       "completion_tokens": 166,
       "total_tokens": 247
     },
-    "latency_ms": 27198.76,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:24.801900+00:00"
+    "completed_at": "2026-11-03T07:03:24.801900+00:00",
+    "legacy_elapsed_ms": 27198.76,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H010",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "The numbers increase by a constant difference.\n\n9 − 4 = 5\n14 − 9 = 5\n19 − 14 = 5\n\nNext term = 19 + 5 = 24\n\nThe pattern is $4, 9, 14, 19, 24, \\dots$ with common difference +5.",
+    "answer": "The numbers increase by a constant difference.\n\n9 Ã¢Ë†â€™ 4 = 5\n14 Ã¢Ë†â€™ 9 = 5\n19 Ã¢Ë†â€™ 14 = 5\n\nNext term = 19 + 5 = 24\n\nThe pattern is $4, 9, 14, 19, 24, \\dots$ with common difference +5.",
     "tokens": {
       "prompt_tokens": 85,
       "completion_tokens": 155,
       "total_tokens": 240
     },
-    "latency_ms": 23687.0,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:36.607848+00:00"
+    "completed_at": "2026-11-03T07:03:36.607848+00:00",
+    "legacy_elapsed_ms": 23687.0,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H011",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "96 cards total − cards in the first two piles = cards in the third pile\n\n96 − 35 − 28 = 96 − 63 = 33\n\nThe third pile contains **33 cards**.",
+    "answer": "96 cards total Ã¢Ë†â€™ cards in the first two piles = cards in the third pile\n\n96 Ã¢Ë†â€™ 35 Ã¢Ë†â€™ 28 = 96 Ã¢Ë†â€™ 63 = 33\n\nThe third pile contains **33 cards**.",
     "tokens": {
       "prompt_tokens": 88,
       "completion_tokens": 108,
       "total_tokens": 196
     },
-    "latency_ms": 23967.79,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:37.225577+00:00"
+    "completed_at": "2026-11-03T07:03:37.225577+00:00",
+    "legacy_elapsed_ms": 23967.79,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H012",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "Each helper packs\n\n12 kits/day × 4 days = 48 kits\n\nFor 5 helpers:\n\n5 × 48 kits = 240 kits\n\nOr 5 × 12 = 60 kits per day, 60 × 4 = 240 kits in total.",
+    "answer": "Each helper packs\n\n12 kits/day Ãƒâ€” 4 days = 48 kits\n\nFor 5 helpers:\n\n5 Ãƒâ€” 48 kits = 240 kits\n\nOr 5 Ãƒâ€” 12 = 60 kits per day, 60 Ãƒâ€” 4 = 240 kits in total.",
     "tokens": {
       "prompt_tokens": 79,
       "completion_tokens": 149,
       "total_tokens": 228
     },
-    "latency_ms": 23357.29,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:38.556868+00:00"
+    "completed_at": "2026-11-03T07:03:38.556868+00:00",
+    "legacy_elapsed_ms": 23357.29,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H013",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "A 20% discount means you pay 100% - 20% = 80% of the list price.\n\nDiscounted price = 500 × 0.80\n= 500 × 8/10\n= 400 points\n\nThe discount amount is 500 × 0.20 = 100 points off.",
+    "answer": "A 20% discount means you pay 100% - 20% = 80% of the list price.\n\nDiscounted price = 500 Ãƒâ€” 0.80\n= 500 Ãƒâ€” 8/10\n= 400 points\n\nThe discount amount is 500 Ãƒâ€” 0.20 = 100 points off.",
     "tokens": {
       "prompt_tokens": 78,
       "completion_tokens": 150,
       "total_tokens": 228
     },
-    "latency_ms": 6752.6,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:31.556058+00:00"
+    "completed_at": "2026-11-03T07:03:31.556058+00:00",
+    "legacy_elapsed_ms": 6752.6,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H014",
     "tier": "cheap",
     "band": "hard",
-    "correct": false,
+    "correct": true,
     "answer": "19 + 23 + 17 = 59 pages\n\nMonday 19 + Tuesday 23 = 42\n42 + Wednesday 17 = 59 pages in all.",
     "tokens": {
       "prompt_tokens": 82,
       "completion_tokens": 91,
       "total_tokens": 173
     },
-    "latency_ms": 7989.43,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:39.547710+00:00"
+    "completed_at": "2026-11-03T07:03:39.547710+00:00",
+    "legacy_elapsed_ms": 7989.43,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H015",
@@ -714,26 +934,36 @@
       "completion_tokens": 112,
       "total_tokens": 193
     },
-    "latency_ms": 8708.21,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:45.318298+00:00"
+    "completed_at": "2026-11-03T07:03:45.318298+00:00",
+    "legacy_elapsed_ms": 8708.21,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H016",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "Total seats in the hall\n\n$$8 \\text{ rows}\\times 6 \\text{ seats/row}=48 \\text{ seats}$$\n\nEmpty seats = Total – Occupied\n\n$$48 - 39 = 9$$\n\nThere are 9 empty seats.",
+    "answer": "Total seats in the hall\n\n$$8 \\text{ rows}\\times 6 \\text{ seats/row}=48 \\text{ seats}$$\n\nEmpty seats = Total Ã¢â‚¬â€œ Occupied\n\n$$48 - 39 = 9$$\n\nThere are 9 empty seats.",
     "tokens": {
       "prompt_tokens": 82,
       "completion_tokens": 131,
       "total_tokens": 213
     },
-    "latency_ms": 11225.16,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:48.452822+00:00"
+    "completed_at": "2026-11-03T07:03:48.452822+00:00",
+    "legacy_elapsed_ms": 11225.16,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H017",
@@ -746,26 +976,36 @@
       "completion_tokens": 192,
       "total_tokens": 275
     },
-    "latency_ms": 9691.6,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:16:32.784060+00:00"
+    "completed_at": "2026-11-03T07:16:32.784060+00:00",
+    "legacy_elapsed_ms": 9691.6,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H018",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "12 bags × 15 kg/bag = 180 kg received\n\n180 kg – 68 kg shipped out = 112 kg\n\n112 kilograms remain in the store.",
+    "answer": "12 bags Ãƒâ€” 15 kg/bag = 180 kg received\n\n180 kg Ã¢â‚¬â€œ 68 kg shipped out = 112 kg\n\n112 kilograms remain in the store.",
     "tokens": {
       "prompt_tokens": 80,
       "completion_tokens": 98,
       "total_tokens": 178
     },
-    "latency_ms": 5953.82,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:45.502961+00:00"
+    "completed_at": "2026-11-03T07:03:45.502961+00:00",
+    "legacy_elapsed_ms": 5953.82,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H019",
@@ -778,10 +1018,15 @@
       "completion_tokens": 165,
       "total_tokens": 251
     },
-    "latency_ms": 6937.06,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:47.736783+00:00"
+    "completed_at": "2026-11-03T07:03:47.736783+00:00",
+    "legacy_elapsed_ms": 6937.06,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H020",
@@ -794,90 +1039,120 @@
       "completion_tokens": 176,
       "total_tokens": 248
     },
-    "latency_ms": 6409.1,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:51.729211+00:00"
+    "completed_at": "2026-11-03T07:03:51.729211+00:00",
+    "legacy_elapsed_ms": 6409.1,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H021",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "84 pages ÷ 12 pages/day = 7 days\n\nIt will take 7 days to finish at 12 pages per day.",
+    "answer": "84 pages ÃƒÂ· 12 pages/day = 7 days\n\nIt will take 7 days to finish at 12 pages per day.",
     "tokens": {
       "prompt_tokens": 78,
       "completion_tokens": 104,
       "total_tokens": 182
     },
-    "latency_ms": 6446.57,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:51.951795+00:00"
+    "completed_at": "2026-11-03T07:03:51.951795+00:00",
+    "legacy_elapsed_ms": 6446.57,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H022",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "A square has 4 equal sides.\n\nPerimeter = 4 × side\n\nSide = Perimeter ÷ 4\n\nSide = 52 m ÷ 4 = 13 m\n\nEach side of the courtyard is 13 metres long.",
+    "answer": "A square has 4 equal sides.\n\nPerimeter = 4 Ãƒâ€” side\n\nSide = Perimeter ÃƒÂ· 4\n\nSide = 52 m ÃƒÂ· 4 = 13 m\n\nEach side of the courtyard is 13 metres long.",
     "tokens": {
       "prompt_tokens": 75,
       "completion_tokens": 112,
       "total_tokens": 187
     },
-    "latency_ms": 2352.9,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:50.092037+00:00"
+    "completed_at": "2026-11-03T07:03:50.092037+00:00",
+    "legacy_elapsed_ms": 2352.9,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H023",
     "tier": "cheap",
     "band": "hard",
-    "correct": false,
-    "answer": "5 levels × 6 tiles per level = 30 tiles on display\n30 tiles + 4 loose tiles = **34 tiles** total.",
+    "correct": true,
+    "answer": "5 levels Ãƒâ€” 6 tiles per level = 30 tiles on display\n30 tiles + 4 loose tiles = **34 tiles** total.",
     "tokens": {
       "prompt_tokens": 82,
       "completion_tokens": 101,
       "total_tokens": 183
     },
-    "latency_ms": 8349.4,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:56.803687+00:00"
+    "completed_at": "2026-11-03T07:03:56.803687+00:00",
+    "legacy_elapsed_ms": 8349.4,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H024",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "A 90-minute session that includes the breaks means the breaks are part of the 90 minutes.\n\nBreak time = 2 × 15 min = 30 min\n\nWorking time = Total time − Break time\n= 90 min − 30 min\n= 60 min\n\nSo 60 minutes are spent working.",
+    "answer": "A 90-minute session that includes the breaks means the breaks are part of the 90 minutes.\n\nBreak time = 2 Ãƒâ€” 15 min = 30 min\n\nWorking time = Total time Ã¢Ë†â€™ Break time\n= 90 min Ã¢Ë†â€™ 30 min\n= 60 min\n\nSo 60 minutes are spent working.",
     "tokens": {
       "prompt_tokens": 77,
       "completion_tokens": 172,
       "total_tokens": 249
     },
-    "latency_ms": 11672.36,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:04:01.766119+00:00"
+    "completed_at": "2026-11-03T07:04:01.766119+00:00",
+    "legacy_elapsed_ms": 11672.36,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H025",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "8 bottles × 750 ml/bottle = 6 000 ml\n\nAltogether they contain 6,000 millilitres, which is 6 litres.",
+    "answer": "8 bottles Ãƒâ€” 750 ml/bottle = 6 000 ml\n\nAltogether they contain 6,000 millilitres, which is 6 litres.",
     "tokens": {
       "prompt_tokens": 76,
       "completion_tokens": 112,
       "total_tokens": 188
     },
-    "latency_ms": 8435.73,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:04:00.166672+00:00"
+    "completed_at": "2026-11-03T07:04:00.166672+00:00",
+    "legacy_elapsed_ms": 8435.73,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H026",
@@ -890,74 +1165,99 @@
       "completion_tokens": 111,
       "total_tokens": 190
     },
-    "latency_ms": 6764.92,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:03:58.718979+00:00"
+    "completed_at": "2026-11-03T07:03:58.718979+00:00",
+    "legacy_elapsed_ms": 6764.92,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H027",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "Five teams bring\n\n5 × 7 = 35 flags\n\nAdd the organizer's flags:\n\n35 + 3 = 38 flags\n\nThere are 38 flags in total.",
+    "answer": "Five teams bring\n\n5 Ãƒâ€” 7 = 35 flags\n\nAdd the organizer's flags:\n\n35 + 3 = 38 flags\n\nThere are 38 flags in total.",
     "tokens": {
       "prompt_tokens": 78,
       "completion_tokens": 110,
       "total_tokens": 188
     },
-    "latency_ms": 8472.49,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:04:05.277686+00:00"
+    "completed_at": "2026-11-03T07:04:05.277686+00:00",
+    "legacy_elapsed_ms": 8472.49,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H028",
     "tier": "cheap",
     "band": "hard",
-    "correct": false,
-    "answer": "Four parts cost\n\n4 × 175 points = 700 points\n\nPoints remaining = 1,200 – 700 = **500 points**.",
+    "correct": true,
+    "answer": "Four parts cost\n\n4 Ãƒâ€” 175 points = 700 points\n\nPoints remaining = 1,200 Ã¢â‚¬â€œ 700 = **500 points**.",
     "tokens": {
       "prompt_tokens": 79,
       "completion_tokens": 103,
       "total_tokens": 182
     },
-    "latency_ms": 7043.01,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:04:05.763484+00:00"
+    "completed_at": "2026-11-03T07:04:05.763484+00:00",
+    "legacy_elapsed_ms": 7043.01,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H029",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "Each term is 3 times the previous term\n\n* 2 × 3 = 6\n* 6 × 3 = 18\n* 18 × 3 = 54\n\nThe next term in the geometric progression is **54**.",
+    "answer": "Each term is 3 times the previous term\n\n* 2 Ãƒâ€” 3 = 6\n* 6 Ãƒâ€” 3 = 18\n* 18 Ãƒâ€” 3 = 54\n\nThe next term in the geometric progression is **54**.",
     "tokens": {
       "prompt_tokens": 83,
       "completion_tokens": 140,
       "total_tokens": 223
     },
-    "latency_ms": 4476.52,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:04:04.645072+00:00"
+    "completed_at": "2026-11-03T07:04:04.645072+00:00",
+    "legacy_elapsed_ms": 4476.52,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H030",
     "tier": "cheap",
     "band": "hard",
     "correct": false,
-    "answer": "Each jar has 3 blue beads.\n\n3 jars × 3 blue beads/jar = 9 blue beads in all.\n\nThere are also 3 × 4 = 12 red beads in total.",
+    "answer": "Each jar has 3 blue beads.\n\n3 jars Ãƒâ€” 3 blue beads/jar = 9 blue beads in all.\n\nThere are also 3 Ãƒâ€” 4 = 12 red beads in total.",
     "tokens": {
       "prompt_tokens": 80,
       "completion_tokens": 104,
       "total_tokens": 184
     },
-    "latency_ms": 6243.06,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:04:08.011033+00:00"
+    "completed_at": "2026-11-03T07:04:08.011033+00:00",
+    "legacy_elapsed_ms": 6243.06,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M001",
@@ -970,10 +1270,15 @@
       "completion_tokens": 388,
       "total_tokens": 516
     },
-    "latency_ms": 70521.67,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:57:00.287361+00:00"
+    "completed_at": "2026-11-03T06:57:00.287361+00:00",
+    "legacy_elapsed_ms": 70521.67,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M002",
@@ -986,10 +1291,15 @@
       "completion_tokens": 169,
       "total_tokens": 293
     },
-    "latency_ms": 56728.91,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:56:59.982379+00:00"
+    "completed_at": "2026-11-03T06:56:59.982379+00:00",
+    "legacy_elapsed_ms": 56728.91,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M003",
@@ -1002,10 +1312,15 @@
       "completion_tokens": 280,
       "total_tokens": 402
     },
-    "latency_ms": 59873.6,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:57:11.245819+00:00"
+    "completed_at": "2026-11-03T06:57:11.245819+00:00",
+    "legacy_elapsed_ms": 59873.6,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M004",
@@ -1018,10 +1333,15 @@
       "completion_tokens": 228,
       "total_tokens": 348
     },
-    "latency_ms": 68495.12,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:57:55.073245+00:00"
+    "completed_at": "2026-11-03T06:57:55.073245+00:00",
+    "legacy_elapsed_ms": 68495.12,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M005",
@@ -1034,10 +1354,15 @@
       "completion_tokens": 233,
       "total_tokens": 352
     },
-    "latency_ms": 58673.0,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:57:58.657159+00:00"
+    "completed_at": "2026-11-03T06:57:58.657159+00:00",
+    "legacy_elapsed_ms": 58673.0,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M006",
@@ -1050,10 +1375,15 @@
       "completion_tokens": 226,
       "total_tokens": 351
     },
-    "latency_ms": 63940.22,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:58:04.229927+00:00"
+    "completed_at": "2026-11-03T06:58:04.229927+00:00",
+    "legacy_elapsed_ms": 63940.22,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M007",
@@ -1066,10 +1396,15 @@
       "completion_tokens": 394,
       "total_tokens": 517
     },
-    "latency_ms": 25168.07,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:16:48.260322+00:00"
+    "completed_at": "2026-11-03T07:16:48.260322+00:00",
+    "legacy_elapsed_ms": 25168.07,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M008",
@@ -1082,10 +1417,15 @@
       "completion_tokens": 193,
       "total_tokens": 307
     },
-    "latency_ms": 66249.97,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:59:01.324951+00:00"
+    "completed_at": "2026-11-03T06:59:01.324951+00:00",
+    "legacy_elapsed_ms": 66249.97,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M009",
@@ -1098,10 +1438,15 @@
       "completion_tokens": 244,
       "total_tokens": 364
     },
-    "latency_ms": 69839.12,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:59:08.498325+00:00"
+    "completed_at": "2026-11-03T06:59:08.498325+00:00",
+    "legacy_elapsed_ms": 69839.12,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M010",
@@ -1114,10 +1459,15 @@
       "completion_tokens": 266,
       "total_tokens": 390
     },
-    "latency_ms": 75012.83,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:59:19.244496+00:00"
+    "completed_at": "2026-11-03T06:59:19.244496+00:00",
+    "legacy_elapsed_ms": 75012.83,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M011",
@@ -1130,10 +1480,15 @@
       "completion_tokens": 280,
       "total_tokens": 397
     },
-    "latency_ms": 57090.61,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:59:58.417177+00:00"
+    "completed_at": "2026-11-03T06:59:58.417177+00:00",
+    "legacy_elapsed_ms": 57090.61,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M012",
@@ -1146,10 +1501,15 @@
       "completion_tokens": 513,
       "total_tokens": 637
     },
-    "latency_ms": 76484.72,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:00:24.985147+00:00"
+    "completed_at": "2026-11-03T07:00:24.985147+00:00",
+    "legacy_elapsed_ms": 76484.72,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M013",
@@ -1162,10 +1522,15 @@
       "completion_tokens": 158,
       "total_tokens": 277
     },
-    "latency_ms": 44336.47,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T06:59:56.108572+00:00"
+    "completed_at": "2026-11-03T06:59:56.108572+00:00",
+    "legacy_elapsed_ms": 44336.47,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M014",
@@ -1178,10 +1543,15 @@
       "completion_tokens": 387,
       "total_tokens": 508
     },
-    "latency_ms": 66586.24,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:00:25.832693+00:00"
+    "completed_at": "2026-11-03T07:00:25.832693+00:00",
+    "legacy_elapsed_ms": 66586.24,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M015",
@@ -1194,10 +1564,15 @@
       "completion_tokens": 258,
       "total_tokens": 383
     },
-    "latency_ms": 78335.42,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:01:14.446058+00:00"
+    "completed_at": "2026-11-03T07:01:14.446058+00:00",
+    "legacy_elapsed_ms": 78335.42,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M016",
@@ -1210,10 +1585,15 @@
       "completion_tokens": 294,
       "total_tokens": 415
     },
-    "latency_ms": 85746.96,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:01:24.165526+00:00"
+    "completed_at": "2026-11-03T07:01:24.165526+00:00",
+    "legacy_elapsed_ms": 85746.96,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M017",
@@ -1226,10 +1606,15 @@
       "completion_tokens": 223,
       "total_tokens": 338
     },
-    "latency_ms": 34609.8,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:00:59.596651+00:00"
+    "completed_at": "2026-11-03T07:00:59.596651+00:00",
+    "legacy_elapsed_ms": 34609.8,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M018",
@@ -1242,10 +1627,15 @@
       "completion_tokens": 237,
       "total_tokens": 360
     },
-    "latency_ms": 29563.33,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:00:55.398153+00:00"
+    "completed_at": "2026-11-03T07:00:55.398153+00:00",
+    "legacy_elapsed_ms": 29563.33,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M019",
@@ -1258,10 +1648,15 @@
       "completion_tokens": 282,
       "total_tokens": 399
     },
-    "latency_ms": 6504.62,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:16:29.597497+00:00"
+    "completed_at": "2026-11-03T07:16:29.597497+00:00",
+    "legacy_elapsed_ms": 6504.62,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M020",
@@ -1274,10 +1669,15 @@
       "completion_tokens": 212,
       "total_tokens": 338
     },
-    "latency_ms": 30452.43,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:01:30.049966+00:00"
+    "completed_at": "2026-11-03T07:01:30.049966+00:00",
+    "legacy_elapsed_ms": 30452.43,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M021",
@@ -1290,10 +1690,15 @@
       "completion_tokens": 311,
       "total_tokens": 433
     },
-    "latency_ms": 40364.07,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:01:54.811666+00:00"
+    "completed_at": "2026-11-03T07:01:54.811666+00:00",
+    "legacy_elapsed_ms": 40364.07,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M022",
@@ -1306,10 +1711,15 @@
       "completion_tokens": 342,
       "total_tokens": 461
     },
-    "latency_ms": 41160.8,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:01:57.653109+00:00"
+    "completed_at": "2026-11-03T07:01:57.653109+00:00",
+    "legacy_elapsed_ms": 41160.8,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M023",
@@ -1322,10 +1732,15 @@
       "completion_tokens": 213,
       "total_tokens": 333
     },
-    "latency_ms": 31364.47,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:01:55.532085+00:00"
+    "completed_at": "2026-11-03T07:01:55.532085+00:00",
+    "legacy_elapsed_ms": 31364.47,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M024",
@@ -1338,10 +1753,15 @@
       "completion_tokens": 211,
       "total_tokens": 332
     },
-    "latency_ms": 30934.09,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:02:00.986695+00:00"
+    "completed_at": "2026-11-03T07:02:00.986695+00:00",
+    "legacy_elapsed_ms": 30934.09,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M025",
@@ -1354,10 +1774,15 @@
       "completion_tokens": 240,
       "total_tokens": 359
     },
-    "latency_ms": 14634.06,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:02:09.448288+00:00"
+    "completed_at": "2026-11-03T07:02:09.448288+00:00",
+    "legacy_elapsed_ms": 14634.06,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M026",
@@ -1370,10 +1795,15 @@
       "completion_tokens": 214,
       "total_tokens": 333
     },
-    "latency_ms": 24479.26,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:02:20.013238+00:00"
+    "completed_at": "2026-11-03T07:02:20.013238+00:00",
+    "legacy_elapsed_ms": 24479.26,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M027",
@@ -1386,10 +1816,15 @@
       "completion_tokens": 410,
       "total_tokens": 532
     },
-    "latency_ms": 20276.71,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:02:17.931605+00:00"
+    "completed_at": "2026-11-03T07:02:17.931605+00:00",
+    "legacy_elapsed_ms": 20276.71,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M028",
@@ -1402,10 +1837,15 @@
       "completion_tokens": 181,
       "total_tokens": 301
     },
-    "latency_ms": 21091.74,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:02:22.079882+00:00"
+    "completed_at": "2026-11-03T07:02:22.079882+00:00",
+    "legacy_elapsed_ms": 21091.74,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M029",
@@ -1418,10 +1858,15 @@
       "completion_tokens": 270,
       "total_tokens": 386
     },
-    "latency_ms": 32249.79,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:02:41.699866+00:00"
+    "completed_at": "2026-11-03T07:02:41.699866+00:00",
+    "legacy_elapsed_ms": 32249.79,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M030",
@@ -1434,10 +1879,15 @@
       "completion_tokens": 336,
       "total_tokens": 454
     },
-    "latency_ms": 23348.34,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:02:41.282084+00:00"
+    "completed_at": "2026-11-03T07:02:41.282084+00:00",
+    "legacy_elapsed_ms": 23348.34,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E001",
@@ -1450,10 +1900,15 @@
       "completion_tokens": 195,
       "total_tokens": 288
     },
-    "latency_ms": 10070.62,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:04:14.717710+00:00"
+    "completed_at": "2026-11-03T07:04:14.717710+00:00",
+    "legacy_elapsed_ms": 10070.62,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E002",
@@ -1466,10 +1921,15 @@
       "completion_tokens": 460,
       "total_tokens": 550
     },
-    "latency_ms": 66739.28,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:05:12.018973+00:00"
+    "completed_at": "2026-11-03T07:05:12.018973+00:00",
+    "legacy_elapsed_ms": 66739.28,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E003",
@@ -1482,10 +1942,15 @@
       "completion_tokens": 188,
       "total_tokens": 278
     },
-    "latency_ms": 26945.26,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:04:32.711515+00:00"
+    "completed_at": "2026-11-03T07:04:32.711515+00:00",
+    "legacy_elapsed_ms": 26945.26,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E004",
@@ -1498,10 +1963,15 @@
       "completion_tokens": 280,
       "total_tokens": 367
     },
-    "latency_ms": 44273.87,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:04:52.286938+00:00"
+    "completed_at": "2026-11-03T07:04:52.286938+00:00",
+    "legacy_elapsed_ms": 44273.87,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E005",
@@ -1514,10 +1984,15 @@
       "completion_tokens": 206,
       "total_tokens": 294
     },
-    "latency_ms": 29340.88,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:04:44.059987+00:00"
+    "completed_at": "2026-11-03T07:04:44.059987+00:00",
+    "legacy_elapsed_ms": 29340.88,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E006",
@@ -1530,10 +2005,15 @@
       "completion_tokens": 344,
       "total_tokens": 430
     },
-    "latency_ms": 38375.22,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:05:11.088575+00:00"
+    "completed_at": "2026-11-03T07:05:11.088575+00:00",
+    "legacy_elapsed_ms": 38375.22,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E007",
@@ -1546,10 +2026,15 @@
       "completion_tokens": 190,
       "total_tokens": 277
     },
-    "latency_ms": 8595.65,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:04:52.656841+00:00"
+    "completed_at": "2026-11-03T07:04:52.656841+00:00",
+    "legacy_elapsed_ms": 8595.65,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E008",
@@ -1562,10 +2047,15 @@
       "completion_tokens": 280,
       "total_tokens": 366
     },
-    "latency_ms": 28425.88,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:05:20.715023+00:00"
+    "completed_at": "2026-11-03T07:05:20.715023+00:00",
+    "legacy_elapsed_ms": 28425.88,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E009",
@@ -1578,10 +2068,15 @@
       "completion_tokens": 169,
       "total_tokens": 257
     },
-    "latency_ms": 13924.03,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:05:06.582166+00:00"
+    "completed_at": "2026-11-03T07:05:06.582166+00:00",
+    "legacy_elapsed_ms": 13924.03,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E010",
@@ -1594,10 +2089,15 @@
       "completion_tokens": 533,
       "total_tokens": 621
     },
-    "latency_ms": 82142.88,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:06:28.726511+00:00"
+    "completed_at": "2026-11-03T07:06:28.726511+00:00",
+    "legacy_elapsed_ms": 82142.88,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E011",
@@ -1610,10 +2110,15 @@
       "completion_tokens": 165,
       "total_tokens": 255
     },
-    "latency_ms": 11467.24,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:05:22.557829+00:00"
+    "completed_at": "2026-11-03T07:05:22.557829+00:00",
+    "legacy_elapsed_ms": 11467.24,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E012",
@@ -1626,10 +2131,15 @@
       "completion_tokens": 337,
       "total_tokens": 423
     },
-    "latency_ms": 38173.14,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:05:50.195238+00:00"
+    "completed_at": "2026-11-03T07:05:50.195238+00:00",
+    "legacy_elapsed_ms": 38173.14,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E013",
@@ -1642,10 +2152,15 @@
       "completion_tokens": 160,
       "total_tokens": 250
     },
-    "latency_ms": 3478.77,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:05:24.195218+00:00"
+    "completed_at": "2026-11-03T07:05:24.195218+00:00",
+    "legacy_elapsed_ms": 3478.77,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E014",
@@ -1658,10 +2173,15 @@
       "completion_tokens": 427,
       "total_tokens": 512
     },
-    "latency_ms": 5936.84,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:05:28.496540+00:00"
+    "completed_at": "2026-11-03T07:05:28.496540+00:00",
+    "legacy_elapsed_ms": 5936.84,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E015",
@@ -1674,10 +2194,15 @@
       "completion_tokens": 192,
       "total_tokens": 280
     },
-    "latency_ms": 12594.4,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:05:36.792100+00:00"
+    "completed_at": "2026-11-03T07:05:36.792100+00:00",
+    "legacy_elapsed_ms": 12594.4,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E016",
@@ -1690,10 +2215,15 @@
       "completion_tokens": 521,
       "total_tokens": 607
     },
-    "latency_ms": 67021.32,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:06:35.521904+00:00"
+    "completed_at": "2026-11-03T07:06:35.521904+00:00",
+    "legacy_elapsed_ms": 67021.32,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E017",
@@ -1706,10 +2236,15 @@
       "completion_tokens": 208,
       "total_tokens": 295
     },
-    "latency_ms": 4604.66,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:05:41.398142+00:00"
+    "completed_at": "2026-11-03T07:05:41.398142+00:00",
+    "legacy_elapsed_ms": 4604.66,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E018",
@@ -1722,10 +2257,15 @@
       "completion_tokens": 211,
       "total_tokens": 297
     },
-    "latency_ms": 25805.25,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:06:07.205482+00:00"
+    "completed_at": "2026-11-03T07:06:07.205482+00:00",
+    "legacy_elapsed_ms": 25805.25,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E019",
@@ -1738,10 +2278,15 @@
       "completion_tokens": 159,
       "total_tokens": 249
     },
-    "latency_ms": 22946.35,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:06:13.144060+00:00"
+    "completed_at": "2026-11-03T07:06:13.144060+00:00",
+    "legacy_elapsed_ms": 22946.35,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E020",
@@ -1754,10 +2299,15 @@
       "completion_tokens": 651,
       "total_tokens": 735
     },
-    "latency_ms": 87999.32,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:07:35.206666+00:00"
+    "completed_at": "2026-11-03T07:07:35.206666+00:00",
+    "legacy_elapsed_ms": 87999.32,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E021",
@@ -1770,10 +2320,15 @@
       "completion_tokens": 187,
       "total_tokens": 276
     },
-    "latency_ms": 11062.02,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:06:24.210428+00:00"
+    "completed_at": "2026-11-03T07:06:24.210428+00:00",
+    "legacy_elapsed_ms": 11062.02,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E022",
@@ -1786,10 +2341,15 @@
       "completion_tokens": 366,
       "total_tokens": 452
     },
-    "latency_ms": 54825.52,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:07:19.038087+00:00"
+    "completed_at": "2026-11-03T07:07:19.038087+00:00",
+    "legacy_elapsed_ms": 54825.52,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E023",
@@ -1802,10 +2362,15 @@
       "completion_tokens": 164,
       "total_tokens": 254
     },
-    "latency_ms": 5213.31,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:06:33.942463+00:00"
+    "completed_at": "2026-11-03T07:06:33.942463+00:00",
+    "legacy_elapsed_ms": 5213.31,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E024",
@@ -1818,10 +2383,15 @@
       "completion_tokens": 568,
       "total_tokens": 652
     },
-    "latency_ms": 73919.07,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:07:47.863087+00:00"
+    "completed_at": "2026-11-03T07:07:47.863087+00:00",
+    "legacy_elapsed_ms": 73919.07,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E025",
@@ -1834,10 +2404,15 @@
       "completion_tokens": 207,
       "total_tokens": 295
     },
-    "latency_ms": 15511.72,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:06:51.035587+00:00"
+    "completed_at": "2026-11-03T07:06:51.035587+00:00",
+    "legacy_elapsed_ms": 15511.72,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E026",
@@ -1850,10 +2425,15 @@
       "completion_tokens": 350,
       "total_tokens": 435
     },
-    "latency_ms": 45051.01,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:07:36.089176+00:00"
+    "completed_at": "2026-11-03T07:07:36.089176+00:00",
+    "legacy_elapsed_ms": 45051.01,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E027",
@@ -1866,10 +2446,15 @@
       "completion_tokens": 156,
       "total_tokens": 245
     },
-    "latency_ms": 4957.04,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:16:28.049764+00:00"
+    "completed_at": "2026-11-03T07:16:28.049764+00:00",
+    "legacy_elapsed_ms": 4957.04,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E028",
@@ -1882,10 +2467,15 @@
       "completion_tokens": 323,
       "total_tokens": 409
     },
-    "latency_ms": 19053.41,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:07:39.064680+00:00"
+    "completed_at": "2026-11-03T07:07:39.064680+00:00",
+    "legacy_elapsed_ms": 19053.41,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E029",
@@ -1898,10 +2488,15 @@
       "completion_tokens": 168,
       "total_tokens": 258
     },
-    "latency_ms": 13309.73,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:07:48.518362+00:00"
+    "completed_at": "2026-11-03T07:07:48.518362+00:00",
+    "legacy_elapsed_ms": 13309.73,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "E030",
@@ -1914,10 +2509,15 @@
       "completion_tokens": 401,
       "total_tokens": 487
     },
-    "latency_ms": 34966.25,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:08:11.056807+00:00"
+    "completed_at": "2026-11-03T07:08:11.056807+00:00",
+    "legacy_elapsed_ms": 34966.25,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H001",
@@ -1930,122 +2530,162 @@
       "completion_tokens": 203,
       "total_tokens": 284
     },
-    "latency_ms": 7037.77,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:13:47.208419+00:00"
+    "completed_at": "2026-11-03T07:13:47.208419+00:00",
+    "legacy_elapsed_ms": 7037.77,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H002",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "5 boxes × 8 sticks/box = 40 sticks in all\n\n40 sticks – 3 sticks used = 37 sticks left\n\nThere are 40 sticks to start with, so 37 are still unused.",
+    "answer": "5 boxes Ãƒâ€” 8 sticks/box = 40 sticks in all\n\n40 sticks Ã¢â‚¬â€œ 3 sticks used = 37 sticks left\n\nThere are 40 sticks to start with, so 37 are still unused.",
     "tokens": {
       "prompt_tokens": 79,
       "completion_tokens": 363,
       "total_tokens": 442
     },
-    "latency_ms": 10826.01,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:13:58.036310+00:00"
+    "completed_at": "2026-11-03T07:13:58.036310+00:00",
+    "legacy_elapsed_ms": 10826.01,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H003",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "144 ÷ 12 = 12\n\nEach of the 12 sections contains 12 pages.",
+    "answer": "144 ÃƒÂ· 12 = 12\n\nEach of the 12 sections contains 12 pages.",
     "tokens": {
       "prompt_tokens": 77,
       "completion_tokens": 192,
       "total_tokens": 269
     },
-    "latency_ms": 4036.54,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:14:02.075726+00:00"
+    "completed_at": "2026-11-03T07:14:02.075726+00:00",
+    "legacy_elapsed_ms": 4036.54,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H004",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "3 buses × 24 students per bus = 72 students on the buses\n\n72 students + 7 students traveling separately = 79 students\n\nThere are 79 students altogether.",
+    "answer": "3 buses Ãƒâ€” 24 students per bus = 72 students on the buses\n\n72 students + 7 students traveling separately = 79 students\n\nThere are 79 students altogether.",
     "tokens": {
       "prompt_tokens": 79,
       "completion_tokens": 207,
       "total_tokens": 286
     },
-    "latency_ms": 15321.34,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:14:16.012290+00:00"
+    "completed_at": "2026-11-03T07:14:16.012290+00:00",
+    "legacy_elapsed_ms": 15321.34,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H005",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "250 tokens – 3 × 42 tokens spent = tokens left\n\n3 × 42 = 126 tokens spent\n\n250 – 126 = 124 tokens\n\n124 tokens remain.",
+    "answer": "250 tokens Ã¢â‚¬â€œ 3 Ãƒâ€” 42 tokens spent = tokens left\n\n3 Ãƒâ€” 42 = 126 tokens spent\n\n250 Ã¢â‚¬â€œ 126 = 124 tokens\n\n124 tokens remain.",
     "tokens": {
       "prompt_tokens": 79,
       "completion_tokens": 196,
       "total_tokens": 275
     },
-    "latency_ms": 10407.77,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:14:12.485763+00:00"
+    "completed_at": "2026-11-03T07:14:12.485763+00:00",
+    "legacy_elapsed_ms": 10407.77,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H006",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "2.5 h = 2 h 30 min = 150 min\n\nRate = 6 cards / 10 min\n\nCards = 150 min × 6 cards /10 min = 15 × 6 = 90 cards\n\nAt a steady 6 per 10 min = 36 per hour, i.e. 36 × 2.5 = 90 cards in the 2½-hour run.",
+    "answer": "2.5 h = 2 h 30 min = 150 min\n\nRate = 6 cards / 10 min\n\nCards = 150 min Ãƒâ€” 6 cards /10 min = 15 Ãƒâ€” 6 = 90 cards\n\nAt a steady 6 per 10 min = 36 per hour, i.e. 36 Ãƒâ€” 2.5 = 90 cards in the 2Ã‚Â½-hour run.",
     "tokens": {
       "prompt_tokens": 87,
       "completion_tokens": 471,
       "total_tokens": 558
     },
-    "latency_ms": 12991.52,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:14:25.478694+00:00"
+    "completed_at": "2026-11-03T07:14:25.478694+00:00",
+    "legacy_elapsed_ms": 12991.52,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H007",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "48 ÷ 5 = 9 with a remainder.\n\n5 baskets × 9 rolls/basket = 45 rolls placed\n\n48 – 45 = 3 rolls left over\n\nSo 9 rolls go in each basket and 3 rolls remain unplaced.",
+    "answer": "48 ÃƒÂ· 5 = 9 with a remainder.\n\n5 baskets Ãƒâ€” 9 rolls/basket = 45 rolls placed\n\n48 Ã¢â‚¬â€œ 45 = 3 rolls left over\n\nSo 9 rolls go in each basket and 3 rolls remain unplaced.",
     "tokens": {
       "prompt_tokens": 84,
       "completion_tokens": 233,
       "total_tokens": 317
     },
-    "latency_ms": 21259.79,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:14:37.274254+00:00"
+    "completed_at": "2026-11-03T07:14:37.274254+00:00",
+    "legacy_elapsed_ms": 21259.79,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H008",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "9 jars/min × 6 min = 54 jars\n\n9 + 9 + 9 + 9 + 9 + 9 = 54 jars total in 6 minutes.",
+    "answer": "9 jars/min Ãƒâ€” 6 min = 54 jars\n\n9 + 9 + 9 + 9 + 9 + 9 = 54 jars total in 6 minutes.",
     "tokens": {
       "prompt_tokens": 76,
       "completion_tokens": 269,
       "total_tokens": 345
     },
-    "latency_ms": 23092.21,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:14:48.153413+00:00"
+    "completed_at": "2026-11-03T07:14:48.153413+00:00",
+    "legacy_elapsed_ms": 23092.21,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H009",
@@ -2058,74 +2698,99 @@
       "completion_tokens": 291,
       "total_tokens": 372
     },
-    "latency_ms": 20927.2,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:14:46.408014+00:00"
+    "completed_at": "2026-11-03T07:14:46.408014+00:00",
+    "legacy_elapsed_ms": 20927.2,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H010",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "The terms increase by a constant difference\n\n9 − 4 = 5\n14 − 9 = 5\n19 − 14 = 5\n\nSo the common difference is +5.\n\n19 + 5 = 24\n\nThe next term is 24, and the sequence continues 4, 9, 14, 19, 24, …",
+    "answer": "The terms increase by a constant difference\n\n9 Ã¢Ë†â€™ 4 = 5\n14 Ã¢Ë†â€™ 9 = 5\n19 Ã¢Ë†â€™ 14 = 5\n\nSo the common difference is +5.\n\n19 + 5 = 24\n\nThe next term is 24, and the sequence continues 4, 9, 14, 19, 24, Ã¢â‚¬Â¦",
     "tokens": {
       "prompt_tokens": 85,
       "completion_tokens": 316,
       "total_tokens": 401
     },
-    "latency_ms": 26854.67,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:01.451380+00:00"
+    "completed_at": "2026-11-03T07:15:01.451380+00:00",
+    "legacy_elapsed_ms": 26854.67,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H011",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "96 − 35 − 28 = 33\n\nThe third pile contains 33 cards, since 35 + 28 + 33 = 96.",
+    "answer": "96 Ã¢Ë†â€™ 35 Ã¢Ë†â€™ 28 = 33\n\nThe third pile contains 33 cards, since 35 + 28 + 33 = 96.",
     "tokens": {
       "prompt_tokens": 88,
       "completion_tokens": 226,
       "total_tokens": 314
     },
-    "latency_ms": 5850.18,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:14:43.126260+00:00"
+    "completed_at": "2026-11-03T07:14:43.126260+00:00",
+    "legacy_elapsed_ms": 5850.18,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H012",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "Each helper packs\n\n12 kits/day × 4 days = 48 kits\n\nFor 5 helpers\n\n5 × 48 kits = 5 × 12 × 4 = 240 kits\n\nThat's 60 kits per day for the team over the 4 days.",
+    "answer": "Each helper packs\n\n12 kits/day Ãƒâ€” 4 days = 48 kits\n\nFor 5 helpers\n\n5 Ãƒâ€” 48 kits = 5 Ãƒâ€” 12 Ãƒâ€” 4 = 240 kits\n\nThat's 60 kits per day for the team over the 4 days.",
     "tokens": {
       "prompt_tokens": 79,
       "completion_tokens": 288,
       "total_tokens": 367
     },
-    "latency_ms": 11432.35,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:14:54.560561+00:00"
+    "completed_at": "2026-11-03T07:14:54.560561+00:00",
+    "legacy_elapsed_ms": 11432.35,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H013",
     "tier": "strong",
     "band": "hard",
-    "correct": false,
-    "answer": "A 20 % discount means you pay 100 % – 20 % = 80 % of the list price.\n\nDiscount amount = 0.20 × 500 = 100 points\nPrice paid = 500 – 100 = 400 points\n\n= 0.80 × 500 = 400 points.",
+    "correct": true,
+    "answer": "A 20 % discount means you pay 100 % Ã¢â‚¬â€œ 20 % = 80 % of the list price.\n\nDiscount amount = 0.20 Ãƒâ€” 500 = 100 points\nPrice paid = 500 Ã¢â‚¬â€œ 100 = 400 points\n\n= 0.80 Ãƒâ€” 500 = 400 points.",
     "tokens": {
       "prompt_tokens": 78,
       "completion_tokens": 231,
       "total_tokens": 309
     },
-    "latency_ms": 16565.13,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:02.975140+00:00"
+    "completed_at": "2026-11-03T07:15:02.975140+00:00",
+    "legacy_elapsed_ms": 16565.13,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H014",
@@ -2138,10 +2803,15 @@
       "completion_tokens": 184,
       "total_tokens": 266
     },
-    "latency_ms": 12259.23,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:00.414680+00:00"
+    "completed_at": "2026-11-03T07:15:00.414680+00:00",
+    "legacy_elapsed_ms": 12259.23,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H015",
@@ -2154,58 +2824,78 @@
       "completion_tokens": 295,
       "total_tokens": 376
     },
-    "latency_ms": 23189.04,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:17.751124+00:00"
+    "completed_at": "2026-11-03T07:15:17.751124+00:00",
+    "legacy_elapsed_ms": 23189.04,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H016",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "Total seats in the hall\n\n$$8\\text{ rows}\\times 6\\text{ seats/row}=48\\text{ seats}$$\n\nEmpty seats = Total seats – Occupied seats\n\n$$48-39 = 9$$\n\nThere are 9 empty seats.",
+    "answer": "Total seats in the hall\n\n$$8\\text{ rows}\\times 6\\text{ seats/row}=48\\text{ seats}$$\n\nEmpty seats = Total seats Ã¢â‚¬â€œ Occupied seats\n\n$$48-39 = 9$$\n\nThere are 9 empty seats.",
     "tokens": {
       "prompt_tokens": 82,
       "completion_tokens": 194,
       "total_tokens": 276
     },
-    "latency_ms": 8378.26,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:08.795177+00:00"
+    "completed_at": "2026-11-03T07:15:08.795177+00:00",
+    "legacy_elapsed_ms": 8378.26,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H017",
     "tier": "strong",
     "band": "hard",
-    "correct": false,
+    "correct": true,
     "answer": "At the same rate the flour per serving is constant.\n\n$300\\;{\\rm g} \\div 4\\;{\\rm servings}=75\\;{\\rm g/serving}$\n\nFor 7 servings\n\n$7 \\times 75\\;{\\rm g/serving}=525\\;{\\rm g}$\n\ni.e. $300/4 = x/7\\;\\Rightarrow\\;x = 300\\times7/4 = 525\\;{\\rm g}$ of flour.",
     "tokens": {
       "prompt_tokens": 83,
       "completion_tokens": 327,
       "total_tokens": 410
     },
-    "latency_ms": 13432.56,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:14.885941+00:00"
+    "completed_at": "2026-11-03T07:15:14.885941+00:00",
+    "legacy_elapsed_ms": 13432.56,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H018",
     "tier": "strong",
     "band": "hard",
-    "correct": false,
-    "answer": "12 bags × 15 kg / bag = 180 kg received\n\n180 kg received – 68 kg shipped out = 112 kg left in store.",
+    "correct": true,
+    "answer": "12 bags Ãƒâ€” 15 kg / bag = 180 kg received\n\n180 kg received Ã¢â‚¬â€œ 68 kg shipped out = 112 kg left in store.",
     "tokens": {
       "prompt_tokens": 80,
       "completion_tokens": 272,
       "total_tokens": 352
     },
-    "latency_ms": 12985.67,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:15.962755+00:00"
+    "completed_at": "2026-11-03T07:15:15.962755+00:00",
+    "legacy_elapsed_ms": 12985.67,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H019",
@@ -2218,10 +2908,15 @@
       "completion_tokens": 223,
       "total_tokens": 309
     },
-    "latency_ms": 14563.93,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:23.360737+00:00"
+    "completed_at": "2026-11-03T07:15:23.360737+00:00",
+    "legacy_elapsed_ms": 14563.93,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H020",
@@ -2234,26 +2929,36 @@
       "completion_tokens": 296,
       "total_tokens": 368
     },
-    "latency_ms": 10086.36,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:24.974655+00:00"
+    "completed_at": "2026-11-03T07:15:24.974655+00:00",
+    "legacy_elapsed_ms": 10086.36,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H021",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "84 ÷ 12 = 7\n\nAt 12 pages per day it will take 7 days to finish the 84 pages left.",
+    "answer": "84 ÃƒÂ· 12 = 7\n\nAt 12 pages per day it will take 7 days to finish the 84 pages left.",
     "tokens": {
       "prompt_tokens": 78,
       "completion_tokens": 273,
       "total_tokens": 351
     },
-    "latency_ms": 16690.69,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:32.656581+00:00"
+    "completed_at": "2026-11-03T07:15:32.656581+00:00",
+    "legacy_elapsed_ms": 16690.69,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H022",
@@ -2266,138 +2971,183 @@
       "completion_tokens": 241,
       "total_tokens": 316
     },
-    "latency_ms": 5121.99,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:22.875595+00:00"
+    "completed_at": "2026-11-03T07:15:22.875595+00:00",
+    "legacy_elapsed_ms": 5121.99,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H023",
     "tier": "strong",
     "band": "hard",
-    "correct": false,
-    "answer": "5 levels × 6 tiles/level = 30 tiles in the display\n\n30 tiles in the display + 4 loose tiles = 34 tiles in total.",
+    "correct": true,
+    "answer": "5 levels Ãƒâ€” 6 tiles/level = 30 tiles in the display\n\n30 tiles in the display + 4 loose tiles = 34 tiles in total.",
     "tokens": {
       "prompt_tokens": 82,
       "completion_tokens": 297,
       "total_tokens": 379
     },
-    "latency_ms": 21278.2,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:44.154936+00:00"
+    "completed_at": "2026-11-03T07:15:44.154936+00:00",
+    "legacy_elapsed_ms": 21278.2,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H024",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "A session that is 90 min long in total is made up of work time + break time.\n\nBreak time = 2 × 15 min = 30 min\n\nWork time = Total elapsed time – Break time\n         = 90 min – 30 min\n         = 60 min\n\nof actual work in the 90 min elapsed session.\n\n*Remark:* If you mean a 90 min of *work* block to which the breaks are added on top, the elapsed time is 90 min + 2×15 min = 120 min total.",
+    "answer": "A session that is 90 min long in total is made up of work time + break time.\n\nBreak time = 2 Ãƒâ€” 15 min = 30 min\n\nWork time = Total elapsed time Ã¢â‚¬â€œ Break time\n         = 90 min Ã¢â‚¬â€œ 30 min\n         = 60 min\n\nof actual work in the 90 min elapsed session.\n\n*Remark:* If you mean a 90 min of *work* block to which the breaks are added on top, the elapsed time is 90 min + 2Ãƒâ€”15 min = 120 min total.",
     "tokens": {
       "prompt_tokens": 77,
       "completion_tokens": 375,
       "total_tokens": 452
     },
-    "latency_ms": 27517.33,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:50.879441+00:00"
+    "completed_at": "2026-11-03T07:15:50.879441+00:00",
+    "legacy_elapsed_ms": 27517.33,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H025",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "8 bottles × 750 ml / bottle = 6 000 ml\n\nAltogether they hold 6 litres.",
+    "answer": "8 bottles Ãƒâ€” 750 ml / bottle = 6 000 ml\n\nAltogether they hold 6 litres.",
     "tokens": {
       "prompt_tokens": 76,
       "completion_tokens": 176,
       "total_tokens": 252
     },
-    "latency_ms": 14074.78,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:39.050814+00:00"
+    "completed_at": "2026-11-03T07:15:39.050814+00:00",
+    "legacy_elapsed_ms": 14074.78,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H026",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "Two fifths of 45 is\n\n45 ÷ 5 = 9 learners in one fifth\n9 × 2 = 18 learners in two fifths\n\n18 learners choose the music activity.",
+    "answer": "Two fifths of 45 is\n\n45 ÃƒÂ· 5 = 9 learners in one fifth\n9 Ãƒâ€” 2 = 18 learners in two fifths\n\n18 learners choose the music activity.",
     "tokens": {
       "prompt_tokens": 79,
       "completion_tokens": 192,
       "total_tokens": 271
     },
-    "latency_ms": 17095.38,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:49.753277+00:00"
+    "completed_at": "2026-11-03T07:15:49.753277+00:00",
+    "legacy_elapsed_ms": 17095.38,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H027",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "5 teams × 7 flags per team = 35 flags\n\n35 flags + 3 flags added by the organizer = 38 flags\n\nThere are 38 flags in all.",
+    "answer": "5 teams Ãƒâ€” 7 flags per team = 35 flags\n\n35 flags + 3 flags added by the organizer = 38 flags\n\nThere are 38 flags in all.",
     "tokens": {
       "prompt_tokens": 78,
       "completion_tokens": 224,
       "total_tokens": 302
     },
-    "latency_ms": 15827.53,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:54.879295+00:00"
+    "completed_at": "2026-11-03T07:15:54.879295+00:00",
+    "legacy_elapsed_ms": 15827.53,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H028",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "Four parts cost\n\n4 × 175 points = 700 points\n\n1,200 – 700 = 500 points\n\n500 points remain in the fund.",
+    "answer": "Four parts cost\n\n4 Ãƒâ€” 175 points = 700 points\n\n1,200 Ã¢â‚¬â€œ 700 = 500 points\n\n500 points remain in the fund.",
     "tokens": {
       "prompt_tokens": 79,
       "completion_tokens": 247,
       "total_tokens": 326
     },
-    "latency_ms": 8156.44,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:15:52.312189+00:00"
+    "completed_at": "2026-11-03T07:15:52.312189+00:00",
+    "legacy_elapsed_ms": 8156.44,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H029",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "The terms are multiplied by 3 each time\n\n* 2 × 3 = 6\n* 6 × 3 = 18\n* 18 × 3 = 54\n\nSo the pattern is 2, 6, 18, 54, …",
+    "answer": "The terms are multiplied by 3 each time\n\n* 2 Ãƒâ€” 3 = 6\n* 6 Ãƒâ€” 3 = 18\n* 18 Ãƒâ€” 3 = 54\n\nSo the pattern is 2, 6, 18, 54, Ã¢â‚¬Â¦",
     "tokens": {
       "prompt_tokens": 83,
       "completion_tokens": 334,
       "total_tokens": 417
     },
-    "latency_ms": 19686.06,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:16:09.440548+00:00"
+    "completed_at": "2026-11-03T07:16:09.440548+00:00",
+    "legacy_elapsed_ms": 19686.06,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "H030",
     "tier": "strong",
     "band": "hard",
     "correct": false,
-    "answer": "Each jar has 3 blue beads.\n\n3 jars × 3 blue/jar = 9 blue beads\n\nIn total there are 3 × 7 = 21 beads, 12 red and 9 blue.",
+    "answer": "Each jar has 3 blue beads.\n\n3 jars Ãƒâ€” 3 blue/jar = 9 blue beads\n\nIn total there are 3 Ãƒâ€” 7 = 21 beads, 12 red and 9 blue.",
     "tokens": {
       "prompt_tokens": 80,
       "completion_tokens": 326,
       "total_tokens": 406
     },
-    "latency_ms": 19671.82,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:16:10.552559+00:00"
+    "completed_at": "2026-11-03T07:16:10.552559+00:00",
+    "legacy_elapsed_ms": 19671.82,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M001",
@@ -2410,10 +3160,15 @@
       "completion_tokens": 1552,
       "total_tokens": 1680
     },
-    "latency_ms": 69965.06,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:08:49.032230+00:00"
+    "completed_at": "2026-11-03T07:08:49.032230+00:00",
+    "legacy_elapsed_ms": 69965.06,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M002",
@@ -2426,10 +3181,15 @@
       "completion_tokens": 421,
       "total_tokens": 545
     },
-    "latency_ms": 23878.03,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:08:11.743187+00:00"
+    "completed_at": "2026-11-03T07:08:11.743187+00:00",
+    "legacy_elapsed_ms": 23878.03,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M003",
@@ -2442,10 +3202,15 @@
       "completion_tokens": 614,
       "total_tokens": 736
     },
-    "latency_ms": 37877.41,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:08:26.397066+00:00"
+    "completed_at": "2026-11-03T07:08:26.397066+00:00",
+    "legacy_elapsed_ms": 37877.41,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M004",
@@ -2458,10 +3223,15 @@
       "completion_tokens": 958,
       "total_tokens": 1078
     },
-    "latency_ms": 63828.13,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:09:14.887188+00:00"
+    "completed_at": "2026-11-03T07:09:14.887188+00:00",
+    "legacy_elapsed_ms": 63828.13,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M005",
@@ -2474,10 +3244,15 @@
       "completion_tokens": 452,
       "total_tokens": 571
     },
-    "latency_ms": 38991.71,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:08:50.739036+00:00"
+    "completed_at": "2026-11-03T07:08:50.739036+00:00",
+    "legacy_elapsed_ms": 38991.71,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M006",
@@ -2490,10 +3265,15 @@
       "completion_tokens": 502,
       "total_tokens": 627
     },
-    "latency_ms": 28833.66,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:08:55.232492+00:00"
+    "completed_at": "2026-11-03T07:08:55.232492+00:00",
+    "legacy_elapsed_ms": 28833.66,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M007",
@@ -2506,10 +3286,15 @@
       "completion_tokens": 965,
       "total_tokens": 1088
     },
-    "latency_ms": 38363.44,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:09:27.397322+00:00"
+    "completed_at": "2026-11-03T07:09:27.397322+00:00",
+    "legacy_elapsed_ms": 38363.44,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M008",
@@ -2522,10 +3307,15 @@
       "completion_tokens": 395,
       "total_tokens": 509
     },
-    "latency_ms": 21908.74,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:09:12.649897+00:00"
+    "completed_at": "2026-11-03T07:09:12.649897+00:00",
+    "legacy_elapsed_ms": 21908.74,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M009",
@@ -2538,10 +3328,15 @@
       "completion_tokens": 1694,
       "total_tokens": 1814
     },
-    "latency_ms": 104514.48,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:20:18.875089+00:00"
+    "completed_at": "2026-11-03T07:20:18.875089+00:00",
+    "legacy_elapsed_ms": 104514.48,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M010",
@@ -2554,10 +3349,15 @@
       "completion_tokens": 471,
       "total_tokens": 595
     },
-    "latency_ms": 27357.89,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:09:40.009987+00:00"
+    "completed_at": "2026-11-03T07:09:40.009987+00:00",
+    "legacy_elapsed_ms": 27357.89,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M011",
@@ -2570,10 +3370,15 @@
       "completion_tokens": 617,
       "total_tokens": 734
     },
-    "latency_ms": 44147.8,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:09:59.036499+00:00"
+    "completed_at": "2026-11-03T07:09:59.036499+00:00",
+    "legacy_elapsed_ms": 44147.8,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M012",
@@ -2586,10 +3391,15 @@
       "completion_tokens": 1678,
       "total_tokens": 1802
     },
-    "latency_ms": 69012.73,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:10:36.412265+00:00"
+    "completed_at": "2026-11-03T07:10:36.412265+00:00",
+    "legacy_elapsed_ms": 69012.73,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M013",
@@ -2602,10 +3412,15 @@
       "completion_tokens": 591,
       "total_tokens": 710
     },
-    "latency_ms": 48153.03,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:10:28.165683+00:00"
+    "completed_at": "2026-11-03T07:10:28.165683+00:00",
+    "legacy_elapsed_ms": 48153.03,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M014",
@@ -2618,10 +3433,15 @@
       "completion_tokens": 2644,
       "total_tokens": 2765
     },
-    "latency_ms": 35317.36,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:17:04.916777+00:00"
+    "completed_at": "2026-11-03T07:17:04.916777+00:00",
+    "legacy_elapsed_ms": 35317.36,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M015",
@@ -2634,10 +3454,15 @@
       "completion_tokens": 1268,
       "total_tokens": 1393
     },
-    "latency_ms": 102557.3,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:12:10.725091+00:00"
+    "completed_at": "2026-11-03T07:12:10.725091+00:00",
+    "legacy_elapsed_ms": 102557.3,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M016",
@@ -2650,10 +3475,15 @@
       "completion_tokens": 548,
       "total_tokens": 669
     },
-    "latency_ms": 51147.97,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:11:27.560968+00:00"
+    "completed_at": "2026-11-03T07:11:27.560968+00:00",
+    "legacy_elapsed_ms": 51147.97,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M017",
@@ -2666,10 +3496,15 @@
       "completion_tokens": 459,
       "total_tokens": 574
     },
-    "latency_ms": 24212.42,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:11:20.342073+00:00"
+    "completed_at": "2026-11-03T07:11:20.342073+00:00",
+    "legacy_elapsed_ms": 24212.42,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M018",
@@ -2682,10 +3517,15 @@
       "completion_tokens": 459,
       "total_tokens": 582
     },
-    "latency_ms": 24479.89,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:11:44.823555+00:00"
+    "completed_at": "2026-11-03T07:11:44.823555+00:00",
+    "legacy_elapsed_ms": 24479.89,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M019",
@@ -2698,10 +3538,15 @@
       "completion_tokens": 407,
       "total_tokens": 524
     },
-    "latency_ms": 32438.44,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:12:00.000735+00:00"
+    "completed_at": "2026-11-03T07:12:00.000735+00:00",
+    "legacy_elapsed_ms": 32438.44,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M020",
@@ -2714,10 +3559,15 @@
       "completion_tokens": 391,
       "total_tokens": 517
     },
-    "latency_ms": 19982.27,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:12:04.806765+00:00"
+    "completed_at": "2026-11-03T07:12:04.806765+00:00",
+    "legacy_elapsed_ms": 19982.27,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M021",
@@ -2730,10 +3580,15 @@
       "completion_tokens": 817,
       "total_tokens": 939
     },
-    "latency_ms": 31241.59,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:12:30.894556+00:00"
+    "completed_at": "2026-11-03T07:12:30.894556+00:00",
+    "legacy_elapsed_ms": 31241.59,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M022",
@@ -2746,10 +3601,15 @@
       "completion_tokens": 1069,
       "total_tokens": 1188
     },
-    "latency_ms": 46978.4,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:17:19.764193+00:00"
+    "completed_at": "2026-11-03T07:17:19.764193+00:00",
+    "legacy_elapsed_ms": 46978.4,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M023",
@@ -2762,10 +3622,15 @@
       "completion_tokens": 497,
       "total_tokens": 617
     },
-    "latency_ms": 17792.55,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:12:22.601596+00:00"
+    "completed_at": "2026-11-03T07:12:22.601596+00:00",
+    "legacy_elapsed_ms": 17792.55,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M024",
@@ -2778,10 +3643,15 @@
       "completion_tokens": 465,
       "total_tokens": 586
     },
-    "latency_ms": 10234.9,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:12:20.961802+00:00"
+    "completed_at": "2026-11-03T07:12:20.961802+00:00",
+    "legacy_elapsed_ms": 10234.9,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M025",
@@ -2794,10 +3664,15 @@
       "completion_tokens": 504,
       "total_tokens": 623
     },
-    "latency_ms": 3523.06,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:12:24.487095+00:00"
+    "completed_at": "2026-11-03T07:12:24.487095+00:00",
+    "legacy_elapsed_ms": 3523.06,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M026",
@@ -2810,10 +3685,15 @@
       "completion_tokens": 410,
       "total_tokens": 529
     },
-    "latency_ms": 30205.04,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:12:52.808959+00:00"
+    "completed_at": "2026-11-03T07:12:52.808959+00:00",
+    "legacy_elapsed_ms": 30205.04,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M027",
@@ -2826,10 +3706,15 @@
       "completion_tokens": 1448,
       "total_tokens": 1570
     },
-    "latency_ms": 33344.78,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:17:21.607759+00:00"
+    "completed_at": "2026-11-03T07:17:21.607759+00:00",
+    "legacy_elapsed_ms": 33344.78,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M028",
@@ -2842,10 +3727,15 @@
       "completion_tokens": 444,
       "total_tokens": 564
     },
-    "latency_ms": 27979.07,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:12:58.875408+00:00"
+    "completed_at": "2026-11-03T07:12:58.875408+00:00",
+    "legacy_elapsed_ms": 27979.07,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M029",
@@ -2858,10 +3748,15 @@
       "completion_tokens": 1164,
       "total_tokens": 1280
     },
-    "latency_ms": 101783.59,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:14:34.594880+00:00"
+    "completed_at": "2026-11-03T07:14:34.594880+00:00",
+    "legacy_elapsed_ms": 101783.59,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   },
   {
     "id": "M030",
@@ -2874,9 +3769,14 @@
       "completion_tokens": 933,
       "total_tokens": 1051
     },
-    "latency_ms": 41290.88,
+    "latency_ms": null,
     "cost_usd": null,
     "error": null,
-    "completed_at": "2026-11-03T07:13:40.168757+00:00"
+    "completed_at": "2026-11-03T07:13:40.168757+00:00",
+    "legacy_elapsed_ms": 41290.88,
+    "request_time_ms": null,
+    "model_time_ms": null,
+    "retry_count": null,
+    "retry_sleep_ms": null
   }
 ]

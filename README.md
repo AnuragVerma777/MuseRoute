@@ -38,23 +38,33 @@ MuseRoute makes no claim that it beats these alternatives.
 
 ## Results
 
-All results below come from [results/facts.json](results/facts.json). Accuracy is measured on 45 holdout prompts. A JSON `null` means **NOT MEASURED**.
+All results below come from [results/facts.json](results/facts.json). The set contains 45 held-out prompts (15 per band). A JSON `null` means **NOT MEASURED**.
 
-| System | Accuracy | Escalation | Average total tokens/request | Average latency (ms) | Cost units |
-|---|---:|---:|---:|---:|---:|
-| Cheap-only | 60.00% | 0% | 249.93 | 12,947.69 | NOT MEASURED |
-| Strong-only | 57.78% | 100% | 537.33 | 26,021.18 | NOT MEASURED |
-| MuseRoute | 48.89% | 20% | NOT MEASURED | 452,626.58 | NOT MEASURED |
+| System | Accuracy | Escalation | Average total tokens/request | Average active request time (ms) | Isolated model time (ms) | Retry count / sleep | Cost units |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Cheap-only | 66.67% | 0% | 249.93 | NOT MEASURED | NOT MEASURED | NOT MEASURED | NOT MEASURED |
+| Strong-only | 66.67% | 100% | 537.33 | NOT MEASURED | NOT MEASURED | NOT MEASURED | NOT MEASURED |
+| MuseRoute | 75.56% | 20% | NOT MEASURED | NOT MEASURED | NOT MEASURED | NOT MEASURED | NOT MEASURED |
 
-Per-band accuracy:
+Per-band results:
 
-| Band (15 prompts each) | Cheap-only | Strong-only | MuseRoute |
-|---|---:|---:|---:|
-| Easy | 100% | 100% | 60% |
-| Medium | 80% | 73.33% | 73.33% |
-| Hard | 0% | 0% | 13.33% |
+| Band (15 prompts each) | System | Accuracy | Escalation | Average total tokens/request | Active request time (ms) |
+|---|---|---:|---:|---:|---:|
+| Easy | Cheap-only | 100% | 0% | 177.53 | NOT MEASURED |
+| Easy | Strong-only | 100% | 100% | 340.60 | NOT MEASURED |
+| Easy | MuseRoute | 60% | 60% | NOT MEASURED | NOT MEASURED |
+| Medium | Cheap-only | 80% | 0% | 372.00 | NOT MEASURED |
+| Medium | Strong-only | 73.33% | 100% | 931.87 | NOT MEASURED |
+| Medium | MuseRoute | 73.33% | 0% | 392.80 | NOT MEASURED |
+| Hard | Cheap-only | 20% | 0% | 200.27 | NOT MEASURED |
+| Hard | Strong-only | 26.67% | 100% | 339.53 | NOT MEASURED |
+| Hard | MuseRoute | 93.33% | 0% | 202.67 | NOT MEASURED |
 
-The saved operating point uses threshold `0.5` with self-consistency off. The configured tiers currently use the same model ID and host. The MuseRoute holdout total-token count and cost units are null in the source facts, so this evaluation cannot establish a cost saving. Six routed prompts had no returned answer; the source facts record 15 tier-call errors across those requests and fallbacks.
+**Exploratory, post-hoc holdout rescoring:** the numeric checker previously rejected worked answers containing intermediate numbers even when their final equation or explicit remainder equaled the gold answer. The checker was corrected and the saved 45 holdout responses were rescored offline. This post-hoc holdout accuracy is exploratory and must not be treated as an untouched estimate of generalization. The threshold (`0.5`, self-consistency off) was selected using tune data only; no holdout result was used to choose the policy.
+
+The prior `452,626.58 ms` mean mixed active HTTP time with retry waits and was not a valid isolated model-time figure. New client telemetry measures active HTTP request time across attempts and records retry count and sleep time separately. The host does not expose isolated model-compute time, so `model_time_ms` remains **NOT MEASURED**. The saved answer cache predates this split; replaying it cannot recover active time, retry counts, or sleeps, so those averages are now null rather than guessed. Per-call token usage is retained in the route trace. Since failed calls have unknown usage, the complete MuseRoute token total is **NOT MEASURED**; known successful-call usage is 10,962 tokens across the cached trace calls. Cost units are a relative estimate, not dollars; no cost weights are configured, so cost is **NOT MEASURED**.
+
+The operating point remains a tune-only choice. Cheap and strong currently use the same model ID and host, with different reasoning modes.
 
 ## What was built during the hackathon
 
