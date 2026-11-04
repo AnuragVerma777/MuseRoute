@@ -89,7 +89,7 @@
     const header = document.createElement("div");
     header.className = "step-heading";
     addText(header, "h3", "", `${call.tier || "Tier"} answer`);
-    if (call.cached === true) addText(header, "span", "cached-badge", "cached");
+    if (call.cached === true && call.status !== "error") addText(header, "span", "cached-badge", "cached");
     section.append(header);
     if (call.status === "error") {
       addCallError(section, call.error);
@@ -137,8 +137,9 @@
       steps.append(skipped);
     }
 
-    el("final-tier").textContent = trace.tier_used ? `${trace.tier_used} tier` : "No tier returned an answer";
-    el("final-text").textContent = result.answer || "No tier returned an answer.";
+    el("final-tier").textContent = trace.tier_used ? `${trace.tier_used} tier` : "Request failed";
+    el("final-text").textContent = result.answer || "Neither Muse tier returned a response. See the tier errors above.";
+    el("final-text").classList.toggle("error-message", !result.answer);
     el("final-tokens").textContent = tokens(trace.total_tokens);
     el("timeline").hidden = false;
     el("compare-result").hidden = true;

@@ -151,11 +151,32 @@ def test_cheap_error_falls_back_to_strong(monkeypatch):
     assert trace["total_prompt_tokens"] is None
     assert trace["total_latency_ms"] is None
 
-    # Failed attempts are cached too, so a repeat reuses the same traced result.
+    # Failures are not cached, but the successful strong answer is.
     repeated_answer, repeated_trace = router.route([{"role": "user", "content": "Answer"}], {})
     assert repeated_answer == answer
     assert repeated_trace["calls"][0]["status"] == "error"
-    assert call.call_count == 2  # both the error and strong answer are served from cache
+    assert repeated_trace["calls"][0]["cached"] is False
+    assert repeated_trace["calls"][1]["cached"] is True
+    assert call.call_count == 3
+
+
+def test_stale_cached_failure_is_removed_and_retried(monkeypatch):
+    messages = [{"role": "user", "content": "retry me"}]
+    cache = {}
+    prepared = router._with_confidence_request(messages, "text")
+    key = router._cache_key("cheap", prepared, {"temperature": 0.2}, 0)
+    cache[key] = {"error_type": "MuseRouteError", "error": "old connection failure", "metrics": {}}
+    router._CACHE_PATH.write_text(json.dumps(cache), encoding="utf-8")
+    call = Mock(return_value=(_envelope("recovered"), _stats()))
+    monkeypatch.setattr(router.client, "chat", call)
+
+    answer, trace = router.route(messages, {})
+
+    assert answer == "recovered"
+    assert trace["calls"][0]["cached"] is False
+    saved_cache = json.loads(router._CACHE_PATH.read_text(encoding="utf-8"))
+    assert saved_cache[key]["answer"]
+    call.assert_called_once()
 
 
 def test_router_records_retry_metadata_per_call(monkeypatch):

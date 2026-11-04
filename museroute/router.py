@@ -55,24 +55,15 @@ def _cached_chat(
     if isinstance(saved, dict) and isinstance(saved.get("answer"), str) and isinstance(saved.get("stats"), dict):
         return saved["answer"], saved["stats"], True
     if isinstance(saved, dict) and isinstance(saved.get("error"), str):
-        error_type = getattr(client, saved.get("error_type", "MuseRouteError"), client.MuseRouteError)
-        error = error_type(saved["error"])
-        error.cached = True
-        for name, value in (saved.get("metrics") or {}).items():
-            setattr(error, name, value)
-        raise error
+        # Older versions cached transient failures. Drop them and retry the
+        # tier so restored network access can recover on the next request.
+        cache.pop(key, None)
+        _save_cache(cache)
     try:
         answer, stats = client.chat(tier, messages, **params)
-    except Exception as exc:
-        cache[key] = {
-            "error_type": type(exc).__name__,
-            "error": client.redact_secrets(exc),
-            "metrics": {
-                name: getattr(exc, name, None)
-                for name in ("request_time_ms", "retry_count", "retry_sleep_ms", "attempt_count")
-            },
-        }
-        _save_cache(cache)
+    except Exception:
+        # Cache successful answers only; connection/auth/model errors can be
+        # temporary or corrected by the user and must not become sticky.
         raise
     cache[key] = {"answer": answer, "stats": stats}
     _save_cache(cache)
@@ -208,7 +199,7 @@ def _attempt(
             sample,
         )
     except Exception as exc:
-        _record_call(calls, tier, sample, error=exc, cached=bool(getattr(exc, "cached", False)))
+        _record_call(calls, tier, sample, error=exc, cached=False)
         return None, 0.0, None, exc
     _record_call(calls, tier, sample, stats=stats, cached=cached)
     parsed_answer, confidence, parse_error = _parse_envelope(answer)
