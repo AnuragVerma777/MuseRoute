@@ -54,6 +54,35 @@
     parent.append(line);
   }
 
+  function explainCallError(error) {
+    const detail = String(error || "Tier call failed; exact error was not saved.");
+    if (/WinError 10013|access a socket.*forbidden|access permissions/i.test(detail)) {
+      return {
+        message: "The current environment blocked the outbound connection to the configured Muse host (WinError 10013). Run MuseRoute where outbound HTTPS to that host is allowed.",
+        detail,
+      };
+    }
+    if (/Max retries exceeded|Failed to establish a new connection|NameResolutionError/i.test(detail)) {
+      return {
+        message: "MuseRoute could not connect to the configured Muse host. Check that the host is reachable and outbound HTTPS is allowed.",
+        detail,
+      };
+    }
+    return { message: detail, detail: null };
+  }
+
+  function addCallError(parent, error) {
+    const explained = explainCallError(error);
+    addText(parent, "p", "error-message", explained.message);
+    if (explained.detail) {
+      const details = document.createElement("details");
+      details.className = "error-details";
+      addText(details, "summary", "", "Technical details");
+      addText(details, "pre", "", explained.detail);
+      parent.append(details);
+    }
+  }
+
   function renderCall(call, index) {
     const section = document.createElement("article");
     section.className = `timeline-step ${call.status === "error" ? "step-error" : ""}`;
@@ -63,7 +92,7 @@
     if (call.cached === true) addText(header, "span", "cached-badge", "cached");
     section.append(header);
     if (call.status === "error") {
-      addText(section, "p", "error-message", call.error || "Tier call failed; exact error was not saved.");
+      addCallError(section, call.error);
     } else {
       addText(section, "p", "answer-text", call.answer || "Empty answer");
       const metrics = [`Confidence: ${percent(call.confidence)}`];
@@ -92,7 +121,10 @@
     decision.className = "timeline-step decision-step";
     const escalated = trace.escalated === true || trace.decision === "escalate";
     addText(decision, "div", "decision-label", escalated ? "Decision · escalate" : "Decision · stay on cheap");
-    addText(decision, "p", "", trace.reason || "Routing reason: NOT MEASURED");
+    const reasonText = trace.reason || "Routing reason: NOT MEASURED";
+    addText(decision, "p", "", /WinError 10013|access a socket.*forbidden|access permissions/i.test(reasonText)
+      ? "The cheap tier request failed because this environment blocked outbound network access."
+      : reasonText);
     steps.append(decision);
 
     const strong = calls.find((call) => call.tier === "strong");

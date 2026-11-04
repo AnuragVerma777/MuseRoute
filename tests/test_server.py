@@ -226,6 +226,8 @@ def test_ui_has_freeform_prompt_timeline_compare_proof_and_measurement_banner():
     assert "Decision latency:" not in script
     assert "Total latency:" not in script
     assert "Latency: NOT MEASURED" not in script
+    assert "WinError 10013" in script
+    assert "Technical details" in script
     assert '"/api/demo-prompts"' not in script
     assert 'jsonPost("/api/route", payload)' in script
     assert '"/api/facts"' in script

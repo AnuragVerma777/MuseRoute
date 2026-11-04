@@ -53,6 +53,9 @@ button:focus-visible { outline: 3px solid #72ad96; outline-offset: 2px; }
 .step-heading h3, .timeline-step h3, .compare-card h3 { margin: 0; font-size: .94rem; text-transform: capitalize; }
 .decision-label { font-weight: 850; }
 .answer-text { margin: 5px 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.error-details { margin-top: 8px; color: var(--muted); font-size: .8rem; }
+.error-details summary { cursor: pointer; font-weight: 700; }
+.error-details pre { max-height: 220px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--red); font: .78rem/1.45 ui-monospace, Consolas, monospace; }
 .metric-line { margin: 4px 0 0; color: var(--muted); font-size: .73rem; }
 .tier-pill, .cached-badge { display: inline-block; padding: 2px 8px; border-radius: 999px; color: #245c49; background: #e3f2e9; font-size: .7rem; font-weight: 800; }
 .cached-badge { margin-left: auto; text-transform: uppercase; letter-spacing: .04em; }
