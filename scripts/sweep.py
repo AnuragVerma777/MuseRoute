@@ -471,15 +471,17 @@ def _baseline(
         measured_tokens = _tokens(stats) if stats else None
         token_values.append(measured_tokens)
         cost_values.append(stats.get("cost_units"))
-        if isinstance(stats.get("latency_ms"), (int, float)):
-            total_lat += stats["latency_ms"]
+        if isinstance(stats.get("request_time_ms"), (int, float)):
+            total_lat += stats["request_time_ms"]
             latency_count += 1
         b = p["band"]
         band_n[b] = band_n.get(b, 0) + 1
         band_c[b] = band_c.get(b, 0) + (1 if ok else 0)
         details.append({
             "id": p["id"], "band": b, "correct": ok, "answer": ans,
-            "tokens": measured_tokens, "latency_ms": stats.get("latency_ms"),
+            "tokens": measured_tokens, "latency_ms": stats.get("request_time_ms"),
+            "retry_count": stats.get("retry_count"),
+            "retry_sleep_ms": stats.get("retry_sleep_ms"),
             "cost_units": stats.get("cost_units"), "escalated": tier == "strong",
             "error": error,
             "prompt_tokens": stats.get("prompt_tokens"),
@@ -496,6 +498,10 @@ def _baseline(
         "errors": error_count,
         "avg_total_tokens_per_request": round(sum(token_values) / n, 2) if n and all(value is not None for value in token_values) else None,
         "avg_latency_ms": round(total_lat / latency_count, 2) if latency_count == n and n else None,
+        "retry_count": sum(row["retry_count"] for row in details)
+        if n and all(isinstance(row.get("retry_count"), int) for row in details) else None,
+        "retry_sleep_ms": round(sum(row["retry_sleep_ms"] for row in details), 2)
+        if n and all(isinstance(row.get("retry_sleep_ms"), (int, float)) for row in details) else None,
         "band_accuracy": {b: round(band_c.get(b, 0) / band_n[b], 4) for b in sorted(band_n)},
         "bands": _group_metrics(details),
         "details": details,
@@ -518,6 +524,8 @@ def _sweep(
             token_values: list[int | None] = []
             cost_values: list[float | int | None] = []
             latency_values: list[float | None] = []
+            retry_values: list[int | None] = []
+            retry_sleep_values: list[float | None] = []
             band_c: dict[str, int] = {}
             band_n: dict[str, int] = {}
 
@@ -530,6 +538,8 @@ def _sweep(
                 token_values.append(r["tokens"])
                 cost_values.append(r["cost_units"])
                 latency_values.append(r["latency_ms"])
+                retry_values.append(r["trace"].get("retry_count"))
+                retry_sleep_values.append(r["trace"].get("retry_sleep_ms"))
                 b = p["band"]
                 band_n[b] = band_n.get(b, 0) + 1
                 band_c[b] = band_c.get(b, 0) + (1 if r["correct"] else 0)
@@ -553,6 +563,10 @@ def _sweep(
                         if n and all(isinstance(value, (int, float)) for value in latency_values)
                         else None
                     ),
+                    "retry_count": sum(retry_values)
+                    if n and all(isinstance(value, int) for value in retry_values) else None,
+                    "retry_sleep_ms": round(sum(retry_sleep_values), 2)
+                    if n and all(isinstance(value, (int, float)) for value in retry_sleep_values) else None,
                     "band_accuracy": {
                         b: round(band_c.get(b, 0) / band_n[b], 4)
                         for b in sorted(band_n)
@@ -639,6 +653,9 @@ def _eval_set(
                 "answer": r["answer"],
                 "tokens": r["tokens"],
                 "latency_ms": r["latency_ms"],
+                "retry_count": r["trace"].get("retry_count"),
+                "retry_sleep_ms": r["trace"].get("retry_sleep_ms"),
+                "trace": r["trace"],
                 "cost_units": r["cost_units"],
             }
         )
@@ -659,6 +676,10 @@ def _eval_set(
             if n and all(isinstance(value, (int, float)) for value in latency_values)
             else None
         ),
+        "retry_count": sum(row["retry_count"] for row in details)
+        if n and all(isinstance(row.get("retry_count"), int) for row in details) else None,
+        "retry_sleep_ms": round(sum(row["retry_sleep_ms"] for row in details), 2)
+        if n and all(isinstance(row.get("retry_sleep_ms"), (int, float)) for row in details) else None,
         "band_accuracy": {
             b: round(band_c.get(b, 0) / band_n[b], 4) for b in sorted(band_n)
         },
@@ -694,6 +715,10 @@ def _group_metrics(details: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
                 if all(isinstance(row.get("latency_ms"), (int, float)) for row in rows)
                 else None
             ),
+            "retry_count": sum(row["retry_count"] for row in rows)
+            if rows and all(isinstance(row.get("retry_count"), int) for row in rows) else None,
+            "retry_sleep_ms": round(sum(row["retry_sleep_ms"] for row in rows), 2)
+            if rows and all(isinstance(row.get("retry_sleep_ms"), (int, float)) for row in rows) else None,
         }
     return result
 

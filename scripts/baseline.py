@@ -75,6 +75,8 @@ def _finished(item: dict[str, Any] | None) -> bool:
 
 def _new_row(tier: str, prompt: dict[str, Any], *, answer: str | None = None,
              correct: bool = False, tokens: Any = None, latency_ms: float | None = None,
+             request_time_ms: float | None = None, model_time_ms: float | None = None,
+             retry_count: int | None = None, retry_sleep_ms: float | None = None,
              cost_usd: float | None = None, error: str | None = None) -> dict[str, Any]:
     return {
         "id": prompt["id"],
@@ -84,6 +86,10 @@ def _new_row(tier: str, prompt: dict[str, Any], *, answer: str | None = None,
         "answer": answer,
         "tokens": tokens,
         "latency_ms": latency_ms,
+        "request_time_ms": request_time_ms,
+        "model_time_ms": model_time_ms,
+        "retry_count": retry_count,
+        "retry_sleep_ms": retry_sleep_ms,
         "cost_usd": cost_usd,
         "error": error,
         "completed_at": datetime.now(timezone.utc).isoformat(),
@@ -137,7 +143,11 @@ def _run_item(tier: str, prompt: dict[str, Any]) -> dict[str, Any]:
             answer=answer,
             correct=score(answer, prompt["gold"], prompt["check"]),
             tokens=token_usage,
-            latency_ms=stats.get("latency_ms"),
+            latency_ms=stats.get("request_time_ms"),
+            request_time_ms=stats.get("request_time_ms"),
+            model_time_ms=stats.get("model_time_ms"),
+            retry_count=stats.get("retry_count"),
+            retry_sleep_ms=stats.get("retry_sleep_ms"),
             # The current project config has relative cost weights but no verified
             # price fields, so they cannot be converted to USD.
             cost_usd=stats.get("cost_usd"),

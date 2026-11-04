@@ -11,6 +11,11 @@ def _stats(tokens=10, latency=12.5, cost=0.25):
         "prompt_tokens": tokens - 3,
         "completion_tokens": 3,
         "latency_ms": latency,
+        "request_time_ms": latency,
+        "model_time_ms": None,
+        "retry_count": 0,
+        "retry_sleep_ms": 0,
+        "attempt_count": 1,
         "cost_units": cost,
     }
 
@@ -37,6 +42,9 @@ def test_accepts_cheap_when_confident_and_format_valid(monkeypatch):
     assert trace["reason"] == "cheap_answer_accepted"
     assert trace["escalated"] is False
     assert trace["calls"][0]["prompt_tokens"] == 7
+    assert trace["calls"][0]["completion_tokens"] == 3
+    assert trace["calls"][0]["request_time_ms"] == 12.5
+    assert trace["retry_count"] == 0
     assert trace["calls"][0]["answer"] == "hello"
     assert trace["calls"][0]["confidence"] == 0.9
     assert trace["calls"][0]["cached"] is False
@@ -135,7 +143,13 @@ def test_cheap_error_falls_back_to_strong(monkeypatch):
     assert trace["tier_used"] == "strong"
     assert trace["escalated"] is True
     assert trace["calls"][0]["status"] == "error"
-    assert isinstance(trace["calls"][0]["latency_ms"], (int, float))
+    assert trace["calls"][0]["prompt_tokens"] is None
+    assert trace["calls"][0]["completion_tokens"] is None
+    assert trace["calls"][0]["request_time_ms"] is None
+    assert trace["calls"][1]["prompt_tokens"] == 7
+    assert trace["successful_call_prompt_tokens"] == 7
+    assert trace["total_prompt_tokens"] is None
+    assert trace["total_latency_ms"] is None
 
     # Failed attempts are cached too, so a repeat reuses the same traced result.
     repeated_answer, repeated_trace = router.route([{"role": "user", "content": "Answer"}], {})
@@ -143,6 +157,33 @@ def test_cheap_error_falls_back_to_strong(monkeypatch):
     assert repeated_trace["calls"][0]["status"] == "error"
     assert call.call_count == 2  # both the error and strong answer are served from cache
 
+
+def test_router_records_retry_metadata_per_call(monkeypatch):
+    stats = _stats()
+    stats.update({"request_time_ms": 8.25, "retry_count": 2, "retry_sleep_ms": 3000, "attempt_count": 3})
+    monkeypatch.setattr(router.client, "chat", Mock(return_value=(_envelope("answer"), stats)))
+
+    _answer, trace = router.route([{"role": "user", "content": "Answer"}], {})
+
+    call = trace["calls"][0]
+    assert call["prompt_tokens"] == 7
+    assert call["completion_tokens"] == 3
+    assert call["retry_count"] == 2
+    assert call["retry_sleep_ms"] == 3000
+    assert trace["retry_count"] == 2
+    assert trace["retry_sleep_ms"] == 3000
+
+
+def test_legacy_cached_latency_is_not_mislabeled_as_active_request_time(monkeypatch):
+    legacy_stats = {"prompt_tokens": 7, "completion_tokens": 3, "latency_ms": 9999, "cost_units": None}
+    monkeypatch.setattr(router.client, "chat", Mock(return_value=(_envelope("answer"), legacy_stats)))
+
+    _answer, trace = router.route([{"role": "user", "content": "Answer"}], {})
+
+    assert trace["calls"][0]["request_time_ms"] is None
+    assert trace["calls"][0]["latency_ms"] is None
+    assert trace["calls"][0]["legacy_latency_ms"] == 9999
+    assert trace["total_latency_ms"] is None
 
 def test_strong_error_falls_back_to_cheap_answer(monkeypatch):
     call = Mock(side_effect=[(_envelope("cheap answer", 0.1), _stats()), RuntimeError("strong unavailable")])

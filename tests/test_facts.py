@@ -37,6 +37,8 @@ def test_build_facts_keeps_unmeasured_values_null_and_uses_recorded_tokens():
     assert facts["prompt_counts"]["baseline"]["cheap"] == {"expected": 2, "finished": 1, "errors": 0}
     assert facts["baseline"]["averages"]["cheap"]["average_total_tokens"] is None
     assert facts["baseline"]["averages"]["cheap"]["average_prompt_tokens"] is None
+    assert facts["baseline"]["averages"]["cheap"]["average_latency_ms"] is None
+    assert facts["baseline"]["averages"]["cheap"]["model_time_ms"] is None
     assert facts["holdout"]["overall"]["museroute"]["accuracy"] is None
     assert facts["holdout"]["overall"]["museroute"]["cost_units"] is None
     assert facts["models_and_hosts"]["cheap"] == {

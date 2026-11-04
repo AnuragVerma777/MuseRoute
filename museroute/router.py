@@ -6,7 +6,6 @@ import hashlib
 import json
 import math
 import re
-import time
 from pathlib import Path
 from typing import Any
 
@@ -59,6 +58,8 @@ def _cached_chat(
         error_type = getattr(client, saved.get("error_type", "MuseRouteError"), client.MuseRouteError)
         error = error_type(saved["error"])
         error.cached = True
+        for name, value in (saved.get("metrics") or {}).items():
+            setattr(error, name, value)
         raise error
     try:
         answer, stats = client.chat(tier, messages, **params)
@@ -66,6 +67,10 @@ def _cached_chat(
         cache[key] = {
             "error_type": type(exc).__name__,
             "error": client.redact_secrets(exc),
+            "metrics": {
+                name: getattr(exc, name, None)
+                for name in ("request_time_ms", "retry_count", "retry_sleep_ms", "attempt_count")
+            },
         }
         _save_cache(cache)
         raise
@@ -147,7 +152,21 @@ def _record_call(
 ) -> None:
     row: dict[str, Any] = {"tier": tier, "sample": sample, "cached": cached}
     if error is not None:
-        row.update({"status": "error", "error": f"{type(error).__name__}: {client.redact_secrets(error)}"})
+        row.update(
+            {
+                "status": "error",
+                "error": f"{type(error).__name__}: {client.redact_secrets(error)}",
+                "prompt_tokens": None,
+                "completion_tokens": None,
+                "latency_ms": getattr(error, "request_time_ms", None),
+                "request_time_ms": getattr(error, "request_time_ms", None),
+                "model_time_ms": None,
+                "retry_count": getattr(error, "retry_count", None),
+                "retry_sleep_ms": getattr(error, "retry_sleep_ms", None),
+                "attempt_count": getattr(error, "attempt_count", None),
+                "cost_units": None,
+            }
+        )
     else:
         stats = stats or {}
         row.update(
@@ -155,7 +174,17 @@ def _record_call(
                 "status": "ok",
                 "prompt_tokens": stats.get("prompt_tokens"),
                 "completion_tokens": stats.get("completion_tokens"),
-                "latency_ms": stats.get("latency_ms"),
+                # Ignore legacy latency fields: the older client included retry
+                # sleeps, which cannot be split from saved cache entries.
+                "latency_ms": stats.get("request_time_ms"),
+                "request_time_ms": stats.get("request_time_ms"),
+                "legacy_latency_ms": (
+                    stats.get("latency_ms") if "request_time_ms" not in stats else None
+                ),
+                "model_time_ms": stats.get("model_time_ms"),
+                "retry_count": stats.get("retry_count"),
+                "retry_sleep_ms": stats.get("retry_sleep_ms"),
+                "attempt_count": stats.get("attempt_count"),
                 "cost_units": stats.get("cost_units"),
             }
         )
@@ -170,7 +199,6 @@ def _attempt(
     temperature: float,
     sample: int,
 ) -> tuple[str | None, float, dict[str, Any] | None, Exception | None]:
-    started = time.perf_counter()
     try:
         answer, stats, cached = _cached_chat(
             cache,
@@ -181,7 +209,6 @@ def _attempt(
         )
     except Exception as exc:
         _record_call(calls, tier, sample, error=exc, cached=bool(getattr(exc, "cached", False)))
-        calls[-1]["latency_ms"] = round((time.perf_counter() - started) * 1000, 2)
         return None, 0.0, None, exc
     _record_call(calls, tier, sample, stats=stats, cached=cached)
     parsed_answer, confidence, parse_error = _parse_envelope(answer)
@@ -199,22 +226,46 @@ def _totals(calls: list[dict[str, Any]]) -> dict[str, Any]:
     successful = [c for c in calls if c.get("status") == "ok"]
     prompt_tokens = [c.get("prompt_tokens") for c in successful]
     completion_tokens = [c.get("completion_tokens") for c in successful]
-    latencies = [c.get("latency_ms") for c in calls]
-    successful = [c for c in calls if c.get("status") == "ok"]
+    complete_usage = (
+        len(successful) == len(calls)
+        and bool(successful)
+        and all(isinstance(value, int) and not isinstance(value, bool) for value in prompt_tokens + completion_tokens)
+    )
     costs = [c.get("cost_units") for c in successful]
-    has_errors = any(c.get("status") != "ok" for c in calls)
+    request_times = [c.get("request_time_ms") for c in calls]
+    retry_counts = [c.get("retry_count") for c in calls]
+    retry_sleeps = [c.get("retry_sleep_ms") for c in calls]
+    complete_calls = len(successful) == len(calls)
     return {
-        "total_prompt_tokens": (
-            sum(prompt_tokens) if not has_errors and prompt_tokens and all(isinstance(v, int) for v in prompt_tokens) else None
+        # Full request token totals stay null when any call failed, while usage
+        # from successful calls remains available instead of being discarded.
+        "total_prompt_tokens": sum(prompt_tokens) if complete_usage else None,
+        "total_completion_tokens": sum(completion_tokens) if complete_usage else None,
+        "successful_call_prompt_tokens": (
+            sum(prompt_tokens) if successful and all(isinstance(v, int) and not isinstance(v, bool) for v in prompt_tokens) else None
         ),
-        "total_completion_tokens": (
-            sum(completion_tokens) if not has_errors and completion_tokens and all(isinstance(v, int) for v in completion_tokens) else None
+        "successful_call_completion_tokens": (
+            sum(completion_tokens) if successful and all(isinstance(v, int) and not isinstance(v, bool) for v in completion_tokens) else None
         ),
         "total_latency_ms": (
-            round(sum(latencies), 2) if latencies and all(isinstance(v, (int, float)) for v in latencies) else None
+            round(sum(request_times), 2)
+            if request_times and all(isinstance(v, (int, float)) for v in request_times)
+            else None
+        ),
+        "request_time_ms": (
+            round(sum(request_times), 2)
+            if request_times and all(isinstance(v, (int, float)) for v in request_times)
+            else None
+        ),
+        "model_time_ms": None,
+        "retry_count": sum(retry_counts) if calls and all(isinstance(v, int) for v in retry_counts) else None,
+        "retry_sleep_ms": (
+            round(sum(retry_sleeps), 2)
+            if calls and all(isinstance(v, (int, float)) for v in retry_sleeps)
+            else None
         ),
         "total_cost_units": (
-            None if has_errors or not costs or any(value is None for value in costs) else sum(costs)
+            None if not complete_calls or not costs or any(value is None for value in costs) else sum(costs)
         ),
     }
 

@@ -87,5 +87,31 @@ def test_retries_429_then_returns_stats(monkeypatch):
     assert stats["prompt_tokens"] == 4
     assert stats["completion_tokens"] == 2
     assert stats["cost_units"] == 1.5
+    assert stats["retry_count"] == 1
+    assert stats["retry_sleep_ms"] == 1000
+    assert stats["attempt_count"] == 2
+    assert isinstance(stats["request_time_ms"], (int, float))
+    assert stats["latency_ms"] == stats["request_time_ms"]
+    assert stats["model_time_ms"] is None  # host does not expose isolated compute time
     assert post.call_args.kwargs["timeout"] == 120
     assert post.call_args.kwargs["headers"]["Authorization"] == "Bearer test-secret"
+
+
+def test_request_latency_excludes_backoff_sleep(monkeypatch):
+    _configure(monkeypatch)
+    limited = Mock(ok=False, status_code=429)
+    success = Mock(ok=True, status_code=200)
+    success.json.return_value = {
+        "choices": [{"message": {"content": "hello"}}],
+        "usage": {"prompt_tokens": 4, "completion_tokens": 2},
+    }
+    monkeypatch.setattr(client.requests, "post", Mock(side_effect=[limited, success]))
+    monkeypatch.setattr(client.time, "sleep", Mock())
+    clock = Mock(side_effect=[10.0, 10.01, 50.0, 50.04])
+    monkeypatch.setattr(client.time, "perf_counter", clock)
+
+    _text, stats = client.chat("cheap", [{"role": "user", "content": "hello"}])
+
+    assert stats["request_time_ms"] == 50.0
+    assert stats["retry_sleep_ms"] == 1000
+    assert stats["latency_ms"] == 50.0

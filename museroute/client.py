@@ -163,33 +163,66 @@ def chat(tier: str, messages: list[dict[str, Any]], **overrides: Any) -> tuple[s
         headers["Authorization"] = f"Bearer {api_key}"
 
     url = f"{str(base_url).rstrip('/')}/chat/completions"
-    started = time.perf_counter()
+    request_time_ms = 0.0
+    retry_count = 0
+    retry_sleep_ms = 0.0
+    attempt_count = 0
     response: requests.Response | None = None
     for attempt in range(4):
+        attempt_count += 1
+        started = time.perf_counter()
         try:
             response = requests.post(url, json=body, headers=headers, timeout=120)
         except requests.RequestException as exc:
-            raise MuseRouteError(f"Request failed for tier '{tier}': {exc}") from exc
+            request_time_ms += (time.perf_counter() - started) * 1000
+            error = MuseRouteError(f"Request failed for tier '{tier}': {exc}")
+            error.request_time_ms = round(request_time_ms, 2)
+            error.retry_count = retry_count
+            error.retry_sleep_ms = round(retry_sleep_ms, 2)
+            error.attempt_count = attempt_count
+            raise error from exc
+        request_time_ms += (time.perf_counter() - started) * 1000
         # Handle 402/payment language before retry logic, so it can never retry.
         if response.status_code == 402:
-            raise _error_from_response(response, tier)
+            error = _error_from_response(response, tier)
+            error.request_time_ms = round(request_time_ms, 2)
+            error.retry_count = retry_count
+            error.retry_sleep_ms = round(retry_sleep_ms, 2)
+            error.attempt_count = attempt_count
+            raise error
         if not response.ok:
             error = _error_from_response(response, tier)
             if isinstance(error, FatalPaymentError):
+                error.request_time_ms = round(request_time_ms, 2)
+                error.retry_count = retry_count
+                error.retry_sleep_ms = round(retry_sleep_ms, 2)
+                error.attempt_count = attempt_count
                 raise error
         else:
             break
         if (response.status_code == 429 or 500 <= response.status_code <= 599) and attempt < 3:
-            time.sleep(2**attempt)
+            delay = 2**attempt
+            retry_count += 1
+            retry_sleep_ms += delay * 1000
+            time.sleep(delay)
             continue
+        error.request_time_ms = round(request_time_ms, 2)
+        error.retry_count = retry_count
+        error.retry_sleep_ms = round(retry_sleep_ms, 2)
+        error.attempt_count = attempt_count
         raise error
 
-    latency_ms = round((time.perf_counter() - started) * 1000, 2)
+    latency_ms = round(request_time_ms, 2)
     try:
         payload = response.json()
         text = payload["choices"][0]["message"]["content"]
     except (ValueError, KeyError, IndexError, TypeError, AttributeError) as exc:
-        raise MuseRouteError(f"Invalid chat completion response for tier '{tier}'") from exc
+        error = MuseRouteError(f"Invalid chat completion response for tier '{tier}'")
+        error.request_time_ms = round(request_time_ms, 2)
+        error.retry_count = retry_count
+        error.retry_sleep_ms = round(retry_sleep_ms, 2)
+        error.attempt_count = attempt_count
+        raise error from exc
 
     usage = payload.get("usage") or {}
     prompt_tokens = usage.get("prompt_tokens")
@@ -202,6 +235,13 @@ def chat(tier: str, messages: list[dict[str, Any]], **overrides: Any) -> tuple[s
         "prompt_tokens": prompt_tokens,
         "completion_tokens": completion_tokens,
         "latency_ms": latency_ms,
+        # The host API does not expose isolated model-compute timing. This is
+        # active HTTP request time (all attempts), excluding retry sleeps.
+        "request_time_ms": latency_ms,
+        "model_time_ms": None,
+        "retry_count": retry_count,
+        "retry_sleep_ms": round(retry_sleep_ms, 2),
+        "attempt_count": attempt_count,
         "tier": tier,
         "cost_units": cost_units,
     }

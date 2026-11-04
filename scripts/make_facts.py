@@ -76,12 +76,27 @@ def _baseline_facts(
         prompt_token_values = [(row.get("tokens") or {}).get("prompt_tokens") for row in finished_rows]
         completion_token_values = [(row.get("tokens") or {}).get("completion_tokens") for row in finished_rows]
         total_token_values = [(row.get("tokens") or {}).get("total_tokens") for row in finished_rows]
-        latency_values = [row.get("latency_ms") for row in finished_rows]
+        latency_values = [row.get("request_time_ms") for row in finished_rows]
         averages[tier_name] = {
             "average_prompt_tokens": _mean(prompt_token_values, expected),
             "average_completion_tokens": _mean(completion_token_values, expected),
             "average_total_tokens": _mean(total_token_values, expected),
-            "average_latency_ms": _mean(latency_values, expected),
+            # Only active HTTP request time is valid here. Legacy cache rows
+            # store latency_ms including retry sleeps, so do not reuse it.
+            "average_latency_ms": _mean(
+                [(row.get("tokens") or {}).get("request_time_ms") for row in finished_rows], expected
+            ),
+            "total_retries": (
+                sum(row.get("retry_count") for row in finished_rows)
+                if finished_rows and all(isinstance(row.get("retry_count"), int) for row in finished_rows)
+                else None
+            ),
+            "retry_sleep_ms": (
+                round(sum(row.get("retry_sleep_ms") for row in finished_rows), 2)
+                if finished_rows and all(isinstance(row.get("retry_sleep_ms"), (int, float)) for row in finished_rows)
+                else None
+            ),
+            "model_time_ms": None,
             "cost_units": None,
         }
 
@@ -126,6 +141,10 @@ def _system_metrics(
         "average_total_tokens": source.get("avg_total_tokens_per_request"),
         "total_tokens": total_tokens,
         "latency_ms": source.get("avg_latency_ms"),
+        "request_time_ms": source.get("avg_latency_ms"),
+        "model_time_ms": None,
+        "retry_count": source.get("retry_count"),
+        "retry_sleep_ms": source.get("retry_sleep_ms"),
         "cost_units": source.get("total_cost_units"),
     }
 
@@ -256,6 +275,10 @@ def build_facts(
             "average_completion_tokens": None,
             "average_total_tokens": holdout_router.get("avg_total_tokens_per_request"),
             "latency_ms": holdout_router.get("avg_latency_ms"),
+            "request_time_ms": holdout_router.get("avg_latency_ms"),
+            "model_time_ms": None,
+            "retry_count": holdout_router.get("retry_count"),
+            "retry_sleep_ms": holdout_router.get("retry_sleep_ms"),
             "cost_units": holdout_router.get("total_cost_units"),
         },
         "worst_holdout_mistakes": mistakes[:5],
