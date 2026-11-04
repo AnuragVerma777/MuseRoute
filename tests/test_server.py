@@ -212,7 +212,7 @@ def test_get_root_serves_plain_static_page():
     assert any(route.path == "/static" for route in server.app.routes)
 
 
-def test_ui_has_cache_presets_timeline_compare_proof_and_measurement_banner():
+def test_ui_has_freeform_prompt_timeline_compare_proof_and_measurement_banner():
     html = open(server.home().path, encoding="utf-8").read()
     script = open(server._STATIC_DIR / "app.js", encoding="utf-8").read()
 
@@ -220,7 +220,14 @@ def test_ui_has_cache_presets_timeline_compare_proof_and_measurement_banner():
     assert 'data-tab="proof"' in html
     assert "Five holdout failure cases" in html
     assert "NOT MEASURED" in html
-    assert '"/api/demo-prompts"' in script
+    assert "Type any prompt you want to route" in html
+    assert 'id="preset-list"' not in html
+    assert 'id="final-latency"' not in html
+    assert "Decision latency:" not in script
+    assert "Total latency:" not in script
+    assert "Latency: NOT MEASURED" not in script
+    assert '"/api/demo-prompts"' not in script
+    assert 'jsonPost("/api/route", payload)' in script
     assert '"/api/facts"' in script
     assert "api/compare" in script
     assert '"/api/calculate"' in script

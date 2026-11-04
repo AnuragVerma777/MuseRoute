@@ -1,14 +1,11 @@
 (() => {
   const el = (id) => document.getElementById(id);
-  const demoMode = new URLSearchParams(window.location.search).get("demo") === "1";
   const form = el("route-form");
   const input = el("prompt-input");
   const routeButton = el("route-button");
-  const state = { selectedPresetId: null, lastPrompt: null, factsLoaded: false };
+  const state = { lastPrompt: null, factsLoaded: false };
 
-  el("mode-note").textContent = demoMode
-    ? "Cached demo mode · no model calls are made"
-    : "Live routing · configured Muse tiers may be called";
+  el("mode-note").textContent = "Enter any prompt · cached answers are reused when available; otherwise configured Muse tiers are called";
 
   async function requestJson(url, options = {}) {
     let response;
@@ -57,36 +54,6 @@
     parent.append(line);
   }
 
-  async function loadPresets() {
-    const list = el("preset-list");
-    list.replaceChildren();
-    try {
-      const data = await requestJson("/api/demo-prompts");
-      for (const item of data.prompts || []) {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "preset-button";
-        button.dataset.promptId = item.id;
-        button.setAttribute("aria-label", `${item.band} saved prompt ${item.id}`);
-        const band = document.createElement("span");
-        band.className = `band-tag band-${item.band}`;
-        band.textContent = item.band;
-        const text = document.createElement("span");
-        text.textContent = item.prompt;
-        button.append(band, text);
-        button.addEventListener("click", () => {
-          input.value = item.prompt;
-          state.selectedPresetId = item.id;
-          form.requestSubmit();
-        });
-        list.append(button);
-      }
-      if (!list.children.length) addText(list, "span", "muted", "No saved prompts are available.");
-    } catch (error) {
-      addText(list, "span", "error-message", `Saved prompts unavailable: ${error.message}`);
-    }
-  }
-
   function renderCall(call, index) {
     const section = document.createElement("article");
     section.className = `timeline-step ${call.status === "error" ? "step-error" : ""}`;
@@ -99,12 +66,10 @@
       addText(section, "p", "error-message", call.error || "Tier call failed; exact error was not saved.");
     } else {
       addText(section, "p", "answer-text", call.answer || "Empty answer");
-      addMetricLine(section, [
-        `Confidence: ${percent(call.confidence)}`,
-        `Latency: ${latency(call.latency_ms, call)}`,
-        `Prompt tokens: ${tokens(call.prompt_tokens)}`,
-        `Completion tokens: ${tokens(call.completion_tokens)}`,
-      ]);
+      const metrics = [`Confidence: ${percent(call.confidence)}`];
+      if (typeof call.latency_ms === "number" && call.legacy_latency_ms == null) metrics.push(`Latency: ${latency(call.latency_ms, call)}`);
+      metrics.push(`Prompt tokens: ${tokens(call.prompt_tokens)}`, `Completion tokens: ${tokens(call.completion_tokens)}`);
+      addMetricLine(section, metrics);
     }
     if (Number.isInteger(call.retry_count) || Number.isFinite(call.retry_sleep_ms)) {
       addMetricLine(section, [
@@ -128,7 +93,6 @@
     const escalated = trace.escalated === true || trace.decision === "escalate";
     addText(decision, "div", "decision-label", escalated ? "Decision · escalate" : "Decision · stay on cheap");
     addText(decision, "p", "", trace.reason || "Routing reason: NOT MEASURED");
-    addMetricLine(decision, [`Decision latency: ${latency(trace.decision_latency_ms)}`]);
     steps.append(decision);
 
     const strong = calls.find((call) => call.tier === "strong");
@@ -143,7 +107,6 @@
 
     el("final-tier").textContent = trace.tier_used ? `${trace.tier_used} tier` : "No tier returned an answer";
     el("final-text").textContent = result.answer || "No tier returned an answer.";
-    el("final-latency").textContent = latency(trace.total_latency_ms, trace);
     el("final-tokens").textContent = tokens(trace.total_tokens);
     el("timeline").hidden = false;
     el("compare-result").hidden = true;
@@ -159,15 +122,11 @@
     routeButton.disabled = true;
     routeButton.textContent = "Routing…";
     const payload = { messages: [{ role: "user", content: prompt }] };
-    if (state.selectedPresetId) payload.prompt_id = state.selectedPresetId;
     try {
-      const suffix = demoMode ? "?demo=true" : "";
-      const result = await jsonPost(`/api/route${suffix}`, payload);
+      const result = await jsonPost("/api/route", payload);
       renderTimeline(result);
     } catch (error) {
-      el("request-error").textContent = demoMode
-        ? `Cached demo could not replay this prompt: ${error.message}`
-        : `MuseRoute request failed: ${error.message}`;
+      el("request-error").textContent = `MuseRoute request failed: ${error.message}`;
       el("request-error").hidden = false;
     } finally {
       routeButton.disabled = false;
@@ -197,11 +156,10 @@
     }
     if (trace && totalTokens === undefined) totalTokens = trace.total_tokens;
     const timeValue = trace ? trace.total_latency_ms : (stats?.request_time_ms ?? stats?.latency_ms);
-    addMetricLine(card, [
-      `Tokens: ${tokens(totalTokens)}`,
-      `Latency: ${latency(timeValue, trace || stats)}`,
-      `Cost units: ${measured(trace ? trace.total_cost_units : stats?.cost_units)}`,
-    ]);
+    const metrics = [`Tokens: ${tokens(totalTokens)}`];
+    if (typeof timeValue === "number" && !(trace || stats)?.legacy_latency_ms) metrics.push(`Latency: ${latency(timeValue, trace || stats)}`);
+    metrics.push(`Cost units: ${measured(trace ? trace.total_cost_units : stats?.cost_units)}`);
+    addMetricLine(card, metrics);
     if (stats?.cached === true || trace?.cached === true) addText(card, "span", "cached-badge", "cached");
     container.append(card);
   }
@@ -215,8 +173,7 @@
     output.replaceChildren();
     try {
       const payload = { messages: [{ role: "user", content: state.lastPrompt }] };
-      if (state.selectedPresetId) payload.prompt_id = state.selectedPresetId;
-      const result = await jsonPost(`/api/compare${demoMode ? "?demo=true" : ""}`, payload);
+      const result = await jsonPost("/api/compare", payload);
       addCompareCard(output, "Before · strong-only", result.strong_only?.answer, result.strong_only?.stats);
       addCompareCard(output, "After · MuseRoute", result.museroute?.answer, null, result.museroute?.route_trace);
       output.hidden = false;
@@ -339,6 +296,4 @@
     }
   });
 
-  input.addEventListener("input", () => { state.selectedPresetId = null; });
-  loadPresets();
 })();

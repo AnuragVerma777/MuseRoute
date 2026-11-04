@@ -29,16 +29,11 @@
           <p id="mode-note" class="muted"></p>
         </div>
 
-        <div class="preset-area">
-          <h2 class="section-label">Try a cached example</h2>
-          <div id="preset-list" class="preset-list" aria-live="polite"><span class="muted">Loading saved prompts…</span></div>
-        </div>
-
         <form id="route-form" class="composer">
           <label class="visually-hidden" for="prompt-input">Your prompt</label>
-          <textarea id="prompt-input" rows="3" placeholder="Ask anything…" required></textarea>
+          <textarea id="prompt-input" rows="5" placeholder="Type any prompt you want to route…" required></textarea>
           <div class="composer-footer">
-            <span class="muted">The timeline shows routing and model answers.</span>
+            <span class="muted">Your prompt is routed through the configured Muse tiers.</span>
             <button id="route-button" type="submit">Route prompt <span aria-hidden="true">↑</span></button>
           </div>
         </form>
@@ -50,7 +45,7 @@
           <div class="final-answer">
             <div class="step-heading"><h3>Final answer</h3><span id="final-tier" class="tier-pill"></span></div>
             <p id="final-text" class="answer-text"></p>
-            <p class="metric-line">Total latency: <span id="final-latency">NOT MEASURED</span> · Tokens: <span id="final-tokens">NOT MEASURED</span></p>
+            <p class="metric-line">Tokens: <span id="final-tokens">NOT MEASURED</span></p>
           </div>
           <button id="compare-button" class="secondary-button" type="button">Compare strong-only vs MuseRoute</button>
           <section id="compare-result" class="compare-result" aria-live="polite" hidden></section>

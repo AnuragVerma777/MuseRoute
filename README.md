@@ -16,8 +16,6 @@ MuseRoute records a cheap-first Muse routing experiment and its outcomes across 
 - **API endpoints for routing, comparison, health and facts:** see [the FastAPI service](museroute/server.py).
 - **Presentation material:** [3-minute demo script](docs/DEMO_SCRIPT.md) and [judge Q&A](docs/JUDGE_QA.md).
 
-![MuseRoute chat timeline in cache-only demo mode](docs/img/museroute-chat.png)
-
 ## Existing alternatives
 
 The four source lines referenced for this table were not included in the request (the message contains “paste the four lines from my earlier message”). To avoid unsourced descriptions or comparisons, the factual descriptions are pending those lines.
@@ -106,7 +104,7 @@ uvicorn museroute.server:app --host 127.0.0.1 --port 8000
 
 `museroute/client.py` sends chat-completions HTTP requests. `museroute/router.py` tries the cheap tier, applies its format/confidence checks, and may escalate. `museroute/server.py` exposes `/health`, `/v1/chat/completions`, `/api/route`, `/api/compare`, and `/api/facts`. Workload, tune and holdout inputs are under `data/`; measured outputs and caches are under `results/`.
 
-The plain HTML/CSS/JavaScript demo is served at `/`. Open `http://127.0.0.1:8000/?demo=1` for cache-only examples; presets, route timeline and comparison replay saved results without model calls.
+The plain HTML/CSS/JavaScript demo is served at `/`. Enter any prompt in the chat box; the router reuses a saved answer when available and otherwise calls the configured Muse tiers. `/` and `/?demo=1` show the same freeform prompt UI.
 
 ## API example
 

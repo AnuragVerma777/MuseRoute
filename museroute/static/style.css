@@ -30,15 +30,6 @@ body { min-height: 100vh; margin: 0; color: var(--ink); background: var(--paper)
 h1 { margin: 0; font-size: clamp(2rem, 4vw, 2.65rem); line-height: 1.1; letter-spacing: -.04em; }
 .muted { color: var(--muted); }
 #mode-note { margin: 5px 0 0; font-size: .83rem; }
-.preset-area { margin: 12px 0; }
-.section-label { margin: 0 0 7px; font-size: .86rem; }
-.preset-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.preset-button { display: flex; min-height: 56px; align-items: center; gap: 9px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); background: white; text-align: left; font-size: .78rem; line-height: 1.3; }
-.preset-button:hover { border-color: #91b9a7; background: #f7fcf8; }
-.preset-button span:last-child { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-.band-tag { flex: 0 0 auto; padding: 3px 7px; border-radius: 999px; background: #e8eee9; font-size: .68rem; font-weight: 850; text-transform: capitalize; }
-.band-medium { background: #fff0cf; }
-.band-hard { background: #f8dddd; }
 .composer { margin-top: 12px; padding: 10px 12px; border: 1px solid #cbd3ce; border-radius: 17px; background: white; box-shadow: 0 8px 24px #2939320c; }
 #prompt-input { display: block; width: 100%; min-height: 76px; max-height: 190px; resize: vertical; padding: 9px 10px; border: 0; outline: 0; color: var(--ink); background: transparent; font: inherit; font-size: 1rem; }
 #prompt-input::placeholder { color: #8a9490; }
@@ -95,11 +86,10 @@ th { color: #4b5b54; background: #f3f6f3; }
 @media (max-width: 760px) {
   .shell { width: calc(100% - 28px); padding-top: 12px; }
   .topbar { align-items: flex-start; flex-direction: column; gap: 10px; }
-  .preset-list { grid-template-columns: repeat(2, 1fr); }
   .compare-result { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
-  .preset-list, .calculator-grid { grid-template-columns: 1fr; }
+  .calculator-grid { grid-template-columns: 1fr; }
   .composer-footer { align-items: flex-end; }
   .composer-footer .muted { max-width: 56%; }
 }
